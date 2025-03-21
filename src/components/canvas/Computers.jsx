@@ -1,76 +1,79 @@
-import React, { Suspense, useEffect, useState } from "react";
+import { useAnimations, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
-
+import { Suspense, useEffect, useRef, useState } from "react";
 import CanvasLoader from "../Loader";
 
-const Computers = ({ isMobile }) => {
-  const computer = useGLTF("./desktop_pc/scene.gltf");
+const Computers = ({ scale, position }) => {
+  const spacemanRef = useRef();
+  const { scene, animations } = useGLTF("./desktop_pc/spaceman.glb");
+  const { actions } = useAnimations(animations, spacemanRef);
+
+  useEffect(() => {
+    actions["Idle"].play();
+  }, [actions]);
 
   return (
-    <mesh>
-      <hemisphereLight intensity={0.15} groundColor='black' />
-      <spotLight
-        position={[-20, 50, 10]}
-        angle={0.12}
-        penumbra={1}
-        intensity={1}
-        castShadow
-        shadow-mapSize={1024}
-      />
-      <pointLight intensity={1} />
-      <primitive
-        object={computer.scene}
-        scale={isMobile ? 0.7 : 0.75}
-        position={isMobile ? [0, -3, -2.2] : [0, -3.25, -1.5]}
-        rotation={[-0.01, -0.2, -0.1]}
-      />
+    <mesh ref={spacemanRef} position={position} scale={scale} rotation={[0, 2.2, 0]}>
+      <primitive object={scene} />
     </mesh>
   );
 };
 
-const ComputersCanvas = () => {
-  const [isMobile, setIsMobile] = useState(false);
+const ComputersCanvas = ({ scrollContainer }) => {
+  const [rotationX, setRotationX] = useState(0);
+  const [rotationY, setRotationY] = useState(0);
+  const [scale, setScale] = useState([2, 2, 2]);
+  const [position, setPosition] = useState([0.2, -0.7, 0]);
 
   useEffect(() => {
-    // Add a listener for changes to the screen size
-    const mediaQuery = window.matchMedia("(max-width: 500px)");
-
-    // Set the initial value of the `isMobile` state variable
-    setIsMobile(mediaQuery.matches);
-
-    // Define a callback function to handle changes to the media query
-    const handleMediaQueryChange = (event) => {
-      setIsMobile(event.matches);
+    const handleScroll = () => {
+      const scrollTop = scrollContainer.current.scrollTop;
+      const rotationXValue = scrollTop * -0.0006;
+      const rotationYValue = scrollTop * -0.00075;
+      setRotationX(rotationXValue);
+      setRotationY(rotationYValue);
     };
 
-    // Add the callback function as a listener for changes to the media query
-    mediaQuery.addEventListener("change", handleMediaQueryChange);
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setScale([1, 1, 1]);
+        setPosition([0.2, -0.1, 0]);
+      } else if (window.innerWidth < 1024) {
+        setScale([1.33, 1.33, 1.33]);
+        setPosition([0.2, -0.3, 0]);
+      } else if (window.innerWidth < 1280) {
+        setScale([1.5, 1.5, 1.5]);
+        setPosition([0.2, -0.4, 0]);
+      } else if (window.innerWidth < 1536) {
+        setScale([1.66, 1.66, 1.66]);
+        setPosition([0.2, -0.5, 0]);
+      } else {
+        setScale([2, 2, 2]);
+        setPosition([0.2, -0.7, 0]);
+      }
+    };
 
-    // Remove the listener when the component is unmounted
+    handleResize();
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+
     return () => {
-      mediaQuery.removeEventListener("change", handleMediaQueryChange);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [scrollContainer]);
 
   return (
-    <Canvas
-      frameloop='demand'
-      shadows
-      dpr={[1, 2]}
-      camera={{ position: [20, 3, 5], fov: 25 }}
-      gl={{ preserveDrawingBuffer: true }}
-    >
+    <Canvas className={`w-full h-screen bg-transparent z-10`} camera={{ near: 0.1, far: 1000 }}>
       <Suspense fallback={<CanvasLoader />}>
-        <OrbitControls
-          enableZoom={false}
-          maxPolarAngle={Math.PI / 2}
-          minPolarAngle={Math.PI / 2}
-        />
-        <Computers isMobile={isMobile} />
-      </Suspense>
+        <directionalLight position={[1, 1, 1]} intensity={2} />
+        <ambientLight intensity={0.5} />
+        <pointLight position={[10, 5, 10]} intensity={2} />
+        <spotLight position={[0, 50, 10]} angle={0.15} penumbra={1} intensity={2} />
+        <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={1} />
 
-      <Preload all />
+        <Computers rotationX={rotationX} rotationY={rotationY} scale={scale} position={position} />
+      </Suspense>
     </Canvas>
   );
 };
