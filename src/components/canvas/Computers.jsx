@@ -25,13 +25,17 @@ const ComputersCanvas = ({ scrollContainer }) => {
   const [scale, setScale] = useState([2, 2, 2]);
   const [position, setPosition] = useState([0.2, -0.7, 0]);
 
+  const containerRef = scrollContainer || { current: document.createElement('div') };
+
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = scrollContainer.current.scrollTop;
-      const rotationXValue = scrollTop * -0.0006;
-      const rotationYValue = scrollTop * -0.00075;
-      setRotationX(rotationXValue);
-      setRotationY(rotationYValue);
+      if (containerRef.current) {
+        const scrollTop = containerRef.current.scrollTop;
+        const rotationXValue = scrollTop * -0.0006;
+        const rotationYValue = scrollTop * -0.00075;
+        setRotationX(rotationXValue);
+        setRotationY(rotationYValue);
+      }
     };
 
     const handleResize = () => {
@@ -49,7 +53,7 @@ const ComputersCanvas = ({ scrollContainer }) => {
         setPosition([0.2, -0.5, 0]);
       } else {
         setScale([2, 2, 2]);
-        setPosition([0.2, -0.7, 0]);
+        setPosition([0.2, -1.5, 0]);
       }
     };
 
