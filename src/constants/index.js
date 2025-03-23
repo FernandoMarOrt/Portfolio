@@ -8,21 +8,17 @@ import {
   html,
   css,
   reactjs,
-  redux,
   tailwind,
   nodejs,
-  mongodb,
   git,
   figma,
   docker,
-  meta,
-  starbucks,
-  tesla,
-  shopify,
+  villacarrillo,
+  freelancer,
+  bimaxpro,
   carrent,
   jobit,
   tripguide,
-  threejs,
 } from "../assets";
 
 export const navLinks = [
@@ -81,24 +77,12 @@ const technologies = [
     icon: reactjs,
   },
   {
-    name: "Redux Toolkit",
-    icon: redux,
-  },
-  {
     name: "Tailwind CSS",
     icon: tailwind,
   },
   {
     name: "Node JS",
     icon: nodejs,
-  },
-  {
-    name: "MongoDB",
-    icon: mongodb,
-  },
-  {
-    name: "Three JS",
-    icon: threejs,
   },
   {
     name: "git",
@@ -116,57 +100,44 @@ const technologies = [
 
 const experiences = [
   {
-    title: "React.js Developer",
-    company_name: "Starbucks",
-    icon: starbucks,
-    iconBg: "#383E56",
-    date: "March 2020 - April 2021",
-    points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
-    ],
-  },
-  {
-    title: "React Native Developer",
-    company_name: "Tesla",
-    icon: tesla,
+    title: "Técnico Informático",
+    company_name: "Ayuntamiento de Villacarrillo",
+    icon: villacarrillo,
     iconBg: "#E6DEDD",
-    date: "Jan 2021 - Feb 2022",
+    date: "Abril 2022 - Junio 2022",
     points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
+      "Mantenimiento y soporte técnico de equipos informáticos y redes en las dependencias municipales-",
+      "Instalación y configuración de software y hardware para empleados del ayuntamiento.",
+      "Resolución de incidencias relacionadas con sistemas operativos, aplicaciones y periféricos.",
+      "Gestión y administración básica de servidores y bases de datos locales.",
     ],
   },
   {
-    title: "Web Developer",
-    company_name: "Shopify",
-    icon: shopify,
-    iconBg: "#383E56",
-    date: "Jan 2022 - Jan 2023",
-    points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
-    ],
-  },
-  {
-    title: "Full stack Developer",
-    company_name: "Meta",
-    icon: meta,
+    title: "Freenlancer Web Developer",
+    company_name: "Freelance",
+    icon: freelancer,
     iconBg: "#E6DEDD",
-    date: "Jan 2023 - Present",
+    date: "Julio 2022 -  Septiembre 2024",
     points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
+      "Diseño y desarrollo de sitios web personalizados utilizando tecnologías modernas como React.js y Next.js.",
+      "Optimización del rendimiento y la accesibilidad de las aplicaciones web para mejorar la experiencia del usuario.",
+      "Mantenimiento y actualización de sitios web para garantizar su seguridad y compatibilidad con nuevas tecnologías.",
+      "Comunicación directa con clientes para definir requisitos, proporcionar soluciones técnicas y garantizar la satisfacción del proyecto.",
     ],
   },
+  {
+    title: "Desarrollador Web",
+    company_name: "Bimaxpro",
+    icon: bimaxpro,
+    iconBg: "#E6DEDD",
+    date: "Octubre 2024 - Actualidad",
+    points: [
+      "Desarrollo e implementación de nuevas funcionalidades en aplicaciones web utilizando Angular, .NET, TypeScript y C#",
+      "Mantenimiento y optimización del código existente para mejorar rendimiento y estabilidad.",
+      "Diagnóstico y resolución de errores en aplicaciones web para garantizar un funcionamiento eficiente.",
+      "Colaboración con equipos multidisciplinarios para definir requisitos y mejorar la experiencia del usuario.",
+    ],
+  }
 ];
 
 const testimonials = [
