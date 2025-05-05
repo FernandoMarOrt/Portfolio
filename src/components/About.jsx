@@ -44,7 +44,7 @@ const About = () => {
 
       <motion.p
         variants={fadeIn("", "", 0.1, 1)}
-        className='mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]'
+        className="mt-4 text-[#CCCCCC] text-[17px] max-w-3xl leading-[30px]"
       >
         Soy un programador junior con un sólido interés en la programación y el desarrollo web. Mi capacidad para adaptarme a diferentes entornos y ofrecer siempre lo mejor de mí es una de mis principales fortalezas. Destaco por mi habilidad para trabajar de manera colaborativa en equipos y mi constante entusiasmo por aprender y mejorar mis habilidades.
       </motion.p>

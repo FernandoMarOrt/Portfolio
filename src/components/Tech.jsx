@@ -42,7 +42,7 @@ const technologies = [
 const Tech = () => {
   return (
     <>
-    <motion.div variants={textVariant()} className="flex justify-center">
+    <motion.div variants={textVariant()} className="flex justify-center mb-8">
         <h2 className={styles.sectionHeadText}>Tecnologías y Herramientas</h2>
     </motion.div>
 

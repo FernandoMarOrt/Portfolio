@@ -41,21 +41,22 @@ const ComputersCanvas = ({ scrollContainer }) => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
         setScale([1, 1, 1]);
-        setPosition([0.2, -0.1, 0]);
+        setPosition([0, -1.5, 0]);
       } else if (window.innerWidth < 1024) {
-        setScale([1.33, 1.33, 1.33]);
-        setPosition([0.2, -0.3, 0]);
+        setScale([1.5, 1.5, 1.5]); // Ajustado en proporción
+        setPosition([0.2, -1.5, 0]);
       } else if (window.innerWidth < 1280) {
-        setScale([1.5, 1.5, 1.5]);
-        setPosition([0.2, -0.4, 0]);
+        setScale([1.75, 1.75, 1.75]); // Ajustado en proporción
+        setPosition([0.2, -1.5, 0]);
       } else if (window.innerWidth < 1536) {
-        setScale([1.66, 1.66, 1.66]);
-        setPosition([0.2, -0.5, 0]);
+        setScale([1.85, 1.85, 1.85]); // Ajustado en proporción
+        setPosition([0.2, -1.5, 0]);
       } else {
-        setScale([2, 2, 2]);
+        setScale([2, 2, 2]); // Valor base (para pantallas mayores a 1536px)
         setPosition([0.2, -1.5, 0]);
       }
     };
+
 
     handleResize();
     window.addEventListener("scroll", handleScroll);
