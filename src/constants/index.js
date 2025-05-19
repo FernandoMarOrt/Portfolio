@@ -42,7 +42,7 @@ const services = [
     icon: web,
   },
   {
-    title: "React Native Developer",
+    title: "Angular Developer",
     icon: mobile,
   },
   {
@@ -50,7 +50,7 @@ const services = [
     icon: backend,
   },
   {
-    title: "Content Creator",
+    title: ".NET Developer",
     icon: creator,
   },
 ];
@@ -169,20 +169,20 @@ const testimonials = [
 
 const projects = [
   {
-    name: "Car Rent",
+    name: "Style Barber",
     description:
       "Web-based platform that allows users to search, book, and manage car rentals from various providers, providing a convenient and efficient solution for transportation needs.",
     tags: [
       {
-        name: "react",
+        name: "HTML",
         color: "blue-text-gradient",
       },
       {
-        name: "mongodb",
+        name: "CSS",
         color: "green-text-gradient",
       },
       {
-        name: "tailwind",
+        name: "JavaScript",
         color: "pink-text-gradient",
       },
     ],
@@ -195,15 +195,15 @@ const projects = [
       "Web application that enables users to search for job openings, view estimated salary ranges for positions, and locate available jobs based on their current location.",
     tags: [
       {
-        name: "react",
+        name: "HTML",
         color: "blue-text-gradient",
       },
       {
-        name: "restapi",
+        name: "CSS",
         color: "green-text-gradient",
       },
       {
-        name: "scss",
+        name: "JavaScript",
         color: "pink-text-gradient",
       },
     ],
