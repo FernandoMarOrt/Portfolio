@@ -126,11 +126,17 @@
   transform: translateZ(0);
 }
 .vertical-timeline::before {
-  background: #fff;
+  background: #fff !important;
 }
 
 .tarjeta-info {
   background: "#1d1836" !important;
+  
+}
+
+.vertical-timeline-element-content {
+  background: #1d1836 !important;
+  color: #fff !important;
 }
 
 .disabled{

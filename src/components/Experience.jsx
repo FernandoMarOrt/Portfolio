@@ -59,6 +59,18 @@ const ExperienceCard = ({ experience }) => {
 const Experience = () => {
   return (
     <>
+       {/* Estilos globales para la sección de experiencia */}
+      <style>
+        {`
+          .tarjeta-info {
+            background: #1d1836 !important;
+          }
+          .vertical-timeline-element-content {
+            background: #1d1836 !important;
+            color: #fff !important;
+          }
+        `}
+      </style>
       <motion.div variants={textVariant()}>
         <h2 className={`${styles.sectionHeadText} text-center`}>
           Experiencia
