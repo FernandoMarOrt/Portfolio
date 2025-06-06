@@ -208,6 +208,24 @@
   pointer-events: none !important;
 }
 
+/* Mobile optimizations for stars canvas */
+@media (max-width: 768px) {
+  .stars-canvas canvas {
+    /* Reduce quality on mobile for better performance */
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Performance optimizations for low-end devices */
+@media (max-width: 480px) {
+  .stars-canvas {
+    /* Hide stars on very small screens for better performance */
+    display: none;
+  }
+}
+
 /* Ensure main content is properly positioned above stars */
 .main-content {
   position: relative;
@@ -300,6 +318,24 @@
   height: 100vh !important;
   z-index: -1 !important;
   pointer-events: none !important;
+}
+
+/* Mobile optimizations for stars canvas */
+@media (max-width: 768px) {
+  .stars-canvas canvas {
+    /* Reduce quality on mobile for better performance */
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Performance optimizations for low-end devices */
+@media (max-width: 480px) {
+  .stars-canvas {
+    /* Hide stars on very small screens for better performance */
+    display: none;
+  }
 }
 
 /* Ensure main content is properly positioned above stars */
