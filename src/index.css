@@ -204,7 +204,7 @@
   left: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
-  z-index: -1 !important;
+  z-index: 5 !important;
   pointer-events: none !important;
 }
 
@@ -230,6 +230,23 @@
 .main-content {
   position: relative;
   z-index: 1;
+}
+
+/* Astronaut canvas positioning to show above stars */
+.hero-section canvas {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* Ensure content is properly layered */
+.hero-content {
+  position: relative;
+  z-index: 20;
+}
+
+/* Stars visible behind astronaut */
+.stars-canvas canvas {
+  background: transparent !important;
 }
 
 @keyframes mulShdSpin {
@@ -342,4 +359,21 @@
 .main-content {
   position: relative;
   z-index: 1;
+}
+
+/* Astronaut canvas positioning to show above stars */
+.hero-section canvas {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* Ensure content is properly layered */
+.hero-content {
+  position: relative;
+  z-index: 20;
+}
+
+/* Stars visible behind astronaut */
+.stars-canvas canvas {
+  background: transparent !important;
 }

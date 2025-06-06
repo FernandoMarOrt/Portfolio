@@ -8,7 +8,7 @@ const App = () => {
       <div className='relative z-0 bg-primary'>
         <StarsCanvas />
         <div className='main-content'>
-          <div className='bg-hero-pattern bg-cover bg-no-repeat bg-center'>
+          <div className='relative'>
             <Navbar />
             <Hero />
           </div>

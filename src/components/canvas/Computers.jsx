@@ -69,7 +69,15 @@ const ComputersCanvas = ({ scrollContainer }) => {
   }, [scrollContainer]);
 
   return (
-    <Canvas className={`w-full h-screen bg-transparent z-10`} camera={{ near: 0.1, far: 1000 }}>
+    <Canvas 
+      className={`w-full h-screen bg-transparent`}
+      camera={{ near: 0.1, far: 1000 }}
+      style={{ 
+        zIndex: 10,
+        position: 'relative'
+      }}
+      gl={{ alpha: true }}
+    >
       <Suspense fallback={<CanvasLoader />}>
         <directionalLight position={[1, 1, 1]} intensity={2} />
         <ambientLight intensity={0.5} />
