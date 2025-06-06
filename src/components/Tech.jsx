@@ -42,17 +42,25 @@ const technologies = [
 const Tech = () => {
   return (
     <>
-    <motion.div variants={textVariant()} className="flex justify-center mb-8">
-        <h2 className={styles.sectionHeadText}>Tecnologías y Herramientas</h2>
+    <motion.div variants={textVariant()} className="flex justify-center mb-6 xs:mb-8">
+        <h2 className={`${styles.sectionHeadText} text-center`}>Tecnologías y Herramientas</h2>
     </motion.div>
 
-      <div className='flex flex-row flex-wrap justify-center gap-10'>
-        <div className="p-6 rounded-xl border border-gray-700">
-          <ul className="flex flex-row flex-wrap justify-center gap-4">
+      <div className='flex flex-row flex-wrap justify-center gap-6 xs:gap-8 sm:gap-10'>
+        <div className="p-4 xs:p-6 rounded-xl border border-gray-700 w-full max-w-6xl">
+          <ul className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 xs:gap-6 justify-items-center">
             {technologies.map((tech) => (
-              <li key={tech.name} className="flex flex-col items-center">
-                <img src={tech.icon} alt={tech.name} className="w-28 h-28" />
-                <p className="text-white text-sm mt-2">{tech.name}</p>
+              <li key={tech.name} className="flex flex-col items-center group hover:scale-105 transition-transform duration-200">
+                <div className="p-2 xs:p-3 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors duration-200">
+                  <img 
+                    src={tech.icon} 
+                    alt={tech.name} 
+                    className="w-12 h-12 xs:w-16 xs:h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-contain" 
+                  />
+                </div>
+                <p className="text-white text-xs xs:text-sm mt-2 text-center leading-tight max-w-[80px] xs:max-w-[100px]">
+                  {tech.name}
+                </p>
               </li>
             ))}
           </ul>

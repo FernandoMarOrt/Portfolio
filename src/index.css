@@ -143,6 +143,60 @@
   visibility: hidden;
 }
 
+/* Mobile optimizations for text and layout */
+@media (max-width: 450px) {
+  /* Prevent text overflow and ensure proper wrapping */
+  .hero-text-mobile {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  /* Optimize navbar for very small screens */
+  .navbar-mobile {
+    min-height: 60px;
+  }
+  
+  /* Ensure proper spacing on mobile */
+  .mobile-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 375px) {
+  /* Extra small screens */
+  .hero-container {
+    padding-top: 80px;
+  }
+  
+  /* Reduce font sizes further if needed */
+  .text-responsive {
+    font-size: clamp(0.875rem, 4vw, 1.125rem);
+  }
+}
+
+@media (max-width: 320px) {
+  /* Very small screens - ensure everything fits */
+  .ultra-small-text {
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+  
+  .ultra-small-hero {
+    font-size: clamp(1.5rem, 8vw, 2rem);
+    line-height: 1.1;
+  }
+}
+
+/* Improve touch targets for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .mobile-touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
 /* Stars Canvas Background - Fixed positioning for persistent background */
 .stars-canvas {
   position: fixed !important;
