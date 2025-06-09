@@ -25,6 +25,28 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Efecto para controlar el scroll del body cuando el menú móvil está abierto
+  useEffect(() => {
+    if (toggle) {
+      // Bloquear scroll cuando el menú está abierto
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      // Restaurar scroll cuando el menú se cierra
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+
+    // Cleanup: restaurar scroll cuando el componente se desmonta
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    };
+  }, [toggle]);
+
   return (
     <nav
     className={`${
@@ -86,7 +108,7 @@ const Navbar = () => {
           <div
             className={`${
               !toggle ? "hidden" : "flex"
-            } fixed inset-0 z-50 space-fullscreen-menu`}
+            } fixed inset-0 z-50 space-fullscreen-menu overflow-hidden`}
           >
             {/* Background overlay with stars effect */}
             <div 
@@ -107,7 +129,7 @@ const Navbar = () => {
 
             {/* Menu content */}
             <div 
-              className="relative z-50 flex flex-col items-center justify-start pt-20 w-full h-full px-6"
+              className="relative z-50 flex flex-col items-center justify-start pt-20 w-full h-full px-6 overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Logo/Title */}
