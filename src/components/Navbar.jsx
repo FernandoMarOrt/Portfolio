@@ -46,7 +46,7 @@ const Navbar = () => {
       document.body.style.width = '';
     };
   }, [toggle]);
-
+  
   return (
     <nav
     className={`${
@@ -108,7 +108,7 @@ const Navbar = () => {
           <div
             className={`${
               !toggle ? "hidden" : "flex"
-            } fixed inset-0 z-50 space-fullscreen-menu overflow-hidden`}
+            } fixed inset-0 z-50 space-fullscreen-menu`}
           >
             {/* Background overlay with stars effect */}
             <div 
@@ -129,7 +129,7 @@ const Navbar = () => {
 
             {/* Menu content */}
             <div 
-              className="relative z-50 flex flex-col items-center justify-start pt-20 w-full h-full px-6 overflow-hidden"
+              className="relative z-50 flex flex-col items-center justify-start pt-20 w-full h-full px-6"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Logo/Title */}
