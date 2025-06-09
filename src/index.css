@@ -466,7 +466,7 @@
 
 /* Full Screen Mobile Menu Styles */
 .space-fullscreen-menu {
-  animation: spaceMenuSlideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: spaceMenuSlideIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .space-fullscreen-overlay {
@@ -474,21 +474,21 @@
 }
 
 .space-fullscreen-logo {
-  animation: spaceLogo 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s both;
+  animation: spaceLogo 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s both;
 }
 
 .space-fullscreen-nav {
-  animation: spaceNavContainer 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s both;
+  animation: spaceNavContainer 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s both;
 }
 
 .space-fullscreen-nav-item {
-  animation: spaceNavItem 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: spaceNavItem 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   transform: translateY(40px);
   opacity: 0;
 }
 
 .space-fullscreen-footer {
-  animation: spaceFooter 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s both;
+  animation: spaceFooter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both;
 }
 
 .space-close-button {
@@ -648,11 +648,11 @@
 }
 
 /* Staggered animation delays for nav items */
-.space-fullscreen-nav-item:nth-child(1) { animation-delay: 0.6s; }
-.space-fullscreen-nav-item:nth-child(2) { animation-delay: 0.7s; }
-.space-fullscreen-nav-item:nth-child(3) { animation-delay: 0.8s; }
-.space-fullscreen-nav-item:nth-child(4) { animation-delay: 0.9s; }
-.space-fullscreen-nav-item:nth-child(5) { animation-delay: 1.0s; }
+.space-fullscreen-nav-item:nth-child(1) { animation-delay: 0.25s; }
+.space-fullscreen-nav-item:nth-child(2) { animation-delay: 0.3s; }
+.space-fullscreen-nav-item:nth-child(3) { animation-delay: 0.35s; }
+.space-fullscreen-nav-item:nth-child(4) { animation-delay: 0.4s; }
+.space-fullscreen-nav-item:nth-child(5) { animation-delay: 0.45s; }
 
 /* Star particles for background effect */
 .space-fullscreen-overlay::before {
