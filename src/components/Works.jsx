@@ -16,13 +16,25 @@ const ProjectCard = ({
   image,
   source_code_link,
 }) => {
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
       <Tilt
         options={{
-          max: 45,
+          max: isMobile ? 25 : 45, // Reducir efecto en móvil
           scale: 1,
-          speed: 450,
+          speed: isMobile ? 200 : 450, // Más lento en móvil
         }}
         className='bg-tertiary p-4 xs:p-5 rounded-2xl sm:w-[360px] w-full max-w-[400px] mx-auto'
       >

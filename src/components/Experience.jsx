@@ -59,7 +59,7 @@ const ExperienceCard = ({ experience }) => {
 const Experience = () => {
   return (
     <>
-       {/* Estilos globales para la sección de experiencia */}
+      {/* Estilos globales para la sección de experiencia */}
       <style>
         {`
           .tarjeta-info {
@@ -68,6 +68,15 @@ const Experience = () => {
           .vertical-timeline-element-content {
             background: #1d1836 !important;
             color: #fff !important;
+          }
+          /* Optimización móvil sutil para timeline */
+          @media (max-width: 768px) {
+            .vertical-timeline-element {
+              will-change: auto !important;
+            }
+            .vertical-timeline-element-content {
+              transform: translateZ(0) !important;
+            }
           }
         `}
       </style>
