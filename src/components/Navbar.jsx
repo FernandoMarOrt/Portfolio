@@ -82,78 +82,71 @@ const Navbar = () => {
             />
           </button>
 
+          {/* Full Screen Mobile Menu */}
           <div
             className={`${
-              !toggle ? "opacity-0 invisible transform translate-y-[-20px]" : "opacity-100 visible transform translate-y-0 slide-in-menu"
-            } transition-all duration-300 ease-out absolute top-20 right-0 mx-4 my-2 min-w-[180px] max-w-[220px] z-50`}
+              !toggle ? "hidden" : "flex"
+            } fixed inset-0 z-50 space-fullscreen-menu`}
           >
-            {/* Menú espacial con efectos */}
-            <div className="relative space-menu-container">
-              {/* Fondo con gradiente espacial */}
-              <div className="absolute inset-0 rounded-2xl backdrop-blur-md"></div>
-              
-              {/* Borde brillante animado */}
-              <div className="absolute inset-0 rounded-2xl space-border-glow p-[1px]">
-                <div className="w-full h-full rounded-2xl"></div>
+            {/* Background overlay with stars effect */}
+            <div 
+              className="absolute inset-0 space-fullscreen-overlay"
+              onClick={() => setToggle(false)}
+            ></div>
+            
+            {/* Close button */}
+            <button
+              className="absolute top-4 right-4 z-[60] text-white space-close-button hover:text-purple-400 transition-colors duration-300 p-2 rounded-full mobile-touch-target"
+              onClick={() => setToggle(false)}
+              aria-label="Cerrar menú"
+            >
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Menu content */}
+            <div 
+              className="relative z-50 flex flex-col items-center justify-center w-full h-full px-6"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Logo/Title */}
+              <div className="mb-16 text-center space-fullscreen-logo">
+                <h2 className="text-white text-4xl xs:text-3xl font-bold mb-3 text-space-glow">Fernando</h2>
+                <p className="text-secondary text-lg xs:text-base font-light tracking-wide">Full Stack Developer</p>
+                <div className="mt-4 w-24 h-0.5 bg-gradient-to-r from-purple-400 to-blue-400 mx-auto rounded-full"></div>
               </div>
-              
-              {/* Efectos de partículas animadas */}
-              <div className="absolute top-2 left-2 w-1 h-1 bg-white rounded-full space-particles"></div>
-              <div className="absolute top-4 right-3 w-0.5 h-0.5 bg-blue-400 rounded-full space-particles" style={{ animationDelay: '0.7s' }}></div>
-              <div className="absolute bottom-3 left-4 w-0.5 h-0.5 bg-purple-400 rounded-full space-particles" style={{ animationDelay: '1.4s' }}></div>
-              
-              {/* Contenido del menú */}
-              <div className="relative p-6">
-                <ul className='list-none flex justify-end items-start flex-1 flex-col gap-1'>
-                  {navLinks.map((nav, index) => (
-                    <li
-                      key={nav.id}
-                      className="w-full menu-item-float"
-                      style={{ animationDelay: `${index * 0.1}s` }}
+
+              {/* Navigation links */}
+              <ul className='list-none flex flex-col items-center gap-8 xs:gap-6 space-fullscreen-nav'>
+                {navLinks.map((nav, index) => (
+                  <li
+                    key={nav.id}
+                    className="space-fullscreen-nav-item"
+                  >
+                    <a
+                      href={`#${nav.id}`}
+                      className={`space-nav-link font-poppins font-medium text-3xl xs:text-2xl transition-all duration-300 py-2 px-6 rounded-lg ${
+                        active === nav.title ? "text-white space-nav-link active" : "text-secondary hover:text-white"
+                      }`}
+                      onClick={() => {
+                        setToggle(false);
+                        setActive(nav.title);
+                      }}
                     >
-                      <a 
-                        href={`#${nav.id}`}
-                        className={`
-                          space-menu-item block w-full p-3 rounded-lg font-medium cursor-pointer text-[16px] 
-                          transition-all duration-300 border border-transparent
-                          ${active === nav.title 
-                            ? "active" 
-                            : "text-gray-300 hover:text-white"
-                          }
-                        `}
-                        onClick={() => {
-                          setToggle(!toggle);
-                          setActive(nav.title);
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.querySelector('.shimmer-effect')?.classList.add('shimmer-effect');
-                        }}
-                      >
-                        {/* Efecto de brillo en hover */}
-                        <span className="absolute inset-0 rounded-lg bg-gradient-to-r from-transparent via-white/5 to-transparent transform translate-x-[-100%] shimmer-effect"></span>
-                        
-                        {/* Icono decorativo con animación */}
-                        <span className="inline-block w-2 h-2 mr-3 rounded-full bg-gradient-to-r from-purple-400 to-blue-400 opacity-70 space-particles"></span>
-                        
-                        {/* Texto del enlace */}
-                        <span className="relative z-10">{nav.title}</span>
-                        
-                        {/* Indicador activo con pulso */}
-                        {active === nav.title && (
-                          <span className="absolute right-2 top-1/2 transform -translate-y-1/2 w-2 h-2 bg-purple-400 rounded-full pulse-indicator"></span>
-                        )}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-                
-                {/* Línea divisoria decorativa con efectos espaciales */}
-                <div className="mt-4 pt-4 border-t border-gradient-to-r from-transparent via-purple-500/30 to-transparent">
-                  <div className="flex justify-center space-x-2">
-                    <div className="w-1 h-1 bg-purple-400 rounded-full space-particles"></div>
-                    <div className="w-1 h-1 bg-blue-400 rounded-full space-particles" style={{ animationDelay: '0.5s' }}></div>
-                    <div className="w-1 h-1 bg-cyan-400 rounded-full space-particles" style={{ animationDelay: '1s' }}></div>
-                  </div>
+                      {nav.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Footer section */}
+              <div className="mt-16 text-center space-fullscreen-footer">
+                <p className="text-secondary text-sm font-light tracking-widest">EXPLORE THE GALAXY OF CODE</p>
+                <div className="mt-4 flex justify-center space-x-3">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                  <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
                 </div>
               </div>
             </div>
