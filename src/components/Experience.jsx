@@ -3,14 +3,12 @@ import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
-import { motion } from "framer-motion";
 
 import "react-vertical-timeline-component/style.min.css";
 
 import { styles } from "../styles";
 import { experiences } from "../constants";
 import { SectionWrapper } from "../hoc";
-import { textVariant } from "../utils/motion";
 
 const ExperienceCard = ({ experience }) => {
   return (
@@ -59,7 +57,7 @@ const ExperienceCard = ({ experience }) => {
 const Experience = () => {
   return (
     <>
-      {/* Estilos globales para la sección de experiencia */}
+       {/* Estilos globales para la sección de experiencia */}
       <style>
         {`
           .tarjeta-info {
@@ -69,22 +67,27 @@ const Experience = () => {
             background: #1d1836 !important;
             color: #fff !important;
           }
-          /* Optimización móvil sutil para timeline */
+          /* Optimizaciones móviles para performance */
           @media (max-width: 768px) {
-            .vertical-timeline-element {
+            .vertical-timeline::before {
               will-change: auto !important;
             }
+            .vertical-timeline-element {
+              will-change: auto !important;
+              transform: translateZ(0) !important;
+            }
             .vertical-timeline-element-content {
+              will-change: auto !important;
               transform: translateZ(0) !important;
             }
           }
         `}
       </style>
-      <motion.div variants={textVariant()}>
+      <div>
         <h2 className={`${styles.sectionHeadText} text-center`}>
           Experiencia
         </h2>
-      </motion.div>
+      </div>
 
       <div className='mt-20 flex flex-col'>
         <VerticalTimeline lineColor="#fff"> 

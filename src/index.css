@@ -215,6 +215,34 @@
   color: #fff !important;
 }
 
+/* Optimizaciones críticas para scroll móvil */
+@media (max-width: 768px) {
+  .vertical-timeline::before {
+    width: 2px !important;
+    transform: translateZ(0) !important;
+  }
+  
+  .vertical-timeline-element-content {
+    will-change: auto !important;
+    transform: translateZ(0) !important;
+  }
+  
+  /* Desactiva Tilt en móvil */
+  .react-parallax-tilt {
+    transform: none !important;
+  }
+  
+  /* Optimiza el scroll */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  body {
+    overflow-x: hidden;
+    transform: translateZ(0);
+  }
+}
+
 .disabled{
   visibility: hidden;
 }
@@ -700,57 +728,5 @@
   
   .space-fullscreen-nav .space-nav-link {
     font-size: 1.5rem;
-  }
-}
-
-/* ===== OPTIMIZACIONES DE SCROLL MÓVIL ===== */
-/* Optimización específica para el scroll entre Experience y Works */
-@media (max-width: 768px) {
-  /* Optimizar VerticalTimeline para mejor rendimiento en scroll */
-  .vertical-timeline::before {
-    will-change: auto !important;
-    transform: translateZ(0);
-  }
-    .vertical-timeline-element {
-    will-change: auto !important;
-    transform: translateZ(0);
-  }
-    .vertical-timeline-element-content {
-    will-change: auto !important;
-    transform: translateZ(0);
-  }
-  
-  /* Optimizar transiciones entre secciones */
-  section {
-    contain: layout style;
-    transform: translateZ(0);
-  }
-  
-  /* Mejorar rendimiento de imágenes en proyectos */
-  .bg-tertiary img {
-    will-change: auto;
-    transform: translateZ(0);
-  }
-  
-  /* Optimizar scroll suave general */
-  html {
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  body {
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-  }
-}
-
-/* Optimizaciones adicionales para dispositivos móviles muy pequeños */
-@media (max-width: 480px) {
-  .vertical-timeline-element-content {
-    padding: 1rem !important;
-  }
-  
-  .vertical-timeline::before {
-    width: 2px !important;
   }
 }
