@@ -471,7 +471,6 @@
 
 .space-fullscreen-overlay {
   background: linear-gradient(135deg, #1a0b2e 0%, #16213e 30%, #0f172a 70%, #000000 100%);
-  animation: spaceOverlayGlow 4s ease-in-out infinite alternate;
 }
 
 .space-fullscreen-logo {
