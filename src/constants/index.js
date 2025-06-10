@@ -42,19 +42,19 @@ export const navLinks = [
 
 const services = [
   {
-    title: "Web Developer",
+    title: "Desarrollador Web",
     icon: web,
   },
   {
-    title: "Angular Developer",
+    title: "Desarrollador Angular",
     icon: mobile,
   },
   {
-    title: "Backend Developer",
+    title: "Desarrollador Backend",
     icon: backend,
   },
   {
-    title: ".NET Developer",
+    title: "Desarrollador .NET",
     icon: creator,
   },
 ];
@@ -147,7 +147,7 @@ const experiences = [
 const testimonials = [
   {
     testimonial:
-      "I thought it was impossible to make a website as beautiful as our product, but Rick proved me wrong.",
+      "Pensé que era imposible hacer un sitio web tan hermoso como nuestro producto, pero Fernando me demostró lo contrario.",
     name: "Sara Lee",
     designation: "CFO",
     company: "Acme Co",
@@ -155,7 +155,7 @@ const testimonials = [
   },
   {
     testimonial:
-      "I've never met a web developer who truly cares about their clients' success like Rick does.",
+      "Nunca he conocido a un desarrollador web que se preocupe tanto por el éxito de sus clientes como lo hace Fernando.",
     name: "Chris Brown",
     designation: "COO",
     company: "DEF Corp",
@@ -163,7 +163,7 @@ const testimonials = [
   },
   {
     testimonial:
-      "After Rick optimized our website, our traffic increased by 50%. We can't thank them enough!",
+      "Después de que Fernando optimizó nuestro sitio web, nuestro tráfico aumentó en un 50%. ¡No podemos agradecerle lo suficiente!",
     name: "Lisa Wang",
     designation: "CTO",
     company: "456 Enterprises",
@@ -175,7 +175,7 @@ const projects = [
   {
     name: "Style Barber",
     description:
-      "Web-based platform that allows users to search, book, and manage car rentals from various providers, providing a convenient and efficient solution for transportation needs.",
+      "Plataforma web que permite a los usuarios buscar, reservar y gestionar servicios de barbería de varios proveedores, proporcionando una solución conveniente y eficiente para el cuidado personal.",
     tags: [
       {
         name: "HTML",
@@ -196,7 +196,7 @@ const projects = [
   {
     name: "Job IT",
     description:
-      "Web application that enables users to search for job openings, view estimated salary ranges for positions, and locate available jobs based on their current location.",
+      "Aplicación web que permite a los usuarios buscar ofertas de trabajo, ver rangos salariales estimados para posiciones y localizar trabajos disponibles basándose en su ubicación actual.",
     tags: [
       {
         name: "HTML",
@@ -217,7 +217,7 @@ const projects = [
   {
     name: "Trip Guide",
     description:
-      "A comprehensive travel booking platform that allows users to book flights, hotels, and rental cars, and offers curated recommendations for popular destinations.",
+      "Una plataforma integral de reservas de viajes que permite a los usuarios reservar vuelos, hoteles y autos de alquiler, y ofrece recomendaciones seleccionadas para destinos populares.",
     tags: [
       {
         name: "nextjs",

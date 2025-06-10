@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 
 import { styles } from "../styles";
-import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
 
@@ -63,22 +62,21 @@ const Contact = () => {
         }
       );
   };
-
   return (
-    <div
-      className={`xl:mt-12 flex xl:flex-row flex-col-reverse gap-6 sm:gap-8 xl:gap-10 overflow-hidden`}
-    >
+    <div className="flex justify-center items-center w-full">
       <motion.div
-        variants={slideIn("left", "tween", 0.2, 1)}
-        className='flex-[0.75] bg-black-100 p-4 xs:p-6 sm:p-8 rounded-2xl'
+        variants={slideIn("up", "tween", 0.2, 1)}
+        className='w-full max-w-2xl bg-black-100 p-4 xs:p-6 sm:p-8 rounded-2xl'
       >
-        <p className={styles.sectionSubText}>Póngase en contacto</p>
-        <h3 className={styles.sectionHeadText}>Contacto</h3>
+        <div className="text-center mb-8">
+          <p className={styles.sectionSubText}>Póngase en contacto</p>
+          <h3 className={styles.sectionHeadText}>Contacto</h3>
+        </div>
 
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className='mt-8 xs:mt-10 sm:mt-12 flex flex-col gap-6 xs:gap-7 sm:gap-8'
+          className='flex flex-col gap-6 xs:gap-7 sm:gap-8'
         >
           <label className='flex flex-col'>
             <span className='text-white font-medium mb-3 xs:mb-4 text-[14px] xs:text-[16px]'>Nombre</span>
@@ -114,21 +112,16 @@ const Contact = () => {
             />
           </label>
 
-          <button
-            type='submit'
-            className='bg-tertiary py-3 px-6 xs:px-8 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary mobile-touch-target text-[14px] xs:text-[16px] hover:bg-gray-700 transition-colors duration-200 disabled:opacity-50'
-            disabled={loading}
-          >
-            {loading ? "Enviando..." : "Enviar"}
-          </button>
+          <div className="flex justify-center">
+            <button
+              type='submit'
+              className='bg-tertiary py-3 px-8 xs:px-10 rounded-xl outline-none text-white font-bold shadow-md shadow-primary mobile-touch-target text-[14px] xs:text-[16px] hover:bg-gray-700 transition-colors duration-200 disabled:opacity-50'
+              disabled={loading}
+            >
+              {loading ? "Enviando..." : "Enviar"}
+            </button>
+          </div>
         </form>
-      </motion.div>
-
-      <motion.div
-        variants={slideIn("right", "tween", 0.2, 1)}
-        className='xl:flex-1 xl:h-auto md:h-[550px] sm:h-[400px] h-[300px]'
-      >
-        <EarthCanvas />
       </motion.div>
     </div>
   );

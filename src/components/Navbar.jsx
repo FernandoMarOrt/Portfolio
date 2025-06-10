@@ -64,10 +64,9 @@ const Navbar = () => {
             window.scrollTo(0, 0);
           }}
         >
-          <img src={logo} alt='logo' className='w-9 h-9 xs:w-8 xs:h-8 xxs:w-7 xxs:h-7 object-contain flex-shrink-0' />
-          <p className='text-white text-[18px] xs:text-[16px] xxs:text-[15px] font-bold cursor-pointer flex flex-wrap'>
+          <img src={logo} alt='logo' className='w-9 h-9 xs:w-8 xs:h-8 xxs:w-7 xxs:h-7 object-contain flex-shrink-0' />          <p className='text-white text-[18px] xs:text-[16px] xxs:text-[15px] font-bold cursor-pointer flex flex-wrap'>
             <span className="whitespace-nowrap">Fernando</span>&nbsp;
-            <span className='sm:inline hidden whitespace-nowrap'>| Full stack developer</span>
+            <span className='sm:inline hidden whitespace-nowrap'>| Desarrollador Full Stack</span>
             <span className='sm:hidden xs:inline hidden whitespace-nowrap'>| Dev</span>
           </p>
         </Link>
@@ -132,10 +131,9 @@ const Navbar = () => {
               className="relative z-50 flex flex-col items-center justify-start pt-20 w-full h-full px-6"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Logo/Title */}
-              <div className="mb-12 xs:mb-10 text-center space-fullscreen-logo">
+              {/* Logo/Title */}              <div className="mb-12 xs:mb-10 text-center space-fullscreen-logo">
                 <h2 className="text-white text-4xl xs:text-3xl font-bold mb-3 text-space-glow">Fernando</h2>
-                <p className="text-secondary text-lg xs:text-base font-light tracking-wide">Full Stack Developer</p>
+                <p className="text-secondary text-lg xs:text-base font-light tracking-wide">Desarrollador Full Stack</p>
                 <div className="mt-4 w-24 h-0.5 bg-gradient-to-r from-purple-400 to-blue-400 mx-auto rounded-full"></div>
               </div>
 
@@ -160,11 +158,9 @@ const Navbar = () => {
                     </a>
                   </li>
                 ))}
-              </ul>
-
-              {/* Footer section */}
+              </ul>              {/* Footer section */}
               <div className="mt-12 xs:mt-10 text-center space-fullscreen-footer">
-                <p className="text-secondary text-sm font-light tracking-widest">EXPLORE THE GALAXY OF CODE</p>
+                <p className="text-secondary text-sm font-light tracking-widest">EXPLORA LA GALAXIA DEL CÓDIGO</p>
                 <div className="mt-4 flex justify-center space-x-3">
                   <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
                   <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
