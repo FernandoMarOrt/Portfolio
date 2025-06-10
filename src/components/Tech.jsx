@@ -40,13 +40,14 @@ const technologies = [
   { name: "Postman", icon: postmanIcon },
 ];
 const Tech = () => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
     
+    checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
@@ -55,8 +56,8 @@ const Tech = () => {
     <>
     <motion.div 
       variants={isMobile ? {} : textVariant()} 
-      initial={isMobile ? {} : 'hidden'}
-      whileInView={isMobile ? {} : 'show'}
+      initial={isMobile ? false : 'hidden'}
+      whileInView={isMobile ? false : 'show'}
       viewport={isMobile ? {} : { once: true, amount: 0.25 }}
       className="flex justify-center mb-6 xs:mb-8"
     >
