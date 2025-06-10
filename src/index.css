@@ -316,6 +316,93 @@
   }
 }
 
+/* =================================================================== */
+/* QUITAR TODAS LAS ANIMACIONES EN MÓVIL (EXCEPTO NAVBAR Y HERO) */
+/* =================================================================== */
+
+/* Desactivar animaciones específicas en móvil (NO tocar navbar) */
+@media (max-width: 768px) {
+  /* Específicamente para Framer Motion */
+  .framer-motion-disable {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  /* Desactivar efectos Tilt en móvil */
+  .react-parallax-tilt {
+    transform: none !important;
+    transition: none !important;
+  }  
+  /* Desactivar animaciones del vertical timeline */
+  .vertical-timeline-element {
+    animation: none !important;
+    transition: opacity 0.3s ease !important;
+  }
+  
+  .vertical-timeline-element-content {
+    animation: none !important;
+    transition: none !important;
+    transform: translateZ(0) !important;
+  }
+  
+  /* Desactivar animaciones de las tarjetas de proyectos */
+  .bg-tertiary {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  /* Desactivar animaciones de las cards */
+  .shadow-card {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* PRESERVAR TODAS las animaciones del menú móvil */
+@media (max-width: 768px) {
+  /* Asegurar que TODAS las clases del navbar mantienen sus animaciones */
+  .space-fullscreen-menu,
+  .space-fullscreen-menu *,
+  .space-nav-toggle,
+  .space-close-button,
+  .space-nav-link,
+  .space-fullscreen-logo,
+  .space-fullscreen-nav,
+  .space-fullscreen-nav-item,
+  .space-fullscreen-footer,
+  .space-fullscreen-overlay,
+  .mobile-touch-target,
+  .space-button-glow,
+  .space-particles,
+  .space-border-glow,
+  .menu-item-float,
+  .slide-in-menu,
+  .shimmer-effect,
+  .pulse-indicator {
+    animation: revert !important;
+    transition: revert !important;
+    transform: revert !important;
+    opacity: revert !important;
+    visibility: visible !important;
+    color: revert !important;
+  }
+  
+  /* Asegurar visibilidad del texto del menú */
+  .space-fullscreen-menu h2,
+  .space-fullscreen-menu p,
+  .space-fullscreen-menu a,
+  .space-fullscreen-menu span,
+  .space-nav-link {
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: white !important;
+  }
+}
+
+/* =================================================================== */
+
 /* Keep stars visible on mobile but optimize performance */
 @media (max-width: 480px) {
   .stars-canvas {
