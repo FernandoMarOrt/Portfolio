@@ -57,14 +57,13 @@ const ExperienceCard = ({ experience }) => {
 };
 
 const Experience = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
     
-    checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
@@ -96,11 +95,10 @@ const Experience = () => {
             }
           }
         `}
-      </style>
-      <motion.div 
+      </style>      <motion.div 
         variants={isMobile ? {} : textVariant()}
-        initial={isMobile ? false : 'hidden'}
-        whileInView={isMobile ? false : 'show'}
+        initial={isMobile ? {} : 'hidden'}
+        whileInView={isMobile ? {} : 'show'}
         viewport={isMobile ? {} : { once: true, amount: 0.25 }}
       >
         <h2 className={`${styles.sectionHeadText} text-center`}>
