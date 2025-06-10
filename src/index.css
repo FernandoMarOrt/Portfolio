@@ -243,69 +243,6 @@
   }
 }
 
-/* Desactivar animaciones en móvil (excepto menú móvil, estrellas y astronauta) */
-@media (max-width: 768px) {
-  /* Desactivar animaciones de Framer Motion en móvil */
-  .framer-motion-disable {
-    animation: none !important;
-    transition: none !important;
-    transform: none !important;
-  }
-  
-  /* Desactivar efectos Tilt en móvil */
-  .react-parallax-tilt {
-    transform: none !important;
-    transition: none !important;
-  }
-  
-  /* Desactivar animaciones de hover en móvil excepto menú */
-  *:hover:not(.space-fullscreen-menu *):not(.mobile-touch-target) {
-    transform: none !important;
-    scale: 1 !important;
-    transition: none !important;
-  }
-  
-  /* Desactivar animaciones del vertical timeline */
-  .vertical-timeline-element {
-    animation: none !important;
-    transition: opacity 0.3s ease !important;
-  }
-  
-  .vertical-timeline-element-content {
-    animation: none !important;
-    transition: none !important;
-    transform: translateZ(0) !important;
-  }
-  
-  /* Desactivar animaciones de las tarjetas de proyectos */
-  .bg-tertiary {
-    animation: none !important;
-    transition: none !important;
-    transform: none !important;
-  }
-  
-  /* Mantener animaciones del astronauta y estrellas (Canvas 3D) */
-  canvas {
-    animation: revert !important;
-    transition: revert !important;
-    transform: revert !important;
-  }
-  
-  /* Mantener todas las animaciones del menú móvil */
-  .space-fullscreen-menu,
-  .space-fullscreen-menu *,
-  .space-close-button,
-  .space-nav-link,
-  .space-fullscreen-logo,
-  .space-fullscreen-nav,
-  .space-fullscreen-footer,
-  .mobile-touch-target {
-    animation: revert !important;
-    transition: revert !important;
-    transform: revert !important;
-  }
-}
-
 .disabled{
   visibility: hidden;
 }

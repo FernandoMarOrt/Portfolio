@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { textVariant } from "../utils/motion";
 import { SectionWrapper } from "../hoc";
@@ -40,27 +40,9 @@ const technologies = [
   { name: "Postman", icon: postmanIcon },
 ];
 const Tech = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
   return (
     <>
-    <motion.div 
-      variants={isMobile ? {} : textVariant()} 
-      initial={isMobile ? false : 'hidden'}
-      whileInView={isMobile ? false : 'show'}
-      viewport={isMobile ? {} : { once: true, amount: 0.25 }}
-      className="flex justify-center mb-6 xs:mb-8"
-    >
+    <motion.div variants={textVariant()} className="flex justify-center mb-6 xs:mb-8">
         <h2 className={`${styles.sectionHeadText} text-center`}>Tecnologías y Herramientas</h2>
     </motion.div>
 
@@ -68,8 +50,8 @@ const Tech = () => {
         <div className="p-4 xs:p-6 rounded-xl border border-gray-700 w-full max-w-6xl">
           <ul className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4 xs:gap-6 justify-items-center">
             {technologies.map((tech) => (
-              <li key={tech.name} className={`flex flex-col items-center group ${!isMobile ? 'hover:scale-105' : ''} transition-transform duration-200`}>
-                <div className={`p-2 xs:p-3 rounded-lg bg-gray-800/50 ${!isMobile ? 'hover:bg-gray-700/50' : ''} transition-colors duration-200`}>
+              <li key={tech.name} className="flex flex-col items-center group hover:scale-105 transition-transform duration-200">
+                <div className="p-2 xs:p-3 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors duration-200">
                   <img 
                     src={tech.icon} 
                     alt={tech.name} 
