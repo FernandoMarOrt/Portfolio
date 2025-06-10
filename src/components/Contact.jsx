@@ -1,9 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 
 import { styles } from "../styles";
-import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
 
@@ -16,6 +15,17 @@ const Contact = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleChange = (e) => {
     const { target } = e;
@@ -63,14 +73,16 @@ const Contact = () => {
         }
       );
   };
-
   return (
     <div
       className={`xl:mt-12 flex xl:flex-row flex-col-reverse gap-6 sm:gap-8 xl:gap-10 overflow-hidden`}
     >
       <motion.div
-        variants={slideIn("left", "tween", 0.2, 1)}
-        className='flex-[0.75] bg-black-100 p-4 xs:p-6 sm:p-8 rounded-2xl'
+        variants={isMobile ? {} : slideIn("left", "tween", 0.2, 1)}
+        initial={isMobile ? false : 'hidden'}
+        whileInView={isMobile ? false : 'show'}
+        viewport={isMobile ? {} : { once: true, amount: 0.25 }}
+        className={`flex-[0.75] bg-black-100 p-4 xs:p-6 sm:p-8 rounded-2xl ${isMobile ? 'framer-motion-disable' : ''}`}
       >
         <p className={styles.sectionSubText}>Póngase en contacto</p>
         <h3 className={styles.sectionHeadText}>Contacto</h3>
@@ -122,13 +134,41 @@ const Contact = () => {
             {loading ? "Enviando..." : "Enviar"}
           </button>
         </form>
-      </motion.div>
-
-      <motion.div
-        variants={slideIn("right", "tween", 0.2, 1)}
-        className='xl:flex-1 xl:h-auto md:h-[550px] sm:h-[400px] h-[300px]'
+      </motion.div>      <motion.div
+        variants={isMobile ? {} : slideIn("right", "tween", 0.2, 1)}
+        initial={isMobile ? false : 'hidden'}
+        whileInView={isMobile ? false : 'show'}
+        viewport={isMobile ? {} : { once: true, amount: 0.25 }}
+        className={`xl:flex-1 xl:h-auto md:h-[550px] sm:h-[400px] h-[300px] ${isMobile ? 'framer-motion-disable' : ''}`}
       >
-        <EarthCanvas />
+        {/* Contact visual content - lightweight space design */}
+        <div className="relative w-full h-full bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-2xl overflow-hidden flex items-center justify-center">
+          {/* Animated particles */}
+          <div className="absolute inset-0">
+            {[...Array(50)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1 h-1 bg-white rounded-full opacity-70 animate-pulse"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 3}s`,
+                  animationDuration: `${2 + Math.random() * 3}s`,
+                }}
+              ></div>
+            ))}
+          </div>
+          
+          {/* Central icon */}
+          <div className="relative z-10 text-center">
+            <div className="w-20 h-20 xs:w-24 xs:h-24 mx-auto mb-4 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+              <svg className="w-10 h-10 xs:w-12 xs:h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <p className="text-secondary text-sm xs:text-base">¡Hablemos!</p>
+          </div>
+        </div>
       </motion.div>
     </div>
   );

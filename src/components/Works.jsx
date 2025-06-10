@@ -15,12 +15,13 @@ const ProjectCard = ({
   tags,
   image,
   source_code_link,
+  isMobile = false
 }) => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobileState, setIsMobileState] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobileState(window.innerWidth <= 768);
     };
     
     checkMobile();
@@ -28,13 +29,15 @@ const ProjectCard = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  const mobileCheck = isMobile || isMobileState;
+
   return (
-    <div>
+    <div className={mobileCheck ? 'framer-motion-disable' : ''}>
       <Tilt
         options={{
-          max: isMobile ? 0 : 45,
+          max: mobileCheck ? 0 : 45,
           scale: 1,
-          speed: isMobile ? 0 : 450,
+          speed: mobileCheck ? 0 : 450,
         }}
         className='bg-tertiary p-4 xs:p-5 rounded-2xl sm:w-[360px] w-full max-w-[400px] mx-auto'
       >
@@ -80,22 +83,37 @@ const ProjectCard = ({
 };
 
 const Works = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <>
-      <motion.div variants={textVariant()}>
+      <motion.div 
+        variants={isMobile ? {} : textVariant()}
+        initial={isMobile ? false : 'hidden'}
+        whileInView={isMobile ? false : 'show'}
+        viewport={isMobile ? {} : { once: true, amount: 0.25 }}
+      >
         <p className={`${styles.sectionSubText} `}>Mi trabajo</p>
         <h2 className={`${styles.sectionHeadText}`}>Proyectos</h2>
       </motion.div>      <div className='w-full flex'>
         <p
-          className='mt-3 text-secondary text-[15px] xs:text-[16px] sm:text-[17px] max-w-3xl leading-[26px] xs:leading-[28px] sm:leading-[30px]'
+          className={`mt-3 text-secondary text-[15px] xs:text-[16px] sm:text-[17px] max-w-3xl leading-[26px] xs:leading-[28px] sm:leading-[30px] ${isMobile ? 'framer-motion-disable' : ''}`}
         >
           Los siguientes proyectos muestran mis habilidades y experiencia a través de ejemplos reales de mi trabajo. Cada proyecto se describe brevemente con enlaces a repositorios de código y demostraciones en vivo. Refleja mi capacidad para resolver problemas complejos, trabajar con diferentes tecnologías y gestionar proyectos de forma eficaz.
         </p>
-      </div>
-
-      <div className='mt-12 xs:mt-16 sm:mt-20 flex flex-wrap gap-6 xs:gap-7 justify-center'>
+      </div>      <div className='mt-12 xs:mt-16 sm:mt-20 flex flex-wrap gap-6 xs:gap-7 justify-center'>
         {projects.map((project, index) => (
-          <ProjectCard key={`project-${index}`} index={index} {...project} />
+          <ProjectCard key={`project-${index}`} index={index} isMobile={isMobile} {...project} />
         ))}
       </div>
     </>  );

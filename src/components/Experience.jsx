@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
+import { motion } from "framer-motion";
 
 import "react-vertical-timeline-component/style.min.css";
 
 import { styles } from "../styles";
 import { experiences } from "../constants";
 import { SectionWrapper } from "../hoc";
+import { textVariant } from "../utils/motion";
 
 const ExperienceCard = ({ experience }) => {
   return (
@@ -55,6 +57,18 @@ const ExperienceCard = ({ experience }) => {
 };
 
 const Experience = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <>
        {/* Estilos globales para la sección de experiencia */}
@@ -83,14 +97,19 @@ const Experience = () => {
           }
         `}
       </style>
-      <div>
+      <motion.div 
+        variants={isMobile ? {} : textVariant()}
+        initial={isMobile ? false : 'hidden'}
+        whileInView={isMobile ? false : 'show'}
+        viewport={isMobile ? {} : { once: true, amount: 0.25 }}
+      >
         <h2 className={`${styles.sectionHeadText} text-center`}>
           Experiencia
         </h2>
-      </div>
+      </motion.div>
 
       <div className='mt-20 flex flex-col'>
-        <VerticalTimeline lineColor="#fff"> 
+        <VerticalTimeline lineColor="#f55f17"> 
           {experiences.map((experience, index) => (
             <ExperienceCard
               key={`experience-${index}`}

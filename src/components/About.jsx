@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
 
@@ -7,12 +7,34 @@ import { services } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
 
-const ServiceCard = ({ index, title, icon }) => (
-  <Tilt className='xs:w-[250px] w-full max-w-[300px] mx-auto'>
-    <motion.div
-      variants={fadeIn("right", "spring", index * 0.5, 0.75)}
-      className='w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card'
+const ServiceCard = ({ index, title, icon }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  return (
+    <Tilt className='xs:w-[250px] w-full max-w-[300px] mx-auto'
+      options={{
+        max: isMobile ? 0 : 45,
+        scale: 1,
+        speed: isMobile ? 0 : 450,
+      }}
     >
+      <motion.div
+        variants={isMobile ? {} : fadeIn("right", "spring", index * 0.5, 0.75)}
+        initial={isMobile ? false : 'hidden'}
+        whileInView={isMobile ? false : 'show'}
+        viewport={isMobile ? {} : { once: true, amount: 0.25 }}
+        className={`w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card ${isMobile ? 'framer-motion-disable' : ''}`}
+      >
       <div
         options={{
           max: 45,
@@ -30,21 +52,41 @@ const ServiceCard = ({ index, title, icon }) => (
         <h3 className='text-white text-[18px] xs:text-[20px] font-bold text-center leading-tight'>
           {title}
         </h3>
-      </div>
-    </motion.div>
-  </Tilt>
-);
+      </div>      </motion.div>
+    </Tilt>
+  );
+};
 
 const About = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <>
-      <motion.div variants={textVariant()}>
+      <motion.div 
+        variants={isMobile ? {} : textVariant()}
+        initial={isMobile ? false : 'hidden'}
+        whileInView={isMobile ? false : 'show'}
+        viewport={isMobile ? {} : { once: true, amount: 0.25 }}
+      >
         <h2 className={styles.sectionHeadText}>Sobre mi.</h2>
       </motion.div>
 
       <motion.p
-        variants={fadeIn("", "", 0.1, 1)}
-        className="mt-4 text-[#CCCCCC] text-[15px] xs:text-[16px] sm:text-[17px] max-w-3xl leading-[26px] xs:leading-[28px] sm:leading-[30px]"
+        variants={isMobile ? {} : fadeIn("", "", 0.1, 1)}
+        initial={isMobile ? false : 'hidden'}
+        whileInView={isMobile ? false : 'show'}
+        viewport={isMobile ? {} : { once: true, amount: 0.25 }}
+        className={`mt-4 text-[#CCCCCC] text-[15px] xs:text-[16px] sm:text-[17px] max-w-3xl leading-[26px] xs:leading-[28px] sm:leading-[30px] ${isMobile ? 'framer-motion-disable' : ''}`}
       >
         Soy un programador junior con un sólido interés en la programación y el desarrollo web. Mi capacidad para adaptarme a diferentes entornos y ofrecer siempre lo mejor de mí es una de mis principales fortalezas. Destaco por mi habilidad para trabajar de manera colaborativa en equipos y mi constante entusiasmo por aprender y mejorar mis habilidades.
       </motion.p>
