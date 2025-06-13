@@ -136,7 +136,7 @@ MIT License - ver [LICENSE.md](LICENSE.md) para detalles.
 
 ## 👨‍💻 Autor
 
-**Fernando Martinez Ortega**
+**Fernando Martinez Ortiz**
 - GitHub: [@FernandoMarOrt](https://github.com/FernandoMarOrt)
 - LinkedIn: [fernandomartinezo](https://www.linkedin.com/in/fernandomartinezo/)
 - Email: fmarort153@gmail.com

@@ -127,19 +127,19 @@ const Certifications = () => {
       >
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div>
-            <div className="text-primary text-3xl font-bold">{certifications.length}</div>
+            <div className="text-white text-3xl font-bold">{certifications.length}</div>
             <div className="text-secondary text-sm">Certificaciones</div>
           </div>
           <div>
-            <div className="text-primary text-3xl font-bold">2</div>
+            <div className="text-white text-3xl font-bold">2</div>
             <div className="text-secondary text-sm">Años Estudiando</div>
           </div>
           <div>
-            <div className="text-primary text-3xl font-bold">15+</div>
+            <div className="text-white text-3xl font-bold">15+</div>
             <div className="text-secondary text-sm">Cursos Completados</div>
           </div>
           <div>
-            <div className="text-primary text-3xl font-bold">100h</div>
+            <div className="text-white text-3xl font-bold">100h</div>
             <div className="text-secondary text-sm">Horas de Estudio</div>
           </div>
         </div>

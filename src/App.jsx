@@ -1,7 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 
 import { About, Contact, Experience, Hero, Navbar, Tech, Works, StarsCanvas } from "./components";
-import { ThemeProvider, ThemeToggle } from "./contexts/ThemeContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import ScrollProgress from "./components/ScrollProgress";
 import CustomCursor from "./components/CustomCursor";
 import LiveStats from "./components/LiveStats";
@@ -15,7 +15,6 @@ const App = () => {
           <CustomCursor />
           <ScrollProgress />
           <StarsCanvas />
-          <ThemeToggle />
           
           <div className='main-content'>
             <div className='relative'>

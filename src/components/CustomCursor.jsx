@@ -44,41 +44,50 @@ const CustomCursor = () => {
   }, []);
 
   // Solo mostrar en desktop
-  if (window.innerWidth <= 768) return null;
-
-  return (
+  if (window.innerWidth <= 768) return null;  return (
     <>
-      {/* Cursor principal */}
-      <div
-        className="fixed pointer-events-none z-50 mix-blend-difference"
-        style={{
-          left: `${mousePosition.x}px`,
-          top: `${mousePosition.y}px`,
-          transform: 'translate(-50%, -50%)',
-        }}
-      >
+      {/* Cursor cohete - solo aparece cuando hay hover */}
+      {isHovering && (
         <div
-          className={`w-4 h-4 bg-white rounded-full transition-all duration-150 ${
-            isClicking ? 'scale-75' : isHovering ? 'scale-150' : 'scale-100'
-          }`}
-        />
-      </div>
+          className="fixed pointer-events-none z-50"
+          style={{
+            left: `${mousePosition.x}px`,
+            top: `${mousePosition.y}px`,
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <div
+            className={`transition-all duration-150 ${
+              isClicking ? 'scale-75' : 'scale-100'
+            }`}
+          >
+            {/* Cohete emoji */}
+            <div className="text-2xl filter drop-shadow-lg animate-pulse">🚀</div>
+          </div>
+        </div>
+      )}
 
-      {/* Cursor de seguimiento */}
-      <div
-        className="fixed pointer-events-none z-40"
-        style={{
-          left: `${mousePosition.x}px`,
-          top: `${mousePosition.y}px`,
-          transform: 'translate(-50%, -50%)',
-        }}
-      >
+      {/* Efecto de estela/trail del cohete - solo cuando hay hover */}
+      {isHovering && (
         <div
-          className={`w-8 h-8 border-2 border-primary rounded-full transition-all duration-300 ${
-            isHovering ? 'scale-200 border-orange-500' : 'scale-100'
-          } ${isClicking ? 'scale-50' : ''}`}
-        />
-      </div>
+          className="fixed pointer-events-none z-40"
+          style={{
+            left: `${mousePosition.x}px`,
+            top: `${mousePosition.y}px`,
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <div
+            className={`transition-all duration-500 opacity-60 ${
+              isClicking ? 'scale-50' : 'scale-100'
+            }`}
+          >            {/* Estela de fuego/partículas */}
+            <div className="relative">
+              <div className="absolute -top-1 -left-1 w-6 h-6 bg-gradient-to-r from-orange-500 to-red-500 rounded-full blur-sm opacity-60 animate-ping"></div>
+              <div className="absolute -top-2 -left-2 w-8 h-8 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full blur-md opacity-30"></div>
+            </div>
+          </div>        </div>
+      )}
     </>
   );
 };
