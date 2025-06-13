@@ -46,39 +46,39 @@ const certifications = [
 const CertificationCard = ({ certification, index }) => (
   <motion.div
     variants={fadeIn("up", "spring", index * 0.5, 0.75)}
-    className="bg-tertiary p-6 rounded-2xl border border-gray-700 hover:border-primary/50 transition-all duration-300 group"
+    className="bg-tertiary p-4 xs:p-6 rounded-2xl border border-gray-700 hover:border-primary/50 transition-all duration-300 group"
   >
-    <div className="relative mb-6">
+    <div className="relative mb-4 xs:mb-6">
       {/* Badge superior con fecha */}
-      <div className="absolute -top-2 -right-2 bg-primary text-white text-xs px-3 py-1 rounded-full z-10">
+      <div className="absolute -top-2 -right-2 bg-primary text-white text-xs px-2 xs:px-3 py-1 rounded-full z-10">
         {certification.date}
       </div>
       
       {/* Imagen del certificado */}
-      <div className={`w-full h-48 bg-gradient-to-br ${certification.color} rounded-xl flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform duration-300`}>
+      <div className={`w-full h-32 xs:h-40 sm:h-48 bg-gradient-to-br ${certification.color} rounded-xl flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform duration-300`}>
         <div className="text-white text-center">
-          <div className="text-4xl mb-2">🏆</div>
-          <div className="text-sm font-semibold">{certification.issuer}</div>
+          <div className="text-2xl xs:text-3xl sm:text-4xl mb-1 xs:mb-2">🏆</div>
+          <div className="text-xs xs:text-sm font-semibold">{certification.issuer}</div>
         </div>
       </div>
     </div>
 
-    <div className="space-y-4">
-      <h3 className="text-white text-xl font-bold leading-tight">
+    <div className="space-y-3 xs:space-y-4">
+      <h3 className="text-white text-base xs:text-lg sm:text-xl font-bold leading-tight">
         {certification.title}
       </h3>
       
-      <div className="text-secondary text-sm space-y-1">
+      <div className="text-secondary text-xs xs:text-sm space-y-1">
         <p><span className="font-semibold">Emisor:</span> {certification.issuer}</p>
         <p><span className="font-semibold">ID:</span> {certification.credentialId}</p>
       </div>
 
       {/* Skills tags */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-1 xs:gap-2">
         {certification.skills.map((skill, skillIndex) => (
           <span
             key={skillIndex}
-            className="bg-gray-700/50 text-white text-xs px-3 py-1 rounded-full border border-gray-600"
+            className="bg-gray-700/50 text-white text-[10px] xs:text-xs px-2 xs:px-3 py-1 rounded-full border border-gray-600"
           >
             {skill}
           </span>
@@ -86,7 +86,7 @@ const CertificationCard = ({ certification, index }) => (
       </div>
 
       {/* Botón de verificación */}
-      <button className="w-full mt-4 bg-gradient-to-r from-primary to-orange-500 text-white py-2 px-4 rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300 text-sm font-semibold">
+      <button className="w-full mt-3 xs:mt-4 bg-gradient-to-r from-primary to-orange-500 text-white py-2 px-4 rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300 text-xs xs:text-sm font-semibold">
         Verificar Certificado
       </button>
     </div>

@@ -11,20 +11,19 @@ const StatCard = ({ icon, number, label, delay = 0 }) => {
       startCounter();
     }
   }, [isInView, startCounter]);
-
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.6, delay: delay / 1000 }}
-      className="bg-tertiary p-6 rounded-2xl text-center border border-gray-700 hover:border-primary/50 transition-all duration-300 group"
+      className="bg-tertiary p-4 xs:p-6 rounded-2xl text-center border border-gray-700 hover:border-primary/50 transition-all duration-300 group"
     >
-      <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">{icon}</div>
-      <div className="text-white text-3xl font-bold mb-2">
+      <div className="text-2xl xs:text-3xl sm:text-4xl mb-2 xs:mb-3 group-hover:scale-110 transition-transform duration-300">{icon}</div>
+      <div className="text-white text-xl xs:text-2xl sm:text-3xl font-bold mb-1 xs:mb-2">
         {count}{number > 50 ? '+' : ''}
       </div>
-      <div className="text-secondary text-sm">{label}</div>    </motion.div>
+      <div className="text-secondary text-xs xs:text-sm">{label}</div>    </motion.div>
   );
 };
 
