@@ -22,17 +22,8 @@ const ScrollProgress = () => {
       behavior: 'smooth'
     });
   };
-
   return (
     <>
-      {/* Barra de progreso en la parte superior */}
-      <div className="fixed top-0 left-0 w-full h-1 bg-gray-800 z-50">
-        <div
-          className="h-full bg-gradient-to-r from-[#f55f17] to-[#ff914d] transition-all duration-150 ease-out"
-          style={{ width: `${scrollProgress}%` }}
-        />
-      </div>
-
       {/* Botón flotante para volver arriba */}
       {isVisible && (
         <button

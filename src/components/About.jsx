@@ -8,7 +8,7 @@ import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
 
 const ServiceCard = ({ index, title, icon }) => (
-  <Tilt className='xs:w-[250px] w-full max-w-[300px] mx-auto'>
+  <Tilt className='xs:w-[250px] w-[200px] max-w-[300px] mx-auto'>
     <motion.div
       variants={fadeIn("right", "spring", index * 0.5, 0.75)}
       className='w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card'
@@ -19,15 +19,15 @@ const ServiceCard = ({ index, title, icon }) => (
           scale: 1,
           speed: 450,
         }}
-        className='bg-tertiary rounded-[20px] py-5 px-6 xs:px-8 sm:px-12 min-h-[280px] xs:min-h-[260px] flex justify-evenly items-center flex-col'
+        className='bg-tertiary rounded-[20px] py-4 px-4 xs:px-6 sm:px-8 min-h-[220px] xs:min-h-[260px] sm:min-h-[280px] flex justify-evenly items-center flex-col'
       >
         <img
           src={icon}
           alt='web-development'
-          className='w-16 h-16 xs:w-17 xs:h-17 object-contain'
+          className='w-12 h-12 xs:w-16 xs:h-16 sm:w-17 sm:h-17 object-contain'
         />
 
-        <h3 className='text-white text-[18px] xs:text-[20px] font-bold text-center leading-tight'>
+        <h3 className='text-white text-[16px] xs:text-[18px] sm:text-[20px] font-bold text-center leading-tight'>
           {title}
         </h3>
       </div>

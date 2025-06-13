@@ -51,16 +51,13 @@ const SkillCard = ({ tech }) => {
       whileHover={!isMobile ? { scale: 1.05 } : {}}
       className="group relative bg-gray-800/50 p-6 rounded-xl border border-gray-700 hover:border-primary/50 transition-all duration-300"
     >
-      <div className="flex flex-col items-center space-y-4">
-        <div className="relative">
+      <div className="flex flex-col items-center space-y-4">        <div className="relative">
           <img 
             src={tech.icon} 
             alt={tech.name} 
             className="w-16 h-16 object-contain group-hover:scale-110 transition-transform duration-300 lazy-load" 
             loading="lazy"
           />
-          <div className="absolute -top-2 -right-2 bg-primary text-white text-xs px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          </div>
         </div>
           <h3 className="text-white text-sm font-semibold text-center">{tech.name}</h3>
         

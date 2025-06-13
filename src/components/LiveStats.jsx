@@ -21,7 +21,7 @@ const StatCard = ({ icon, number, label, delay = 0 }) => {
       className="bg-tertiary p-6 rounded-2xl text-center border border-gray-700 hover:border-primary/50 transition-all duration-300 group"
     >
       <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">{icon}</div>
-      <div className="text-primary text-3xl font-bold mb-2">
+      <div className="text-white text-3xl font-bold mb-2">
         {count}{number > 50 ? '+' : ''}
       </div>
       <div className="text-secondary text-sm">{label}</div>    </motion.div>
@@ -51,7 +51,7 @@ const LiveStats = () => {
         <p className="text-secondary text-lg max-w-2xl mx-auto">
           Estas estadísticas reflejan mi compromiso y dedicación en el desarrollo web
         </p>
-      </motion.div>      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+      </motion.div>      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
         {stats.map((stat, index) => (
           <StatCard
             key={`${stat.label}-${index}`}
