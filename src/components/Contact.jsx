@@ -59,17 +59,16 @@ const Contact = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 xs:gap-10 mb-12">
-          {socialLinks.map((link, index) => (
-            <motion.div
+          {socialLinks.map((link, index) => (            <motion.div
               key={link.name}
               variants={fadeIn("up", "spring", index * 0.2, 0.75)}
-              className="group relative"
+              className="group relative h-full"
             >
               <motion.a
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`relative block bg-tertiary p-8 xs:p-10 rounded-2xl border-2 border-transparent transition-all duration-500 transform hover:scale-105 ${link.color} hover:shadow-2xl overflow-hidden`}
+                className={`relative block bg-tertiary p-8 xs:p-10 rounded-2xl border-2 border-transparent transition-all duration-500 transform hover:scale-105 ${link.color} hover:shadow-2xl overflow-hidden h-full min-h-[320px] flex flex-col justify-center`}
                 whileHover={{ y: -8 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -144,15 +143,15 @@ const Contact = () => {
           {/* Estadísticas rápidas */}
           <div className="grid grid-cols-3 gap-6 mt-8 pt-6 border-t border-gray-600">
             <div className="text-center">
-              <div className="text-primary text-[20px] xs:text-[24px] font-bold">24h</div>
+              <div className="text-white text-[20px] xs:text-[24px] font-bold">24h</div>
               <div className="text-secondary text-[12px] xs:text-[14px]">Tiempo de respuesta</div>
             </div>
             <div className="text-center">
-              <div className="text-primary text-[20px] xs:text-[24px] font-bold">100%</div>
+              <div className="text-white text-[20px] xs:text-[24px] font-bold">100%</div>
               <div className="text-secondary text-[12px] xs:text-[14px]">Compromiso</div>
             </div>
             <div className="text-center">
-              <div className="text-primary text-[20px] xs:text-[24px] font-bold">∞</div>
+              <div className="text-white text-[20px] xs:text-[24px] font-bold">∞</div>
               <div className="text-secondary text-[12px] xs:text-[14px]">Creatividad</div>
             </div>
           </div>
