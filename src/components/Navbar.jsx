@@ -69,13 +69,11 @@ const Navbar = () => {
             <span className='sm:inline hidden whitespace-nowrap'>| Desarrollador Full Stack</span>
             <span className='sm:hidden xs:inline hidden whitespace-nowrap'>| Dev</span>
           </p>
-        </Link>
-
-        <ul className='list-none hidden sm:flex flex-row gap-6 lg:gap-10'>
+        </Link>        <ul className='list-none hidden sm:flex flex-row gap-6 lg:gap-10'>
           {navLinks.map((nav) => (
             <li
               key={nav.id}
-              className="text-white hover:text-[#915EFF] text-[18px] md:text-[16px] lg:text-[18px] font-medium cursor-pointer transition-colors duration-200"
+              className="text-white hover:text-[#ff914d] text-[18px] md:text-[16px] lg:text-[18px] font-medium cursor-pointer transition-colors duration-200"
               onClick={() => setActive(nav.title)}
             >
               <a href={`#${nav.id}`}>{nav.title}</a>
@@ -84,8 +82,7 @@ const Navbar = () => {
           ))}
         </ul>
 
-        <div className='sm:hidden flex flex-1 justify-end items-center'>
-          <button
+        <div className='sm:hidden flex flex-1 justify-end items-center'>          <button
             className={`mobile-touch-target flex items-center justify-center p-3 rounded-full transition-all duration-300 transform hover:scale-110 ${
               toggle 
                 ? 'bg-gradient-to-r from-purple-600 to-blue-600 space-button-glow' 
@@ -115,8 +112,7 @@ const Navbar = () => {
               onClick={() => setToggle(false)}
             ></div>
             
-            {/* Close button */}
-            <button
+            {/* Close button */}            <button
               className="absolute top-4 right-4 z-[60] text-white space-close-button hover:text-purple-400 transition-colors duration-300 p-2 rounded-full mobile-touch-target"
               onClick={() => setToggle(false)}
               aria-label="Cerrar menú"
@@ -160,8 +156,7 @@ const Navbar = () => {
                 ))}
               </ul>              {/* Footer section */}
               <div className="mt-12 xs:mt-10 text-center space-fullscreen-footer">
-                <p className="text-secondary text-sm font-light tracking-widest">EXPLORA LA GALAXIA DEL CÓDIGO</p>
-                <div className="mt-4 flex justify-center space-x-3">
+                <p className="text-secondary text-sm font-light tracking-widest">EXPLORA LA GALAXIA DEL CÓDIGO</p>                <div className="mt-4 flex justify-center space-x-3">
                   <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
                   <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
                   <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>

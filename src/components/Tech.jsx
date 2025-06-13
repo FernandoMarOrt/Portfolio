@@ -23,22 +23,22 @@ import visualestudioIcon from '../assets/tech/visualestudio.png';
 import postmanIcon from '../assets/tech/postman.png';
 
 const technologies = [
-  { name: "HTML 5", icon: htmlIcon, level: 95, category: "Frontend" },
-  { name: "CSS 3", icon: cssIcon, level: 90, category: "Frontend" },
-  { name: "JavaScript", icon: javascriptIcon, level: 88, category: "Frontend" },
-  { name: "TypeScript", icon: typescriptIcon, level: 85, category: "Frontend" },
-  { name: "C#", icon: csharpIcon, level: 80, category: "Backend" },
-  { name: "Node JS", icon: nodejsIcon, level: 75, category: "Backend" },
-  { name: "Angular", icon: angularIcon, level: 82, category: "Framework" },
-  { name: ".NET", icon: netIcon, level: 78, category: "Framework" },
-  { name: "Tailwind CSS", icon: tailwindIcon, level: 92, category: "Frontend" },
-  { name: "Git", icon: gitIcon, level: 85, category: "Tools" },
-  { name: "Docker", icon: dockerIcon, level: 70, category: "DevOps" },
-  { name: "Figma", icon: figmaIcon, level: 75, category: "Design" },
-  { name: "PostgreSQL", icon: postgreIcon, level: 72, category: "Database" },
-  { name: "MySQL", icon: mysqlIcon, level: 74, category: "Database" },
-  { name: "Visual Studio", icon: visualestudioIcon, level: 88, category: "Tools" },
-  { name: "Postman", icon: postmanIcon, level: 80, category: "Tools" },
+  { name: "HTML 5", icon: htmlIcon, category: "Frontend" },
+  { name: "CSS 3", icon: cssIcon, category: "Frontend" },
+  { name: "JavaScript", icon: javascriptIcon, category: "Frontend" },
+  { name: "TypeScript", icon: typescriptIcon, category: "Frontend" },
+  { name: "C#", icon: csharpIcon, category: "Backend" },
+  { name: "Node JS", icon: nodejsIcon, category: "Backend" },
+  { name: "Angular", icon: angularIcon, category: "Framework" },
+  { name: ".NET", icon: netIcon, category: "Framework" },
+  { name: "Tailwind CSS", icon: tailwindIcon, category: "Frontend" },
+  { name: "Git", icon: gitIcon, category: "Tools" },
+  { name: "Docker", icon: dockerIcon, category: "DevOps" },
+  { name: "Figma", icon: figmaIcon, category: "Design" },
+  { name: "PostgreSQL", icon: postgreIcon, category: "Database" },
+  { name: "MySQL", icon: mysqlIcon, category: "Database" },
+  { name: "Visual Studio", icon: visualestudioIcon, category: "Tools" },
+  { name: "Postman", icon: postmanIcon, category: "Tools" },
 ];
 // Componente SkillCard extraído fuera del componente principal
 const SkillCard = ({ tech }) => {
@@ -60,21 +60,9 @@ const SkillCard = ({ tech }) => {
             loading="lazy"
           />
           <div className="absolute -top-2 -right-2 bg-primary text-white text-xs px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            {tech.level}%
           </div>
         </div>
-        
-        <h3 className="text-white text-sm font-semibold text-center">{tech.name}</h3>
-        
-        {/* Barra de progreso */}
-        <div className="w-full bg-gray-700 rounded-full h-2">
-          <motion.div
-            className="bg-gradient-to-r from-primary to-orange-500 h-2 rounded-full"
-            initial={{ width: 0 }}
-            animate={isInView ? { width: `${tech.level}%` } : { width: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-          />
-        </div>
+          <h3 className="text-white text-sm font-semibold text-center">{tech.name}</h3>
         
         <span className="text-xs text-secondary bg-gray-700/50 px-2 py-1 rounded-full">
           {tech.category}
@@ -136,4 +124,4 @@ const Tech = () => {
   );
 };
 
-export default SectionWrapper(Tech, "");
+export default SectionWrapper(Tech, "tech");

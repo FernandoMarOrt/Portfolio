@@ -28,7 +28,7 @@ export const navLinks = [
   },
   {
     id: "tech",
-    title: "Habilidades",
+    title: "Tecnologías",
   },
   {
     id: "work",
