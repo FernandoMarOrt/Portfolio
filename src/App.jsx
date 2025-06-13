@@ -1,28 +1,41 @@
 import { BrowserRouter } from "react-router-dom";
 
 import { About, Contact, Experience, Hero, Navbar, Tech, Works, StarsCanvas } from "./components";
+import { ThemeProvider, ThemeToggle } from "./contexts/ThemeContext";
+import ScrollProgress from "./components/ScrollProgress";
+import CustomCursor from "./components/CustomCursor";
+import LiveStats from "./components/LiveStats";
+import Certifications from "./components/Certifications";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <div className='relative z-0 bg-primary'>
-        <StarsCanvas />
-        <div className='main-content'>
-          <div className='relative'>
-            <Navbar />
-            <Hero />
-          </div>
-          <About />
-          <Tech />
-          <Experience />
-          <Works />
-          {/* <Feedbacks /> */}
-          <div className='relative z-0'>
-            <Contact />
+    <ThemeProvider>
+      <BrowserRouter>
+        <div className='relative z-0 bg-primary'>
+          <CustomCursor />
+          <ScrollProgress />
+          <StarsCanvas />
+          <ThemeToggle />
+          
+          <div className='main-content'>
+            <div className='relative'>
+              <Navbar />
+              <Hero />
+            </div>
+            <About />
+            <LiveStats />
+            <Tech />
+            <Experience />
+            <Certifications />
+            <Works />
+            {/* <Feedbacks /> */}
+            <div className='relative z-0'>
+              <Contact />
+            </div>
           </div>
         </div>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

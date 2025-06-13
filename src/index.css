@@ -862,3 +862,184 @@
     min-width: 44px;
   }
 }
+
+/* =================================================================== */
+/* MEJORAS ADICIONALES DE RENDIMIENTO Y UX */
+/* =================================================================== */
+
+/* Lazy loading para imágenes */
+.lazy-image-container {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Mejoras de accesibilidad */
+.focus-visible:focus-visible {
+  outline: 2px solid #f55f17;
+  outline-offset: 2px;
+}
+
+/* Scroll behavior mejorado */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Variables CSS para modo claro */
+:root.light {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f8fafc;
+  --tertiary-bg: #e2e8f0;
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --border-color: #e2e8f0;
+}
+
+:root.dark {
+  --primary-bg: #050816;
+  --secondary-bg: #1d1836;
+  --tertiary-bg: #151030;
+  --text-primary: #ffffff;
+  --text-secondary: #aaa6c3;
+  --border-color: #232631;
+}
+
+/* Estilos para modo claro */
+.light {
+  background: var(--primary-bg);
+  color: var(--text-primary);
+}
+
+.light .bg-primary {
+  background: var(--primary-bg) !important;
+}
+
+.light .bg-secondary {
+  background: var(--secondary-bg) !important;
+}
+
+.light .bg-tertiary {
+  background: var(--tertiary-bg) !important;
+}
+
+.light .text-white {
+  color: var(--text-primary) !important;
+}
+
+.light .text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.light .border-gray-700 {
+  border-color: var(--border-color) !important;
+}
+
+/* Mejoras para pantallas ultra anchas */
+@media (min-width: 1920px) {
+  .ultra-wide-container {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  
+  .hero-content {
+    font-size: clamp(2rem, 4vw, 6rem);
+  }
+}
+
+/* Mejoras para dispositivos con pantalla táctil */
+@media (hover: none) and (pointer: coarse) {
+  .hover-effect {
+    transform: none !important;
+  }
+  
+  .touch-friendly {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 12px;
+  }
+}
+
+/* Optimización para tablets en landscape */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .tablet-landscape-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .tablet-landscape-text {
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+  }
+}
+
+/* Preload critical resources */
+.preload-hint {
+  display: none;
+}
+
+/* Intersection Observer optimizations */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease-out;
+}
+
+.animate-on-scroll.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerated {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #f55f17, #ff914d);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #ff914d, #f55f17);
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-friendly {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+}

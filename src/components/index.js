@@ -8,7 +8,11 @@ import Works from "./Works";
 import Feedbacks from "./Feedbacks";
 import Contact from "./Contact";
 import CanvasLoader from "./Loader";
-
+import Certifications from "./Certifications";
+import LiveStats from "./LiveStats";
+import ScrollProgress from "./ScrollProgress";
+import CustomCursor from "./CustomCursor";
+import LazyImage from "./LazyImage";
 
 export {
   Hero,
@@ -21,5 +25,10 @@ export {
   Contact,
   CanvasLoader,
   ComputersCanvas, 
-  StarsCanvas
+  StarsCanvas,
+  Certifications,
+  LiveStats,
+  ScrollProgress,
+  CustomCursor,
+  LazyImage
 };
