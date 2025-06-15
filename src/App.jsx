@@ -4,8 +4,6 @@ import { About, Contact, Experience, Hero, Navbar, Tech, Works, StarsCanvas } fr
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ScrollProgress from "./components/ScrollProgress";
 import CustomCursor from "./components/CustomCursor";
-import LiveStats from "./components/LiveStats";
-import Certifications from "./components/Certifications";
 
 const App = () => {
   return (
@@ -22,12 +20,9 @@ const App = () => {
               <Hero />
             </div>
             <About />
-            <LiveStats />
             <Tech />
             <Experience />
-            <Certifications />
             <Works />
-            {/* <Feedbacks /> */}
             <div className='relative z-0'>
               <Contact />
             </div>

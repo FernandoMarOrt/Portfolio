@@ -4,29 +4,32 @@ import { motion } from "framer-motion";
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { slideIn, fadeIn } from "../utils/motion";
+import githubSvg from "../assets/github.svg";
+import linkedinSvg from "../assets/linkedin.svg";
+import gmailSvg from "../assets/gmail.svg";
 
 const socialLinks = [
   {
     name: "GitHub",
-    icon: "🐙",
+    icon: <img src={githubSvg} alt="GitHub" className="w-16 h-16 xs:w-20 xs:h-20" />,
     url: "https://github.com/FernandoMarOrt",
-    description: "Explora mis proyectos y código",
+    description: "Explora mis proyectos",
     color: "hover:border-purple-500 hover:shadow-purple-500/20",
     bgGradient: "from-gray-800 to-gray-900"
   },
   {
     name: "LinkedIn",
-    icon: "💼",
+    icon: <img src={linkedinSvg} alt="LinkedIn" className="w-16 h-16 xs:w-20 xs:h-20" />,
     url: "https://www.linkedin.com/in/fernandomartinezo/",
-    description: "Conecta conmigo profesionalmente",
+    description: "Conecta conmigo",
     color: "hover:border-blue-500 hover:shadow-blue-500/20",
     bgGradient: "from-blue-800 to-blue-900"
   },
   {
     name: "Email",
-    icon: "📧",
+    icon: <img src={gmailSvg} alt="Email" className="w-16 h-16 xs:w-20 xs:h-20" />,
     url: "mailto:fmarort153@gmail.com",
-    description: "Envíame un mensaje directo",
+    description: "Envíame un mensaje",
     color: "hover:border-green-500 hover:shadow-green-500/20",
     bgGradient: "from-green-800 to-green-900"
   }
