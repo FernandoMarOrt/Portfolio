@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import { styles } from "../styles";
 import { navLinks } from "../constants";
 import { logo, menu, close } from "../assets";
+import { useTheme } from "../contexts/ThemeContext";
 
 const Navbar = () => {
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { showStars, toggleStars } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,7 +71,7 @@ const Navbar = () => {
             <span className='sm:inline hidden whitespace-nowrap'>| Desarrollador Full Stack</span>
             <span className='sm:hidden xs:inline hidden whitespace-nowrap'>| Dev</span>
           </p>
-        </Link>        <ul className='list-none hidden sm:flex flex-row gap-6 lg:gap-10'>
+        </Link>        <ul className='list-none hidden sm:flex flex-row gap-6 lg:gap-10 items-center'>
           {navLinks.map((nav) => (
             <li
               key={nav.id}
@@ -80,9 +82,54 @@ const Navbar = () => {
             </li>
          
           ))}
+          {/* Botón para controlar estrellas en desktop */}
+          <li>
+            <button
+              onClick={toggleStars}
+              className={`p-2 rounded-full transition-all duration-300 transform hover:scale-110 ${
+                showStars 
+                  ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/30' 
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+              aria-label={showStars ? "Desactivar estrellas" : "Activar estrellas"}
+              title={showStars ? "Desactivar estrellas de fondo" : "Activar estrellas de fondo"}
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                {showStars ? (
+                  // Icono de estrella llena
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                ) : (
+                  // Icono de estrella vacía
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2zm0 4.24l-2.13 4.32-4.77.69 3.45 3.36-.81 4.74L12 17.27l4.26 2.24-.81-4.74 3.45-3.36-4.77-.69L12 6.24z"/>
+                )}
+              </svg>
+            </button>
+          </li>
         </ul>
 
-        <div className='sm:hidden flex flex-1 justify-end items-center'>          <button
+        <div className='sm:hidden flex flex-1 justify-end items-center gap-3'>
+          {/* Botón para controlar estrellas en móvil */}
+          <button
+            onClick={toggleStars}
+            className={`mobile-touch-target flex items-center justify-center p-3 rounded-full transition-all duration-300 transform hover:scale-110 ${
+              showStars 
+                ? 'bg-gradient-to-r from-purple-600 to-blue-600 shadow-lg shadow-purple-500/30' 
+                : 'bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800'
+            }`}
+            aria-label={showStars ? "Desactivar estrellas" : "Activar estrellas"}
+          >
+            <svg className="w-[24px] h-[24px] xs:w-[20px] xs:h-[20px]" fill="currentColor" viewBox="0 0 24 24">
+              {showStars ? (
+                // Icono de estrella llena
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              ) : (
+                // Icono de estrella vacía
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2zm0 4.24l-2.13 4.32-4.77.69 3.45 3.36-.81 4.74L12 17.27l4.26 2.24-.81-4.74 3.45-3.36-4.77-.69L12 6.24z"/>
+              )}
+            </svg>
+          </button>
+
+          <button
             className={`mobile-touch-target flex items-center justify-center p-3 rounded-full transition-all duration-300 transform hover:scale-110 ${
               toggle 
                 ? 'bg-gradient-to-r from-purple-600 to-blue-600 space-button-glow' 
@@ -154,7 +201,34 @@ const Navbar = () => {
                     </a>
                   </li>
                 ))}
-              </ul>              {/* Footer section */}
+              </ul>
+
+              {/* Botón para controlar estrellas en menú móvil */}
+              <div className="mt-8 flex justify-center">
+                <button
+                  onClick={toggleStars}
+                  className={`flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105 ${
+                    showStars 
+                      ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/30' 
+                      : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                  }`}
+                >
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    {showStars ? (
+                      // Icono de estrella llena
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    ) : (
+                      // Icono de estrella vacía
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2zm0 4.24l-2.13 4.32-4.77.69 3.45 3.36-.81 4.74L12 17.27l4.26 2.24-.81-4.74 3.45-3.36-4.77-.69L12 6.24z"/>
+                    )}
+                  </svg>
+                  <span className="text-lg font-medium">
+                    {showStars ? "Desactivar estrellas" : "Activar estrellas"}
+                  </span>
+                </button>
+              </div>
+
+              {/* Footer section */}
               <div className="mt-12 xs:mt-10 text-center space-fullscreen-footer">
                 <p className="text-secondary text-sm font-light tracking-widest">EXPLORA LA GALAXIA DEL CÓDIGO</p>                <div className="mt-4 flex justify-center space-x-3">
                   <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
