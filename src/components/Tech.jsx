@@ -4,6 +4,7 @@ import { textVariant } from "../utils/motion";
 import { SectionWrapper } from "../hoc";
 import { styles } from "../styles";
 import { useInView, useIsMobile } from "../hooks/useAnimations";
+import LazyImage from "./LazyImage";
 
 import htmlIcon from '../assets/tech/html.png';
 import cssIcon from '../assets/tech/css.png';
@@ -51,15 +52,15 @@ const SkillCard = ({ tech }) => {
       whileHover={!isMobile ? { scale: 1.05 } : {}}
       className="group relative bg-gray-800/50 p-6 rounded-xl border border-gray-700 hover:border-primary/50 transition-all duration-300"
     >
-      <div className="flex flex-col items-center space-y-4">        <div className="relative">
-          <img 
+      <div className="flex flex-col items-center space-y-4">
+        <div className="relative">
+          <LazyImage 
             src={tech.icon} 
             alt={tech.name} 
             className="w-16 h-16 object-contain group-hover:scale-110 transition-transform duration-300 lazy-load" 
-            loading="lazy"
           />
         </div>
-          <h3 className="text-white text-sm font-semibold text-center">{tech.name}</h3>
+        <h3 className="text-white text-sm font-semibold text-center">{tech.name}</h3>
         
         <span className="text-xs text-secondary bg-gray-700/50 px-2 py-1 rounded-full">
           {tech.category}
