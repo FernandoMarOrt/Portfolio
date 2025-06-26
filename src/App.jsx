@@ -3,7 +3,6 @@ import { BrowserRouter } from "react-router-dom";
 import { About, Contact, Experience, Hero, Navbar, Tech, Works, StarsCanvas } from "./components";
 import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
 import ScrollProgress from "./components/ScrollProgress";
-import CustomCursor from "./components/CustomCursor";
 
 const AppContent = () => {
   const { showStars } = useTheme();
@@ -11,7 +10,6 @@ const AppContent = () => {
   return (
     <BrowserRouter>
       <div className='relative z-0 bg-primary'>
-        <CustomCursor />
         <ScrollProgress />
         {showStars && <StarsCanvas />}
         

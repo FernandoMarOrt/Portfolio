@@ -101,7 +101,6 @@ src/
 ├── components/          # Componentes React
 │   ├── canvas/         # Componentes 3D
 │   ├── LazyImage.jsx   # Carga lazy de imágenes
-│   ├── LiveStats.jsx   # Estadísticas animadas
 │   └── ...
 ├── contexts/           # Contextos React
 ├── hooks/              # Hooks personalizados
