@@ -36,9 +36,10 @@ const ProjectCard = ({
           scale: 1,
           speed: isMobile ? 0 : 450,
         }}
-        className='bg-tertiary p-4 xs:p-5 rounded-2xl sm:w-[360px] w-full max-w-[400px] mx-auto'
+        className='bg-tertiary p-4 xs:p-5 rounded-2xl sm:w-[360px] w-full max-w-[400px] mx-auto relative border-2 border-white/60 dark:border-white/20 before:content-[""] before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none before:border-2 before:border-white/40 before:blur before:opacity-70 before:z-0'
+        style={{ boxShadow: '0 0 16px 0 rgba(255,255,255,0.18), 0 0 0 2px rgba(255,255,255,0.10) inset' }}
       >
-        <div className='relative w-full h-[200px] xs:h-[230px]'>
+        <div className='relative z-10 w-full h-[200px] xs:h-[230px]'>
           <img
             src={image}
             alt='project_image'
