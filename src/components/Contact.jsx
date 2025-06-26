@@ -47,11 +47,9 @@ const Contact = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full min-h-screen">
-      <motion.div
-        variants={slideIn("up", "tween", 0.2, 1)}
-        className='w-full max-w-6xl bg-black-100 p-6 xs:p-8 sm:p-10 rounded-2xl shadow-2xl border-4 border-white/80 dark:border-white/30 relative before:content-[""] before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none before:border-4 before:border-white/40 before:blur-lg before:opacity-80 before:z-0'
-        style={{ boxShadow: '0 0 32px 0 rgba(255,255,255,0.25), 0 0 0 4px rgba(255,255,255,0.15) inset' }}
+    <div className="flex justify-center items-center w-full min-h-screen bg-black-100">
+      <div
+        className='w-full max-w-6xl p-6 xs:p-8 sm:p-10 rounded-2xl shadow-2xl border-4 border-white/80 dark:border-white/30 relative before:content-[""] before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none before:border-4 before:border-white/40 before:blur-lg before:opacity-80 before:z-0 animate-fade-in-blur'
       >
         <div className="relative z-10">
           <div className="text-center mb-16">
@@ -163,9 +161,20 @@ const Contact = () => {
             </div>
           </motion.div>
         </div> {/* Cierre del div relativo z-10 */}
-      </motion.div>
+      </div>
     </div>
   );
 };
 
 export default SectionWrapper(Contact, "contact");
+
+/* Agrega en tu CSS global o tailwind.config.js:
+@keyframes fade-in-blur {
+  0% { opacity: 0; filter: blur(16px) brightness(0.7); }
+  80% { filter: blur(2px) brightness(1.1); }
+  100% { opacity: 1; filter: blur(0) brightness(1); }
+}
+.animate-fade-in-blur {
+  animation: fade-in-blur 1.2s cubic-bezier(0.22,1,0.36,1) both;
+}
+*/
