@@ -36,9 +36,16 @@ const ProjectCard = ({
           scale: 1,
           speed: isMobile ? 0 : 450,
         }}
-        className='bg-tertiary p-4 xs:p-5 rounded-2xl sm:w-[360px] w-full max-w-[400px] mx-auto relative border-2 border-white/80 dark:border-white/40 before:content-[""] before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none before:border-2 before:border-white/70 before:blur-2xl before:opacity-90 before:z-0'
-        style={{ boxShadow: '0 0 48px 0 rgba(255,255,255,0.35), 0 0 0 3px rgba(255,255,255,0.18) inset' }}
+        className='bg-gradient-to-br from-[#181c2b] via-[#232946] to-[#0f172a] p-4 xs:p-5 rounded-2xl sm:w-[360px] w-full max-w-[400px] mx-auto relative border-2 border-white/80 dark:border-white/40 before:content-[" "] before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none before:border-2 before:border-blue-400/40 before:blur-2xl before:opacity-90 before:z-0 animate-glow-card hover:scale-105 hover:shadow-[0_0_64px_16px_rgba(96,165,250,0.35)] transition-transform duration-300 group'
+        style={{ boxShadow: '0 0 48px 0 rgba(96,165,250,0.25), 0 0 0 3px rgba(255,255,255,0.18) inset' }}
       >
+        {/* Partículas tipo estrellas */}
+        <div className="pointer-events-none absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+          <div className="absolute top-6 left-8 w-1 h-1 bg-white rounded-full animate-twinkle" style={{animationDelay:'0.1s'}}></div>
+          <div className="absolute top-1/2 right-10 w-1.5 h-1.5 bg-blue-300 rounded-full animate-twinkle" style={{animationDelay:'0.4s'}}></div>
+          <div className="absolute bottom-8 left-1/3 w-0.5 h-0.5 bg-white/80 rounded-full animate-twinkle" style={{animationDelay:'0.7s'}}></div>
+          <div className="absolute bottom-4 right-1/4 w-1 h-1 bg-blue-200 rounded-full animate-twinkle" style={{animationDelay:'1s'}}></div>
+        </div>
         <div className='relative z-10 w-full h-[200px] xs:h-[230px]'>
           <img
             src={image}
@@ -103,3 +110,21 @@ const Works = () => {
 };
 
 export default SectionWrapper(Works, "projects");
+
+// Agrega en tu CSS global o tailwind.config.js:
+/*
+@keyframes glow-card {
+  0%, 100% { box-shadow: 0 0 48px 0 #60a5fa55, 0 0 0 3px #fff3 inset; }
+  50% { box-shadow: 0 0 96px 16px #60a5fa99, 0 0 0 3px #fff6 inset; }
+}
+.animate-glow-card {
+  animation: glow-card 2.8s ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5) rotate(10deg); }
+}
+.animate-twinkle {
+  animation: twinkle 1.8s infinite ease-in-out;
+}
+*/
