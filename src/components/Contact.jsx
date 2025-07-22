@@ -143,38 +143,11 @@ const Contact = () => {
               Siempre estoy abierto a nuevas oportunidades, colaboraciones y proyectos interesantes.
               No dudes en contactarme si tienes alguna idea o propuesta.
             </p>
-
-            {/* Estadísticas rápidas */}
-            <div className="grid grid-cols-3 gap-6 mt-8 pt-6 border-t border-gray-600">
-              <div className="text-center">
-                <div className="text-white text-[20px] xs:text-[24px] font-bold">24h</div>
-                <div className="text-secondary text-[12px] xs:text-[14px]">Tiempo de respuesta</div>
-              </div>
-              <div className="text-center">
-                <div className="text-white text-[20px] xs:text-[24px] font-bold">100%</div>
-                <div className="text-secondary text-[12px] xs:text-[14px]">Compromiso</div>
-              </div>
-              <div className="text-center">
-                <div className="text-white text-[20px] xs:text-[24px] font-bold">∞</div>
-                <div className="text-secondary text-[12px] xs:text-[14px]">Creatividad</div>
-              </div>
-            </div>
           </motion.div>
-        </div> {/* Cierre del div relativo z-10 */}
+        </div>
       </div>
     </div>
   );
 };
 
 export default SectionWrapper(Contact, "contact");
-
-/* Agrega en tu CSS global o tailwind.config.js:
-@keyframes fade-in-blur {
-  0% { opacity: 0; filter: blur(16px) brightness(0.7); }
-  80% { filter: blur(2px) brightness(1.1); }
-  100% { opacity: 1; filter: blur(0) brightness(1); }
-}
-.animate-fade-in-blur {
-  animation: fade-in-blur 1.2s cubic-bezier(0.22,1,0.36,1) both;
-}
-*/

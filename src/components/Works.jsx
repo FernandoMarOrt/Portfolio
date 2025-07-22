@@ -110,21 +110,3 @@ const Works = () => {
 };
 
 export default SectionWrapper(Works, "projects");
-
-// Agrega en tu CSS global o tailwind.config.js:
-/*
-@keyframes glow-card {
-  0%, 100% { box-shadow: 0 0 48px 0 #60a5fa55, 0 0 0 3px #fff3 inset; }
-  50% { box-shadow: 0 0 96px 16px #60a5fa99, 0 0 0 3px #fff6 inset; }
-}
-.animate-glow-card {
-  animation: glow-card 2.8s ease-in-out infinite;
-}
-@keyframes twinkle {
-  0%, 100% { opacity: 0.7; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.5) rotate(10deg); }
-}
-.animate-twinkle {
-  animation: twinkle 1.8s infinite ease-in-out;
-}
-*/

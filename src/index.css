@@ -1060,3 +1060,37 @@ html {
     box-shadow: none !important;
   }
 }
+
+/* =====================
+   Space warp button effect
+   ===================== */
+.space-warp-btn {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.space-warp-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 40px 10px #60a5fa55, 0 0 80px 20px #a78bfa33;
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.space-warp-btn:hover::after {
+  opacity: 1;
+}
+
+/* =====================
+   Title glow effect
+   ===================== */
+.space-title-glow {
+  animation: titleGlow 2.5s infinite alternate;
+  text-shadow: 0 0 12px #a78bfa, 0 0 24px #60a5fa99;
+}
+@keyframes titleGlow {
+  0% { text-shadow: 0 0 8px #a78bfa, 0 0 16px #60a5fa55; }
+  100% { text-shadow: 0 0 24px #a78bfa, 0 0 48px #60a5fa99; }
+}
