@@ -28,7 +28,7 @@ const ScrollProgress = () => {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-40 bg-gradient-to-r from-[#f55f17] to-[#ff914d] text-white p-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 animate-bounce md:bottom-12 md:right-12"
+          className="fixed bottom-8 right-8 z-40 bg-gradient-to-r from-[#f55f17] to-[#ff914d] text-white p-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 animate-bounce md:bottom-12 md:right-12 hidden xs:flex"
           aria-label="Volver arriba"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
