@@ -2,7 +2,8 @@ import { styles } from "../styles";
 import { ComputersCanvas } from "./canvas";
 
 const Hero = () => {
-  return (    <section className={`relative w-full h-screen mx-auto overflow-hidden`}>
+  return (
+    <section className={`relative w-full h-screen mx-auto overflow-hidden`}>
       <div
         className={`absolute inset-0 top-[120px] xs:top-[110px] xxs:top-[100px] hero-container max-w-7xl mx-auto ${styles.paddingX} mobile-padding flex flex-row items-start gap-3 xs:gap-4 sm:gap-5`}
       >
@@ -18,11 +19,11 @@ const Hero = () => {
             <span className='text-[#f55f17] inline-block'>Fernando</span>
           </h1>
           <p className={`${styles.heroSubText} mt-2 text-white-100 text-responsive`}>
-           <span className="inline-block">Desarrollador</span>
-           <br className='sm:block xs:hidden block' />
-           <span className="xs:inline sm:inline block">
-             <span className="xs:inline hidden">&nbsp;</span>Full Stack
-           </span>
+            <span className="inline-block">Desarrollador</span>
+            <br className='sm:block xs:hidden block' />
+            <span className="xs:inline sm:inline block">
+              Full Stack
+            </span>
           </p>
         </div>
       </div>

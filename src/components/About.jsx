@@ -25,6 +25,7 @@ const ServiceCard = ({ index, title, icon }) => (
         <LazyImage
           src={icon}
           alt='web-development'
+          loading="lazy"
           className='w-12 h-12 xs:w-16 xs:h-16 sm:w-17 sm:h-17 object-contain'
         />
 

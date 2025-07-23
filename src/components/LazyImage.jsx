@@ -13,7 +13,7 @@ const LazyImage = ({ src, alt, className, placeholder = '', ...props }) => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.01 } // menor umbral para cargar antes
     );
 
     if (imgRef.current) {
@@ -34,6 +34,7 @@ const LazyImage = ({ src, alt, className, placeholder = '', ...props }) => {
         <img
           src={src}
           alt={alt}
+          loading="lazy"
           className={`transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${className}`}
           onLoad={() => setIsLoaded(true)}
           {...props}

@@ -57,6 +57,7 @@ const SkillCard = ({ tech }) => {
           <LazyImage 
             src={tech.icon} 
             alt={tech.name} 
+            loading="lazy"
             className="w-16 h-16 object-contain group-hover:scale-110 transition-transform duration-300 lazy-load" 
           />
         </div>
