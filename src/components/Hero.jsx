@@ -1,5 +1,7 @@
 import { styles } from "../styles";
-import { ComputersCanvas } from "./canvas";
+import React, { Suspense, lazy } from "react";
+
+const ComputersCanvas = lazy(() => import("./canvas").then(mod => ({ default: mod.ComputersCanvas })));
 
 const Hero = () => {
   return (
@@ -28,7 +30,9 @@ const Hero = () => {
         </div>
       </div>
 
-      <ComputersCanvas />
+      <Suspense fallback={null}>
+        <ComputersCanvas />
+      </Suspense>
     </section>
   );
 };
