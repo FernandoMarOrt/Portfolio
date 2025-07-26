@@ -5,7 +5,7 @@ const ComputersCanvas = lazy(() => import("./canvas").then(mod => ({ default: mo
 
 const Hero = () => {
   return (
-    <section className={`relative w-full h-screen mx-auto overflow-hidden`}>
+    <section className={`relative w-full h-screen min-h-[100dvh] md:min-h-0 mx-auto overflow-hidden`}>
       <div
         className={`absolute inset-0 top-[120px] xs:top-[110px] xxs:top-[100px] hero-container max-w-7xl mx-auto ${styles.paddingX} mobile-padding flex flex-row items-start gap-3 xs:gap-4 sm:gap-5`}
       >
