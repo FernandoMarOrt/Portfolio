@@ -47,7 +47,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full min-h-screen bg-black-100">
+  <div className="flex justify-center w-full min-h-[60vh] bg-black-100">
       <div
         className='w-full max-w-6xl p-6 xs:p-8 sm:p-10 rounded-2xl shadow-2xl border-4 border-white/80 dark:border-white/30 relative before:content-[""] before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none before:border-4 before:border-white/40 before:blur-lg before:opacity-80 before:z-0 animate-fade-in-blur'
       >
@@ -127,24 +127,6 @@ const Contact = () => {
               </motion.div>
             ))}
           </div>
-
-          {/* Sección adicional con información */}
-          <motion.div
-            variants={fadeIn("up", "tween", 0.6, 1)}
-            className="text-center bg-tertiary rounded-2xl p-8 border border-gray-700"
-          >
-            <div className="flex flex-col xs:flex-row items-center justify-center gap-4 mb-6">
-              <span className="text-4xl">⚡</span>
-              <h4 className="text-white text-[18px] xs:text-[20px] font-bold">
-                Respuesta Rápida Garantizada
-              </h4>
-              <span className="text-4xl">🚀</span>
-            </div>
-            <p className="text-secondary text-[15px] xs:text-[17px] leading-relaxed max-w-2xl mx-auto">
-              Siempre estoy abierto a nuevas oportunidades, colaboraciones y proyectos interesantes.
-              No dudes en contactarme si tienes alguna idea o propuesta.
-            </p>
-          </motion.div>
         </div>
       </div>
     </div>
