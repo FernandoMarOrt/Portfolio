@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { textVariant } from "../utils/motion";
 import { SectionWrapper } from "../hoc";
 import { styles } from "../styles";
@@ -28,95 +28,152 @@ const technologies = [
   { name: "CSS 3", icon: cssIcon, category: "Frontend" },
   { name: "JavaScript", icon: javascriptIcon, category: "Frontend" },
   { name: "TypeScript", icon: typescriptIcon, category: "Frontend" },
+  { name: "Tailwind CSS", icon: tailwindIcon, category: "Frontend" },
   { name: "C#", icon: csharpIcon, category: "Backend" },
   { name: "Node JS", icon: nodejsIcon, category: "Backend" },
   { name: "Angular", icon: angularIcon, category: "Framework" },
   { name: ".NET", icon: netIcon, category: "Framework" },
-  { name: "Tailwind CSS", icon: tailwindIcon, category: "Frontend" },
   { name: "Git", icon: gitIcon, category: "Tools" },
+  { name: "Visual Studio", icon: visualestudioIcon, category: "Tools" },
+  { name: "Postman", icon: postmanIcon, category: "Tools" },
   { name: "Docker", icon: dockerIcon, category: "DevOps" },
   { name: "Figma", icon: figmaIcon, category: "Design" },
   { name: "PostgreSQL", icon: postgreIcon, category: "Database" },
   { name: "MySQL", icon: mysqlIcon, category: "Database" },
-  { name: "Visual Studio", icon: visualestudioIcon, category: "Tools" },
-  { name: "Postman", icon: postmanIcon, category: "Tools" },
 ];
-// Componente SkillCard extraído fuera del componente principal
-const SkillCard = ({ tech }) => {
-  const [ref, isInView] = useInView(0.3);
+
+const categoryConfig = {
+  Frontend: { color: "from-blue-500 to-cyan-400", icon: "🌐" },
+  Backend: { color: "from-green-500 to-emerald-400", icon: "⚙️" },
+  Framework: { color: "from-purple-500 to-violet-400", icon: "🏗️" },
+  Tools: { color: "from-orange-500 to-yellow-400", icon: "🛠️" },
+  DevOps: { color: "from-red-500 to-pink-400", icon: "🚀" },
+  Design: { color: "from-indigo-500 to-purple-400", icon: "🎨" },
+  Database: { color: "from-teal-500 to-cyan-400", icon: "🗄️" },
+};
+
+// Componente SkillCard rediseñado con temática espacial
+const SkillCard = ({ tech, index }) => {
+  const [ref, isInView] = useInView(0.2);
   const isMobile = useIsMobile();
-  
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <motion.div
       ref={ref}
-      whileHover={!isMobile ? { scale: 1.05 } : {}}
-      className="group relative bg-gray-800/50 p-6 rounded-xl border border-gray-700 hover:border-primary/50 transition-all duration-300"
+      initial={{ opacity: 0, y: 50, rotateY: -15 }}
+      animate={{ opacity: 1, y: 0, rotateY: 0 }}
+      transition={{
+        duration: 0.6,
+        type: "spring",
+        stiffness: 100
+      }}
+      whileHover={!isMobile ? {
+        scale: 1.08,
+        rotateY: 5,
+        z: 50
+      } : {}}
+      className="group relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="flex flex-col items-center space-y-4">
-        <div className="relative">
-          <LazyImage 
-            src={tech.icon} 
-            alt={tech.name} 
-            loading="lazy"
-            className="w-16 h-16 object-contain group-hover:scale-110 transition-transform duration-300 lazy-load" 
-          />
+      {/* Contenedor principal con efecto de cristal espacial */}
+  <div className="relative bg-[#181c2a]/50 p-3 sm:p-6 rounded-2xl border border-white/30 transition-all duration-500 overflow-hidden">
+
+
+        {/* Efecto de brillo de fondo */}
+        <div className="absolute inset-0 bg-gradient-to-br from-violet-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+        {/* Partículas espaciales en hover */}
+        <AnimatePresence>
+          {isHovered && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 overflow-hidden pointer-events-none"
+            >
+              {[...Array(6)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 bg-white rounded-full"
+                  initial={{
+                    x: Math.random() * 100 + "%",
+                    y: Math.random() * 100 + "%",
+                    opacity: 0
+                  }}
+                  animate={{
+                    x: Math.random() * 100 + "%",
+                    y: Math.random() * 100 + "%",
+                    opacity: [0, 1, 0]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: i * 0.3
+                  }}
+                />
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="relative flex flex-col items-center space-y-2 sm:space-y-4 z-10">
+          {/* Contenedor del icono con órbita */}
+            <div className="relative mb-4 sm:mb-0">
+                <motion.div
+                  className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center"
+                  animate={isHovered ? { rotate: 360 } : { rotate: 0 }}
+                  transition={{ duration: 8, repeat: isHovered ? Infinity : 0, ease: "linear" }}
+                >
+                <div className="absolute inset-0 border-2 border-dashed border-cyan-400/80 rounded-full animate-spin" style={{ animationDuration: '20s' }} />
+                <LazyImage
+                  src={tech.icon}
+                  alt={tech.name}
+                  loading="lazy"
+                  className="w-12 h-12 sm:w-14 sm:h-14 object-contain filter group-hover:brightness-110 transition-all duration-300"
+                />
+              </motion.div>
+            </div>
+
+          {/* Información de la tecnología */}
+            <div className="text-center flex flex-col items-center space-y-3 sm:space-y-2">
+              <h3 className="text-white text-xs sm:text-base font-bold tracking-wide">
+                {tech.name}
+              </h3>
+              <span className={`text-xs px-2 py-1 sm:px-3 sm:py-1 rounded-full bg-gradient-to-r ${categoryConfig[tech.category]?.color} text-white font-medium shadow-lg`}>
+                {tech.category}
+              </span>
+            </div>
         </div>
-        <h3 className="text-white text-sm font-semibold text-center">{tech.name}</h3>
-        
-        <span className="text-xs text-secondary bg-gray-700/50 px-2 py-1 rounded-full">
-          {tech.category}
-        </span>
+
+        {/* Efecto de borde brillante */}
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-600/20 to-purple-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       </div>
-    </motion.div>  );
+    </motion.div>
+  );
 };
 
 const Tech = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const categories = ['All', 'Frontend', 'Backend', 'Framework', 'Tools', 'Database', 'Design', 'DevOps'];
-  
-  const filteredTechs = selectedCategory === 'All' 
-    ? technologies 
-    : technologies.filter(tech => tech.category === selectedCategory);
-
   return (
     <>
-      <motion.div variants={textVariant()} className="flex justify-center mb-6 xs:mb-8">
-        <h2 className={`${styles.sectionHeadText} text-center`}>Tecnologías y Herramientas</h2>
+      {/* Título principal */}
+      <motion.div
+        variants={textVariant()}
+        className="text-center mb-16"
+      >
+  <h2 className={`${styles.sectionHeadText} text-center text-white`}>
+          Tecnologías y Herramientas
+        </h2>
       </motion.div>
 
-      {/* Filtros de categoría */}
-      <div className="flex flex-wrap justify-center gap-3 mb-12">
-        {categories.map((category) => (
-          <button
-            key={category}
-            onClick={() => setSelectedCategory(category)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-              selectedCategory === category
-                ? 'bg-primary text-white shadow-lg'
-                : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-            }`}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
-
-      {/* Grid de tecnologías */}
-      <motion.div 
+      {/* Grid simple de todas las tecnologías */}
+      <motion.div
         layout
-        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
+        className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-6"
       >
-        {filteredTechs.map((tech) => (
-          <motion.div
-            key={`${tech.name}-${tech.category}`}
-            layout
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3, delay: Math.random() * 0.1 }}
-          >
-            <SkillCard tech={tech} />
-          </motion.div>
+        {technologies.map((tech, index) => (
+          <SkillCard key={tech.name} tech={tech} index={index} />
         ))}
       </motion.div>
     </>
