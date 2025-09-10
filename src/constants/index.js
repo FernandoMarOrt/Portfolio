@@ -179,7 +179,7 @@ const projects = [
   {
     name: "Style Barber",
     description:
-      "Plataforma web que permite a los usuarios buscar, reservar y gestionar servicios de barbería de varios proveedores, proporcionando una solución conveniente y eficiente para el cuidado personal.",
+      "Plataforma web que permite a los usuarios buscar, reservar y gestionar servicios de barbería.",
     tags: [
       {
         name: "HTML",
@@ -200,7 +200,7 @@ const projects = [
   {
     name: "Job IT",
     description:
-      "Aplicación web que permite a los usuarios buscar ofertas de trabajo, ver rangos salariales estimados para posiciones y localizar trabajos disponibles basándose en su ubicación actual.",
+      "Aplicación web que permite a los usuarios buscar ofertas de trabajo.",
     tags: [
       {
         name: "HTML",
@@ -221,7 +221,7 @@ const projects = [
   {
     name: "Trip Guide",
     description:
-      "Una plataforma integral de reservas de viajes que permite a los usuarios reservar vuelos, hoteles y autos de alquiler, y ofrece recomendaciones seleccionadas para destinos populares.",
+      "Una plataforma integral de reservas de viajes que permite a los usuarios reservar vuelos.",
     tags: [
       {
         name: "nextjs",

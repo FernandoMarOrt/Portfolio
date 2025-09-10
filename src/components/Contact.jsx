@@ -1,9 +1,7 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
 
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
-import { slideIn, fadeIn } from "../utils/motion";
 import githubSvg from "../assets/github.svg";
 import linkedinSvg from "../assets/linkedin.svg";
 import gmailSvg from "../assets/gmail.svg";
@@ -34,7 +32,78 @@ const socialLinks = [
     bgGradient: "from-green-800 to-green-900"
   }
 ];
+
+// Componente de contacto minimalista para móvil
+const MobileContact = () => (
+  <section className="py-16 px-6">
+    <div className="max-w-md mx-auto text-center">
+      <p className={styles.sectionSubText}>Conecta conmigo</p>
+      <h2 className={styles.sectionHeadText}>Contacto.</h2>
+      
+      <div className="space-y-4 mt-8">
+        {socialLinks.map((link) => (
+          <a
+            key={link.name}
+            href={link.url}
+            target={link.name !== "Email" ? "_blank" : "_self"}
+            rel={link.name !== "Email" ? "noopener noreferrer" : ""}
+            className="flex items-center justify-between p-4 bg-gray-900/50 rounded-lg border border-gray-800 hover:border-gray-700 transition-colors duration-200"
+          >
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 flex-shrink-0">
+                <img 
+                  src={link.name === "GitHub" ? githubSvg : link.name === "LinkedIn" ? linkedinSvg : gmailSvg} 
+                  alt={link.name} 
+                  className="w-full h-full" 
+                />
+              </div>
+              <div className="text-left">
+                <div className="text-white text-sm font-medium">{link.name}</div>
+                <div className="text-secondary text-xs">{link.description}</div>
+              </div>
+            </div>
+            <div className="text-gray-500">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </a>
+        ))}
+      </div>
+      
+      <p className="text-secondary text-[16px] mt-8 leading-relaxed">
+        ¿Tienes un proyecto en mente? <br />
+        ¡Hablemos!
+      </p>
+    </div>
+  </section>
+);
+
 const Contact = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      // Solo usar window.innerWidth para la detección responsiva
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+    };
+
+    // Verificar inicialmente
+    checkMobile();
+    
+    // Agregar listener para cambios de tamaño
+    window.addEventListener('resize', checkMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Versión minimalista para móvil
+  if (isMobile) {
+    return <MobileContact />;
+  }
+
   const getButtonText = (linkName) => {
     switch (linkName) {
       case "Email":
@@ -46,6 +115,7 @@ const Contact = () => {
     }
   };
 
+  // Versión desktop original
   return (
   <div className="flex justify-center w-full min-h-[60vh] bg-black-100">
       <div
@@ -63,19 +133,16 @@ const Contact = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 xs:gap-10 mb-12">
             {socialLinks.map((link, index) => (
-              <motion.div
+              <div
                 key={link.name}
-                variants={fadeIn("up", "spring", index * 0.2, 0.75)}
                 className="group relative h-full"
               >
-                <motion.a
+                <a
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`relative block bg-tertiary p-4 xs:p-8 sm:p-10 rounded-2xl border-2 ${link.border} transition-all duration-500 transform hover:scale-105 hover:shadow-2xl overflow-hidden h-full min-h-[180px] xs:min-h-[240px] sm:min-h-[320px] flex flex-col justify-center before:content-[''] before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none before:border-2 before:border-white/40 before:blur before:opacity-70 before:z-0`}
                   style={{ boxShadow: '0 0 16px 0 rgba(255,255,255,0.18), 0 0 0 2px rgba(255,255,255,0.10) inset' }}
-                  whileHover={{ y: -8 }}
-                  whileTap={{ scale: 0.95 }}
                 >
                   {/* Fondo degradado solo en hover escritorio */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${link.bgGradient} opacity-0 sm:group-hover:opacity-10 transition-opacity duration-500 rounded-2xl`}></div>
@@ -123,8 +190,8 @@ const Contact = () => {
 
                   {/* Borde animado */}
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-100 transition-opacity duration-500"></div>
-                </motion.a>
-              </motion.div>
+                </a>
+              </div>
             ))}
           </div>
         </div>

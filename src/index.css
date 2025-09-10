@@ -13,6 +13,15 @@
   color-scheme: dark;
 }
 
+/* Utility para truncar texto en móvil */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .hash-span {
   margin-top: -100px;
   padding-bottom: 100px;
