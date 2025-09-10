@@ -42,9 +42,9 @@ const ServiceCard = ({ index, title, icon }) => (
 const About = () => {
   return (
     <>
-      <motion.div variants={textVariant()}>
+      <div>
         <h2 className={styles.sectionHeadText}>Sobre mi.</h2>
-      </motion.div>
+      </div>
 
       <motion.p
         variants={fadeIn("", "", 0.1, 1)}

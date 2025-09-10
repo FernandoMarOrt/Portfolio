@@ -3,6 +3,8 @@ import { usePerformanceOptimization } from '../hooks/useAnimations';
 import { WebGLErrorMessage } from '../components/FallbackCanvas';
 import { GeneralLoader } from '../components/Loader';
 
+// @refresh reset
+
 // Simple Error Boundary implementation
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -144,12 +146,12 @@ const withWebGLFallback = (CanvasComponent, FallbackComponent, options = {}) => 
         {/* Debug Panel */}
         {showDebugInfo && (
           <>
-            {/* <button
+            <button
               onClick={() => setDebugVisible(!debugVisible)}
               className="fixed top-4 right-4 z-50 bg-black bg-opacity-50 text-white p-2 rounded text-xs"
             >
               Debug WebGL
-            </button> */}
+            </button>
             
             {debugVisible && (
               <div className="fixed top-16 right-4 z-50 bg-black bg-opacity-90 text-white p-4 rounded text-xs max-w-xs">

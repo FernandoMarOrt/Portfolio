@@ -157,14 +157,11 @@ const Tech = () => {
   return (
     <>
       {/* Título principal */}
-      <motion.div
-        variants={textVariant()}
-        className="text-center mb-16"
-      >
-  <h2 className={`${styles.sectionHeadText} text-center text-white`}>
+      <div className="text-center mb-16">
+        <h2 className={`${styles.sectionHeadText} text-center text-white`}>
           Tecnologías y Herramientas
         </h2>
-      </motion.div>
+      </div>
 
       {/* Grid simple de todas las tecnologías */}
       <motion.div

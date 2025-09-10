@@ -87,7 +87,7 @@ const StarsFallback = ({ className = '' }) => {
           left: 0;
           width: 100%;
           height: 100%;
-          background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+          background: #000000;
           z-index: -1;
         }
 

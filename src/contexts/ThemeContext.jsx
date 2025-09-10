@@ -19,19 +19,20 @@ export const ThemeProvider = ({ children }) => {
       setShowStars(savedStars === 'true');
     }
   }, []);
+  
   useEffect(() => {
     localStorage.setItem('portfolio-stars', showStars.toString());
-  });
+  }, [showStars]);
 
   const toggleStars = () => {
-    setShowStars(!showStars);
+    setShowStars(prev => !prev);
   };
 
   const value = {
     showStars,
     toggleStars,
-
   };
+  
   return (
     <ThemeContext.Provider value={value}>
       {children}

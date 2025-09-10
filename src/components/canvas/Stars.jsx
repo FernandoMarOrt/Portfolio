@@ -1,4 +1,4 @@
-import { useState, useRef, Suspense } from "react";
+import { useState, useRef, Suspense, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, Preload } from "@react-three/drei";
 import withWebGLFallback from "../../hoc/withWebGLFallback";
@@ -47,6 +47,16 @@ const Stars = ({ performanceLevel = 'medium', ...props }) => {
     }
   });
 
+  // Cleanup function for component unmount
+  useEffect(() => {
+    return () => {
+      // Force cleanup of any references
+      if (ref.current) {
+        ref.current = null;
+      }
+    };
+  }, []);
+
   return (
     <group rotation={[0, 0, Math.PI / 4]}>
       <Points ref={ref} positions={sphere} stride={3} frustumCulled={false} {...props}>
@@ -63,20 +73,36 @@ const Stars = ({ performanceLevel = 'medium', ...props }) => {
 };
 
 const StarsCanvas = ({ performanceLevel = 'medium', gl }) => {
+  const [canvasKey, setCanvasKey] = useState(0);
+
+  // Force re-render on mount to ensure clean state
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCanvasKey(prev => prev + 1);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className='stars-canvas'>
       <Canvas 
+        key={canvasKey}
         camera={{ position: [0, 0, 1] }}
         gl={{
           alpha: true,
           antialias: performanceLevel !== 'low',
           powerPreference: performanceLevel === 'low' ? 'low-power' : 'high-performance',
+          preserveDrawingBuffer: false,
           ...gl
         }}
         onCreated={({ gl: renderer }) => {
           if (performanceLevel === 'low') {
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
           }
+          
+          // Clear any previous WebGL state
+          renderer.clear();
         }}
       >
         <Suspense fallback={null}>

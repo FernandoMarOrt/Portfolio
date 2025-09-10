@@ -4,24 +4,33 @@ import React, { Suspense, lazy } from "react";
 import { Hero, Navbar } from "./components";
 import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
 import ScrollProgress from "./components/ScrollProgress";
+import StarryBackground from "./components/StarryBackground";
 
 const About = lazy(() => import("./components/About"));
 const Tech = lazy(() => import("./components/Tech"));
 const Experience = lazy(() => import("./components/Experience"));
 const Works = lazy(() => import("./components/Works"));
 const Contact = lazy(() => import("./components/Contact"));
-const StarsCanvas = lazy(() => import("./components/canvas/Stars"));
+const StarsManager = lazy(() => import("./components/StarsManager"));
 
 const AppContent = () => {
   const { showStars } = useTheme();
+
+  // Detectar si es móvil
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                   window.innerWidth < 768 ||
+                   ('ontouchstart' in window);
 
   return (
     <BrowserRouter>
       <div className='relative z-0 bg-primary'>
         <ScrollProgress />
         <Suspense fallback={null}>
-          {showStars && <StarsCanvas />}
+          {/* Solo mostrar estrellas 3D en desktop */}
+          {!isMobile && showStars && <StarsManager key={`stars-${showStars}`} />}
         </Suspense>
+        {/* Fondo estrellado CSS: en móvil siempre, en desktop cuando las estrellas están desactivadas */}
+        <StarryBackground isActive={isMobile || !showStars} starCount={150} />
         <div className='main-content'>
           <div className='relative'>
             <Navbar />
