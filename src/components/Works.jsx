@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
 
@@ -16,16 +16,6 @@ const ProjectCard = ({
   image,
   source_code_link,
 }) => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const cardContent = (
     <>
@@ -77,28 +67,30 @@ const ProjectCard = ({
     </>
   );
 
+  const cardClasses = 'bg-gradient-to-br from-[#181c2b] via-[#232946] to-[#0f172a] p-4 xs:p-5 rounded-2xl sm:w-[360px] w-full max-w-[400px] mx-auto relative border-2 border-white/80 dark:border-white/40 before:content-[" "] before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none before:border-2 before:border-blue-400/40 before:blur-2xl before:opacity-90 before:z-0 animate-glow-card hover:scale-105 hover:shadow-[0_0_64px_16px_rgba(96,165,250,0.35)] transition-transform duration-300 group';
+
   return (
     <div>
-      {isMobile ? (
-        <div
-          className='bg-gradient-to-br from-[#181c2b] via-[#232946] to-[#0f172a] p-4 xs:p-5 rounded-2xl sm:w-[360px] w-full max-w-[400px] mx-auto relative border-2 border-white/80 dark:border-white/40 before:content-[" "] before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none before:border-2 before:border-blue-400/40 before:blur-2xl before:opacity-90 before:z-0 animate-glow-card hover:scale-105 hover:shadow-[0_0_64px_16px_rgba(96,165,250,0.35)] transition-transform duration-300 group'
-          style={{ boxShadow: '0 0 48px 0 rgba(96,165,250,0.25), 0 0 0 3px rgba(255,255,255,0.18) inset' }}
-        >
-          {cardContent}
-        </div>
-      ) : (
-        <Tilt
-          options={{
-            max: 45,
-            scale: 1,
-            speed: 450,
-          }}
-          className='bg-gradient-to-br from-[#181c2b] via-[#232946] to-[#0f172a] p-4 xs:p-5 rounded-2xl sm:w-[360px] w-full max-w-[400px] mx-auto relative border-2 border-white/80 dark:border-white/40 before:content-[" "] before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none before:border-2 before:border-blue-400/40 before:blur-2xl before:opacity-90 before:z-0 animate-glow-card hover:scale-105 hover:shadow-[0_0_64px_16px_rgba(96,165,250,0.35)] transition-transform duration-300 group'
-          style={{ boxShadow: '0 0 48px 0 rgba(96,165,250,0.25), 0 0 0 3px rgba(255,255,255,0.18) inset' }}
-        >
-          {cardContent}
-        </Tilt>
-      )}
+      {/* Versión móvil sin Tilt - visible solo en móvil */}
+      <div
+        className={`md:hidden ${cardClasses}`}
+        style={{ boxShadow: '0 0 48px 0 rgba(96,165,250,0.25), 0 0 0 3px rgba(255,255,255,0.18) inset' }}
+      >
+        {cardContent}
+      </div>
+
+      {/* Versión desktop con Tilt - visible solo en desktop */}
+      <Tilt
+        options={{
+          max: 45,
+          scale: 1,
+          speed: 450,
+        }}
+        className={`hidden md:block ${cardClasses}`}
+        style={{ boxShadow: '0 0 48px 0 rgba(96,165,250,0.25), 0 0 0 3px rgba(255,255,255,0.18) inset' }}
+      >
+        {cardContent}
+      </Tilt>
     </div>
   );
 };

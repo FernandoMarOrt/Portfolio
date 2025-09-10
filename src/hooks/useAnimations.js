@@ -31,22 +31,7 @@ export const useInView = (threshold = 0.1, rootMargin = '0px') => {
   return [ref, isInView];
 };
 
-// Hook para detectar dispositivo móvil
-export const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  return isMobile;
-};
 
 // Hook para scroll con throttle
 export const useScrollPosition = () => {

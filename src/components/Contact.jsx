@@ -92,13 +92,13 @@ const Contact = () => {
                       {link.description}
                     </p>
                     {/* Botón call-to-action */}
-                    <div className="mt-4 px-4 py-2 bg-primary rounded-full text-white text-[12px] xs:text-[14px] font-semibold opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transform translate-y-0 sm:translate-y-4 sm:group-hover:translate-y-0 transition-all duration-300">
+                    <div className="mt-4 px-4 py-2 bg-primary rounded-full text-white text-[12px] xs:text-[14px] font-semibold opacity-100 transition-all duration-300">
                       {getButtonText(link.name)}
                     </div>
                   </div>
 
                   {/* Icono de enlace externo */}
-                  <div className="absolute top-4 right-4 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 transform translate-x-0 sm:translate-x-2 sm:group-hover:translate-x-0">
+                  <div className="absolute top-4 right-4 opacity-100 transition-all duration-300">
                     <svg
                       className="w-5 h-5 text-white"
                       fill="none"
@@ -115,14 +115,14 @@ const Contact = () => {
                   </div>
 
                   {/* Efectos de partículas decorativos */}
-                  <div className="absolute inset-0 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 opacity-100 transition-opacity duration-700">
                     <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full animate-ping"></div>
                     <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-white rounded-full animate-ping animation-delay-300"></div>
                     <div className="absolute bottom-1/4 left-1/3 w-1 h-1 bg-white rounded-full animate-ping animation-delay-600"></div>
                   </div>
 
                   {/* Borde animado */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-100 transition-opacity duration-500"></div>
                 </motion.a>
               </motion.div>
             ))}

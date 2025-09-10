@@ -9,17 +9,19 @@ import { fadeIn, textVariant } from "../utils/motion";
 import LazyImage from "./LazyImage";
 
 const ServiceCard = ({ index, title, icon }) => (
-  <Tilt className='xs:w-[250px] w-[200px] max-w-[300px] mx-auto'>
+  <Tilt 
+    className='xs:w-[250px] w-[200px] max-w-[300px] mx-auto'
+    options={{
+      max: window.innerWidth > 768 ? 45 : 0,
+      scale: window.innerWidth > 768 ? 1 : 1,
+      speed: window.innerWidth > 768 ? 450 : 0,
+    }}
+  >
     <motion.div
       variants={fadeIn("right", "spring", index * 0.5, 0.75)}
       className='w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card'
     >
       <div
-        options={{
-          max: 45,
-          scale: 1,
-          speed: 450,
-        }}
         className='bg-tertiary rounded-[20px] py-4 px-4 xs:px-6 sm:px-8 min-h-[220px] xs:min-h-[260px] sm:min-h-[280px] flex justify-evenly items-center flex-col'
       >
         <LazyImage

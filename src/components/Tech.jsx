@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { textVariant } from "../utils/motion";
 import { SectionWrapper } from "../hoc";
 import { styles } from "../styles";
-import { useInView, useIsMobile } from "../hooks/useAnimations";
+import { useInView } from "../hooks/useAnimations";
 import LazyImage from "./LazyImage";
 
 import htmlIcon from '../assets/tech/html.png';
@@ -55,7 +55,6 @@ const categoryConfig = {
 // Componente SkillCard rediseñado con temática espacial
 const SkillCard = ({ tech, index }) => {
   const [ref, isInView] = useInView(0.2);
-  const isMobile = useIsMobile();
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -68,12 +67,12 @@ const SkillCard = ({ tech, index }) => {
         type: "spring",
         stiffness: 100
       }}
-      whileHover={!isMobile ? {
+      whileHover={{
         scale: 1.08,
         rotateY: 5,
         z: 50
-      } : {}}
-      className="group relative"
+      }}
+      className="group relative md:hover:scale-105"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
