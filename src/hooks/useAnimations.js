@@ -116,6 +116,95 @@ export const useImagePreload = (images) => {
   return imagesLoaded;
 };
 
+// Hook para detección de WebGL y capacidades del dispositivo
+export const useWebGLCapabilities = () => {
+  const [capabilities, setCapabilities] = useState({
+    webgl1: null,
+    webgl2: null,
+    hasHardwareAcceleration: null,
+    maxTextureSize: null,
+    vendor: null,
+    renderer: null,
+    isLowEnd: null,
+    recommendFallback: null,
+    isLoading: true
+  });
+
+  useEffect(() => {
+    const detectWebGLCapabilities = () => {
+      let webgl1 = false;
+      let webgl2 = false;
+      let hasHardwareAcceleration = false;
+      let maxTextureSize = 0;
+      let vendor = '';
+      let renderer = '';
+      let isLowEnd = false;
+
+      try {
+        // Test WebGL 1.0
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        
+        if (gl) {
+          webgl1 = true;
+          
+          // Get renderer info
+          const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+          if (debugInfo) {
+            vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || '';
+            renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || '';
+            
+            // Check for software rendering indicators
+            const softwareIndicators = [
+              'swiftshader', 'llvmpipe', 'mesa', 'software', 'microsoft basic render'
+            ];
+            hasHardwareAcceleration = !softwareIndicators.some(indicator => 
+              renderer.toLowerCase().includes(indicator)
+            );
+          }
+          
+          maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
+          
+          // Determine if device is low-end based on various factors
+          isLowEnd = maxTextureSize < 4096 || 
+                    renderer.toLowerCase().includes('intel') ||
+                    /mobile|android|iphone|ipad/i.test(navigator.userAgent);
+        }
+
+        // Test WebGL 2.0
+        const gl2 = canvas.getContext('webgl2');
+        if (gl2) {
+          webgl2 = true;
+        }
+
+        // Clean up
+        canvas.remove();
+
+      } catch (error) {
+        console.warn('WebGL detection failed:', error);
+      }
+
+      const recommendFallback = !webgl1 || !hasHardwareAcceleration || isLowEnd;
+
+      setCapabilities({
+        webgl1,
+        webgl2,
+        hasHardwareAcceleration,
+        maxTextureSize,
+        vendor,
+        renderer,
+        isLowEnd,
+        recommendFallback,
+        isLoading: false
+      });
+    };
+
+    detectWebGLCapabilities();
+  }, []);
+
+  return capabilities;
+};
+
 // Hook para detección de preferencias de usuario
 export const useUserPreferences = () => {
   const [preferences, setPreferences] = useState({
@@ -153,4 +242,24 @@ export const useUserPreferences = () => {
   }, []);
 
   return preferences;
+};
+
+// Hook combinado para optimización de rendimiento
+export const usePerformanceOptimization = () => {
+  const webglCapabilities = useWebGLCapabilities();
+  const userPreferences = useUserPreferences();
+
+  const shouldUse3D = !webglCapabilities.recommendFallback && 
+                     !userPreferences.reducedMotion && 
+                     !webglCapabilities.isLoading;
+
+  const performanceLevel = webglCapabilities.isLowEnd ? 'low' : 
+                          webglCapabilities.webgl2 ? 'high' : 'medium';
+
+  return {
+    ...webglCapabilities,
+    ...userPreferences,
+    shouldUse3D,
+    performanceLevel
+  };
 };

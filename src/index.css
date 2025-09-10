@@ -1094,3 +1094,126 @@ html {
   0% { text-shadow: 0 0 8px #a78bfa, 0 0 16px #60a5fa55; }
   100% { text-shadow: 0 0 24px #a78bfa, 0 0 48px #60a5fa99; }
 }
+
+/* WebGL Fallback Styles */
+.webgl-fallback {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.stars-fallback {
+  pointer-events: none;
+  user-select: none;
+}
+
+.stars-fallback .star {
+  will-change: opacity, transform;
+  transform: translateZ(0);
+}
+
+/* Performance optimized animations */
+@media (prefers-reduced-motion: reduce) {
+  .stars-fallback .star {
+    animation: none !important;
+  }
+  
+  .webgl-fallback * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* GPU acceleration for fallback elements */
+.computer-fallback {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.computer-fallback .animate-pulse,
+.computer-fallback .animate-bounce,
+.computer-fallback .animate-ping {
+  transform: translateZ(0);
+}
+
+/* Low-end device optimizations */
+@media (max-width: 768px), (pointer: coarse) {
+  .stars-fallback .star {
+    animation-duration: 4s !important;
+  }
+  
+  .computer-fallback .animate-pulse {
+    animation-duration: 3s !important;
+  }
+  
+  .computer-fallback .animate-bounce {
+    animation-duration: 2s !important;
+  }
+}
+
+/* WebGL error message styles */
+.webgl-error-backdrop {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Canvas loader improvements */
+.canvas-loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #f272c8;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+  transform: translateZ(0);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg) translateZ(0); }
+  100% { transform: rotate(360deg) translateZ(0); }
+}
+
+/* Debug panel styles */
+.webgl-debug-panel {
+  font-family: 'Courier New', monospace;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Smooth transitions for fallback switching */
+.canvas-container {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.canvas-container.switching {
+  opacity: 0.7;
+}
+
+/* Performance indicator styles */
+.performance-indicator {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.performance-indicator.high {
+  background: #10b981;
+  color: white;
+}
+
+.performance-indicator.medium {
+  background: #f59e0b;
+  color: white;
+}
+
+.performance-indicator.low {
+  background: #ef4444;
+  color: white;
+}

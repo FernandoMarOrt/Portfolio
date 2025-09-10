@@ -68,7 +68,7 @@ const Navbar = () => {
         >
           <img src={logo} alt='logo' className='w-9 h-9 xs:w-8 xs:h-8 xxs:w-7 xxs:h-7 object-contain flex-shrink-0' />          <p className='text-white text-[18px] xs:text-[16px] xxs:text-[15px] font-bold cursor-pointer flex flex-wrap'>
             <span className="whitespace-nowrap">Fernando</span>&nbsp;
-            <span className='sm:inline hidden whitespace-nowrap'>| Desarrollador Full Stack</span>
+  
             <span className='sm:hidden xs:inline hidden whitespace-nowrap'>| Dev</span>
           </p>
         </Link>        <ul className='list-none hidden sm:flex flex-row gap-6 lg:gap-10 items-center'>

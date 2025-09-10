@@ -1,15 +1,26 @@
 import { useState, useRef, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, Preload } from "@react-three/drei";
-import * as random from "maath/random/dist/maath-random.esm";
+import withWebGLFallback from "../../hoc/withWebGLFallback";
+import { StarsFallback } from "../FallbackCanvas";
 
-const Stars = (props) => {
+const Stars = ({ performanceLevel = 'medium', ...props }) => {
   const ref = useRef();
+  
+  // Optimize star count based on performance level
+  const starCounts = {
+    low: 1000,
+    medium: 3000,
+    high: 5000
+  };
+  
+  const starCount = starCounts[performanceLevel] || starCounts.medium;
+  
   const [sphere] = useState(() => {
-    const positions = new Float32Array(5000 * 3);
+    const positions = new Float32Array(starCount * 3);
     
     // Generate random positions within a sphere
-    for (let i = 0; i < 5000; i++) {
+    for (let i = 0; i < starCount; i++) {
       const radius = Math.random() * 1.2;
       const theta = Math.random() * 2 * Math.PI;
       const phi = Math.acos(2 * Math.random() - 1);
@@ -29,8 +40,10 @@ const Stars = (props) => {
 
   useFrame((state, delta) => {
     if (ref.current) {
-      ref.current.rotation.x -= delta / 10;
-      ref.current.rotation.y -= delta / 15;
+      // Reduce animation intensity for low performance
+      const rotationMultiplier = performanceLevel === 'low' ? 0.5 : 1;
+      ref.current.rotation.x -= (delta / 10) * rotationMultiplier;
+      ref.current.rotation.y -= (delta / 15) * rotationMultiplier;
     }
   });
 
@@ -40,7 +53,7 @@ const Stars = (props) => {
         <PointMaterial
           transparent
           color='#f272c8'
-          size={0.002}
+          size={performanceLevel === 'low' ? 0.001 : 0.002}
           sizeAttenuation={true}
           depthWrite={false}
         />
@@ -49,12 +62,25 @@ const Stars = (props) => {
   );
 };
 
-const StarsCanvas = () => {
+const StarsCanvas = ({ performanceLevel = 'medium', gl }) => {
   return (
     <div className='stars-canvas'>
-      <Canvas camera={{ position: [0, 0, 1] }}>
+      <Canvas 
+        camera={{ position: [0, 0, 1] }}
+        gl={{
+          alpha: true,
+          antialias: performanceLevel !== 'low',
+          powerPreference: performanceLevel === 'low' ? 'low-power' : 'high-performance',
+          ...gl
+        }}
+        onCreated={({ gl: renderer }) => {
+          if (performanceLevel === 'low') {
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+          }
+        }}
+      >
         <Suspense fallback={null}>
-          <Stars />
+          <Stars performanceLevel={performanceLevel} />
         </Suspense>
 
         <Preload all />
@@ -63,4 +89,15 @@ const StarsCanvas = () => {
   );
 };
 
-export default StarsCanvas;
+// Apply WebGL fallback HOC
+const EnhancedStarsCanvas = withWebGLFallback(
+  StarsCanvas, 
+  StarsFallback,
+  {
+    enablePerformanceMode: true,
+    enableErrorRecovery: true,
+    showDebugInfo: process.env.NODE_ENV === 'development'
+  }
+);
+
+export default EnhancedStarsCanvas;

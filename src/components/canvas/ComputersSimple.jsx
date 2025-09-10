@@ -1,9 +1,7 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useEffect, useRef, useState } from "react";
-import * as THREE from "three";
 import CanvasLoader from "../Loader";
-import withSimpleWebGLFallback from "../../hoc/withSimpleWebGLFallback";
 import SimpleComputerFallback from "../SimpleComputerFallback";
 
 const Computers = ({ scale, position }) => {
@@ -18,12 +16,7 @@ const Computers = ({ scale, position }) => {
   }, [actions]);
 
   return (
-    <mesh 
-      ref={spacemanRef} 
-      position={position} 
-      scale={scale} 
-      rotation={[0, 2.2, 0]}
-    >
+    <mesh ref={spacemanRef} position={position} scale={scale} rotation={[0, 2.2, 0]}>
       <primitive object={scene} />
     </mesh>
   );
@@ -34,6 +27,7 @@ const ComputersCanvas = ({ scrollContainer }) => {
   const [rotationY, setRotationY] = useState(0);
   const [scale, setScale] = useState([2, 2, 2]);
   const [position, setPosition] = useState([0.2, -0.7, 0]);
+  const [hasError, setHasError] = useState(false);
 
   const containerRef = scrollContainer || { current: document.createElement('div') };
 
@@ -77,6 +71,20 @@ const ComputersCanvas = ({ scrollContainer }) => {
     };
   }, [scrollContainer]);
 
+  // Simple WebGL detection
+  const isWebGLAvailable = () => {
+    try {
+      const canvas = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext && canvas.getContext('webgl'));
+    } catch (e) {
+      return false;
+    }
+  };
+
+  if (hasError || !isWebGLAvailable()) {
+    return <SimpleComputerFallback />;
+  }
+
   return (
     <Canvas 
       className="w-full h-screen bg-transparent"
@@ -86,6 +94,12 @@ const ComputersCanvas = ({ scrollContainer }) => {
         position: 'relative'
       }}
       gl={{ alpha: true }}
+      onCreated={({ gl }) => {
+        // Test if WebGL context is working
+        if (!gl.getParameter(gl.VERSION)) {
+          setHasError(true);
+        }
+      }}
     >
       <Suspense fallback={<CanvasLoader />}>
         <directionalLight position={[1, 1, 1]} intensity={2} />
@@ -94,21 +108,10 @@ const ComputersCanvas = ({ scrollContainer }) => {
         <spotLight position={[0, 50, 10]} angle={0.15} penumbra={1} intensity={2} />
         <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={1} />
 
-        <Computers 
-          rotationX={rotationX} 
-          rotationY={rotationY} 
-          scale={scale} 
-          position={position}
-        />
+        <Computers rotationX={rotationX} rotationY={rotationY} scale={scale} position={position} />
       </Suspense>
     </Canvas>
   );
 };
 
-// Apply WebGL fallback HOC
-const EnhancedComputersCanvas = withSimpleWebGLFallback(
-  ComputersCanvas, 
-  SimpleComputerFallback
-);
-
-export default EnhancedComputersCanvas;
+export default ComputersCanvas;
