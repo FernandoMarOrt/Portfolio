@@ -26,7 +26,7 @@ const socialLinks = [
   {
     name: "Email",
     icon: <img src={gmailSvg} alt="Email" className="w-12 h-12 xs:w-16 xs:h-16 sm:w-20 sm:h-20" />,
-    url: "mailto:fmarort153@gmail.com",
+    url: "mailto:fmarort153@gmail.com?subject=Contacto desde Portfolio&body=Hola Fernando,%0D%0A%0D%0AMe gustaría contactar contigo...",
     description: "Envíame un mensaje",
     border: "border-green-500 sm:border-white/60 sm:dark:border-white/20 sm:hover:border-green-500 sm:hover:shadow-green-500/20",
     bgGradient: "from-green-800 to-green-900"
@@ -34,7 +34,7 @@ const socialLinks = [
 ];
 
 // Componente de contacto minimalista para móvil
-const MobileContact = () => (
+const MobileContact = ({ handleEmailClick }) => (
   <section className="py-16 px-6">
     <div className="max-w-md mx-auto text-center">
       <p className={styles.sectionSubText}>Conecta conmigo</p>
@@ -47,6 +47,7 @@ const MobileContact = () => (
             href={link.url}
             target={link.name !== "Email" ? "_blank" : "_self"}
             rel={link.name !== "Email" ? "noopener noreferrer" : ""}
+            onClick={(e) => handleEmailClick(e, link.url)}
             className="flex items-center justify-between p-4 bg-gray-900/50 rounded-lg border border-gray-800 hover:border-gray-700 transition-colors duration-200"
           >
             <div className="flex items-center space-x-3">
@@ -99,9 +100,49 @@ const Contact = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  const handleEmailClick = (e, url) => {
+    // Si es el enlace de email, intentar mailto y dar alternativa si falla
+    if (url.startsWith('mailto:')) {
+      try {
+        window.location.href = url;
+        // Detectar si el mailto no funcionó después de un delay
+        setTimeout(() => {
+          const userChoice = confirm(
+            '¿No se abrió tu cliente de email?\n\n' +
+            'Puedes copiar mi email: fmarort153@gmail.com\n\n' +
+            '¿Quieres copiarlo al portapapeles?'
+          );
+          if (userChoice) {
+            navigator.clipboard.writeText('fmarort153@gmail.com').then(() => {
+              alert('¡Email copiado al portapapeles!');
+            }).catch(() => {
+              alert('Email: fmarort153@gmail.com');
+            });
+          }
+        }, 1000);
+      } catch (error) {
+        // Fallback si mailto falla
+        const userChoice = confirm(
+          'No se pudo abrir el cliente de email.\n\n' +
+          'Mi email es: fmarort153@gmail.com\n\n' +
+          '¿Quieres copiarlo al portapapeles?'
+        );
+        if (userChoice) {
+          navigator.clipboard.writeText('fmarort153@gmail.com').then(() => {
+            alert('¡Email copiado al portapapeles!');
+          }).catch(() => {
+            alert('Email: fmarort153@gmail.com');
+          });
+        }
+      }
+      e.preventDefault();
+      return false;
+    }
+  };
+
   // Versión minimalista para móvil
   if (isMobile) {
-    return <MobileContact />;
+    return <MobileContact handleEmailClick={handleEmailClick} />;
   }
 
   const getButtonText = (linkName) => {
@@ -139,8 +180,9 @@ const Contact = () => {
               >
                 <a
                   href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={link.name !== "Email" ? "_blank" : "_self"}
+                  rel={link.name !== "Email" ? "noopener noreferrer" : ""}
+                  onClick={(e) => handleEmailClick(e, link.url)}
                   className={`relative block bg-tertiary p-4 xs:p-8 sm:p-10 rounded-2xl border-2 ${link.border} transition-all duration-500 transform hover:scale-105 hover:shadow-2xl overflow-hidden h-full min-h-[180px] xs:min-h-[240px] sm:min-h-[320px] flex flex-col justify-center before:content-[''] before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none before:border-2 before:border-white/40 before:blur before:opacity-70 before:z-0`}
                   style={{ boxShadow: '0 0 16px 0 rgba(255,255,255,0.18), 0 0 0 2px rgba(255,255,255,0.10) inset' }}
                 >
