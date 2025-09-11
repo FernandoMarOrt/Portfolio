@@ -7,7 +7,7 @@ Un portafolio moderno y profesional construido con React, Three.js y las última
 - **Frontend:** React 18, Vite, Tailwind CSS
 - **3D:** Three.js, React Three Fiber, React Three Drei
 - **Animaciones:** Framer Motion
-- **Otros:** React Router, EmailJS
+- **Otros:** React Router
 
 ## 🚀 Instalación y Uso
 
