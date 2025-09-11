@@ -30,7 +30,7 @@ const AppContent = () => {
           {!isMobile && showStars && <StarsManager key={`stars-${showStars}`} />}
         </Suspense>
         {/* Fondo estrellado CSS: en móvil siempre, en desktop cuando las estrellas están desactivadas */}
-        <StarryBackground isActive={isMobile || !showStars} starCount={150} />
+        <StarryBackground isActive={isMobile || !showStars} starCount={180} />
         <div className='main-content'>
           <div className='relative'>
             <Navbar />

@@ -80,16 +80,8 @@ const Works = () => {
   return (
     <>
       <div>
-        <h2 className={`${styles.sectionHeadText}`}>Proyectos</h2>
+        <h2 className={`${styles.sectionHeadText} text-center`}>Proyectos</h2>
       </div>
-      <div className='w-full flex'>
-        <p
-          className='mt-3 text-secondary text-[15px] xs:text-[16px] sm:text-[17px] max-w-3xl leading-[26px] xs:leading-[28px] sm:leading-[30px]'
-        >
-          Los siguientes proyectos muestran mis habilidades y experiencia a través de ejemplos reales de mi trabajo. Cada proyecto se describe brevemente con enlaces a repositorios de código y demostraciones en vivo. Refleja mi capacidad para resolver problemas complejos, trabajar con diferentes tecnologías y gestionar proyectos de forma eficaz.
-        </p>
-      </div>
-
       <div className='mt-12 xs:mt-16 sm:mt-20 flex flex-wrap gap-6 xs:gap-7 justify-center'>
         {projects.map((project, index) => (
           <ProjectCard key={`project-${index}`} index={index} {...project} />

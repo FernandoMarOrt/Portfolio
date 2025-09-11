@@ -31,9 +31,9 @@ const StarryBackground = ({ isActive = true, starCount = 100 }) => {
               top: `${Math.random() * 100}%`,
               animationDelay: `${Math.random() * 2}s`,
               animationDuration: `${2 + Math.random() * 3}s`,
-              // Diferentes tamaños de estrellas para más realismo
-              width: `${1 + Math.random() * 2}px`,
-              height: `${1 + Math.random() * 2}px`,
+              // Puntos blancos
+              width: `${2 + Math.random() * 3}px`,
+              height: `${2 + Math.random() * 3}px`,
             }}
           />
         ))}
@@ -51,6 +51,9 @@ const StarryBackground = ({ isActive = true, starCount = 100 }) => {
           pointer-events: none;
           opacity: 0;
           transition: opacity 0.3s ease-in-out;
+          /* Optimización para mejor scroll */
+          transform: translateZ(0);
+          will-change: opacity;
         }
 
         .starry-background.visible {
@@ -65,27 +68,31 @@ const StarryBackground = ({ isActive = true, starCount = 100 }) => {
           position: relative;
           width: 100%;
           height: 100%;
+          /* Optimización GPU */
+          transform: translateZ(0);
+          backface-visibility: hidden;
         }
 
         .star {
           position: absolute;
-          background: #f272c8;
+          background: #ffffff;
           border-radius: 50%;
           animation: twinkle linear infinite;
           transform: translateZ(0);
           will-change: opacity, transform;
         }
 
+        /* Variaciones sutiles de blanco para más naturalidad */
         .star:nth-child(3n) {
-          background: #60a5fa;
+          background: #f8f8f8;
         }
 
         .star:nth-child(4n) {
-          background: #a78bfa;
+          background: #ffffff;
         }
 
         .star:nth-child(5n) {
-          background: #fbbf24;
+          background: #fafafa;
         }
 
         @keyframes twinkle {

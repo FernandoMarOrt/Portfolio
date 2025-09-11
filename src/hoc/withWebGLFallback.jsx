@@ -145,14 +145,7 @@ const withWebGLFallback = (CanvasComponent, FallbackComponent, options = {}) => 
 
         {/* Debug Panel */}
         {showDebugInfo && (
-          <>
-            <button
-              onClick={() => setDebugVisible(!debugVisible)}
-              className="fixed top-4 right-4 z-50 bg-black bg-opacity-50 text-white p-2 rounded text-xs"
-            >
-              Debug WebGL
-            </button>
-            
+          <>      
             {debugVisible && (
               <div className="fixed top-16 right-4 z-50 bg-black bg-opacity-90 text-white p-4 rounded text-xs max-w-xs">
                 <h4 className="font-bold mb-2">WebGL Info</h4>

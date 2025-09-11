@@ -9,8 +9,19 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
-  scroll-behavior: smooth;
   color-scheme: dark;
+}
+
+/* Smooth scroll solo para navegación programática */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optimización de scroll en móvil */
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* Utility para truncar texto en móvil */
