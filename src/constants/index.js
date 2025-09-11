@@ -177,62 +177,70 @@ const testimonials = [
 
 const projects = [
   {
-    name: "Style Barber",
+    name: "BitLock - (En desarrollo)",
     description:
-      "Plataforma web que permite a los usuarios buscar, reservar y gestionar servicios de barbería.",
+      "Juego de caja fuerte intereactivo con pistas ocultas.",
     tags: [
+       {
+        name: "Astro",
+        color: "orange-text-gradient",
+      },
       {
-        name: "HTML",
-        color: "blue-text-gradient",
+        name: "TypeScript",
+        color: "dark-blue-text-gradient",
       },
       {
         name: "CSS",
-        color: "green-text-gradient",
+        color: "blue-text-gradient",
       },
       {
         name: "JavaScript",
-        color: "pink-text-gradient",
+        color: "yellow-text-gradient",
       },
     ],
     image: carrent,
     source_code_link: "https://github.com/",
   },
   {
-    name: "Job IT",
+    name: "Flow - (En desarrollo)",
     description:
-      "Aplicación web que permite a los usuarios buscar ofertas de trabajo.",
+      "Aplicación web que permite a los usuarios tomar notas y organizar tareas.",
     tags: [
       {
-        name: "HTML",
-        color: "blue-text-gradient",
+        name: "Angular",
+        color: "red-text-gradient",
       },
       {
-        name: "CSS",
+        name: "TypeScript",
+        color: "dark-blue-text-gradient",
+      },
+      {
+        name: ".NET",
+        color: "purple-text-gradient",
+      },
+         {
+        name: "C#",
         color: "green-text-gradient",
-      },
-      {
-        name: "JavaScript",
-        color: "pink-text-gradient",
       },
     ],
     image: jobit,
     source_code_link: "https://github.com/",
   },
   {
-    name: "Trip Guide",
+    name: "MyLedger - (En desarrollo)",
     description:
-      "Una plataforma integral de reservas de viajes que permite a los usuarios reservar vuelos.",
+      "Aplicación móvil que permite al usuario crear y manejar gastos , presupuestos e ingresos.",
     tags: [
       {
-        name: "nextjs",
+        name: "React Native",
         color: "blue-text-gradient",
       },
-      {
-        name: "supabase",
-        color: "green-text-gradient",
+        {
+        name: "TypeScript",
+        color: "dark-blue-text-gradient",
       },
       {
-        name: "css",
+        name: "Expo",
         color: "pink-text-gradient",
       },
     ],
