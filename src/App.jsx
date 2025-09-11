@@ -15,11 +15,15 @@ const StarsManager = lazy(() => import("./components/StarsManager"));
 
 const AppContent = () => {
   const { showStars } = useTheme();
+  const [isMobile, setIsMobile] = React.useState(window.innerWidth < 768);
 
-  // Detectar si es móvil
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
-                   window.innerWidth < 768 ||
-                   ('ontouchstart' in window);
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <BrowserRouter>
