@@ -1,7 +1,6 @@
 import { useState, useRef, Suspense, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, Preload } from "@react-three/drei";
-import withWebGLFallback from "../../hoc/withWebGLFallback";
 import { StarsFallback } from "../FallbackCanvas";
 
 const Stars = ({ performanceLevel = 'medium', ...props }) => {
@@ -115,15 +114,4 @@ const StarsCanvas = ({ performanceLevel = 'medium', gl }) => {
   );
 };
 
-// Apply WebGL fallback HOC
-const EnhancedStarsCanvas = withWebGLFallback(
-  StarsCanvas, 
-  StarsFallback,
-  {
-    enablePerformanceMode: true,
-    enableErrorRecovery: true,
-    showDebugInfo: process.env.NODE_ENV === 'development'
-  }
-);
-
-export default EnhancedStarsCanvas;
+export default StarsCanvas;

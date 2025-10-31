@@ -43,13 +43,13 @@ const technologies = [
 ];
 
 const categoryConfig = {
-  Frontend: { color: "from-blue-500 to-cyan-400", icon: "🌐" },
-  Backend: { color: "from-green-500 to-emerald-400", icon: "⚙️" },
-  Framework: { color: "from-purple-500 to-violet-400", icon: "🏗️" },
-  Tools: { color: "from-orange-500 to-yellow-400", icon: "🛠️" },
-  DevOps: { color: "from-red-500 to-pink-400", icon: "🚀" },
-  Design: { color: "from-indigo-500 to-purple-400", icon: "🎨" },
-  Database: { color: "from-teal-500 to-cyan-400", icon: "🗄️" },
+  Frontend: { color: "from-blue-500 to-cyan-400"},
+  Backend: { color: "from-green-500 to-emerald-400"},
+  Framework: { color: "from-purple-500 to-violet-400"},
+  Tools: { color: "from-orange-500 to-yellow-400"},
+  DevOps: { color: "from-red-500 to-pink-400"},
+  Design: { color: "from-indigo-500 to-purple-400"},
+  Database: { color: "from-teal-500 to-cyan-400"},
 };
 
 // Componente SkillCard rediseñado con temática espacial

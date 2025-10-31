@@ -1,10 +1,95 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import { styles } from "../styles";
 import { navLinks } from "../constants";
 import { logo, menu, close } from "../assets";
 import { useTheme } from "../contexts/ThemeContext";
+
+// Componente de item de navegación desktop
+const NavItem = ({ nav, active, setActive }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <motion.li
+      className="relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ y: -2 }}
+    >
+      <a
+        href={`#${nav.id}`}
+        className={`relative text-[18px] font-medium cursor-pointer transition-all duration-300 block py-2 px-4 rounded-lg ${
+          active === nav.title 
+            ? "text-white" 
+            : "text-gray-300 hover:text-white"
+        }`}
+        onClick={() => setActive(nav.title)}
+      >
+        {nav.title}
+        
+        {/* Efecto de subrayado animado */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#f55f17] via-purple-500 to-blue-500 rounded-full"
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ 
+            scaleX: (active === nav.title || isHovered) ? 1 : 0,
+            opacity: (active === nav.title || isHovered) ? 1 : 0
+          }}
+          transition={{ duration: 0.3 }}
+        />
+
+        {/* Brillo de fondo en hover */}
+        {(isHovered || active === nav.title) && (
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-[#f55f17]/10 via-purple-500/10 to-blue-500/10 rounded-lg -z-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          />
+        )}
+      </a>
+    </motion.li>
+  );
+};
+
+// Componente del botón de estrellas mejorado
+const StarsToggleButton = ({ showStars, toggleStars }) => {
+  return (
+    <motion.button
+      onClick={toggleStars}
+      className={`relative p-3 rounded-full transition-all duration-300 overflow-hidden ${
+        showStars 
+          ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white' 
+          : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+      }`}
+      whileHover={{ scale: 1.1, rotate: 180 }}
+      whileTap={{ scale: 0.95 }}
+      aria-label={showStars ? "Desactivar estrellas" : "Activar estrellas"}
+    >
+      {/* Efecto de brillo pulsante */}
+      {showStars && (
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-purple-400 to-blue-400 opacity-50 blur-xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3]
+          }}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
+      )}
+      
+      <svg className="w-5 h-5 relative z-10" fill="currentColor" viewBox="0 0 24 24">
+        {showStars ? (
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        ) : (
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2zm0 4.24l-2.13 4.32-4.77.69 3.45 3.36-.81 4.74L12 17.27l4.26 2.24-.81-4.74 3.45-3.36-4.77-.69L12 6.24z"/>
+        )}
+      </svg>
+    </motion.button>
+  );
+};
 
 const Navbar = () => {
   const [active, setActive] = useState("");
@@ -50,66 +135,78 @@ const Navbar = () => {
   }, [toggle]);
   
   return (
-    <nav
-    className={`${
-      styles.paddingX
-    } w-full flex items-center py-5 fixed top-0 z-20 navbar-mobile ${
-      scrolled ? "bg-primary" : "bg-transparent"
-    }`}
-  >  
+    <motion.nav
+      className={`${
+        styles.paddingX
+      } w-full flex items-center py-5 fixed top-0 z-20 navbar-mobile transition-all duration-500 ${
+        scrolled ? "bg-primary backdrop-blur-xl shadow-lg shadow-black/20" : "bg-transparent"
+      }`}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* Borde inferior brillante con animación */}
+      {scrolled && (
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#f55f17] to-transparent"
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8 }}
+        />
+      )}
+
       <div className='w-full flex justify-between items-center max-w-7xl mx-auto '>
-        <Link
-          to='/'
-          className='flex items-center gap-2 min-w-0 flex-shrink-0'
-          onClick={() => {
-            setActive("");
-            window.scrollTo(0, 0);
-          }}
+        {/* Logo mejorado */}
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
-          <img src={logo} alt='logo' className='w-9 h-9 xs:w-8 xs:h-8 xxs:w-7 xxs:h-7 object-contain flex-shrink-0' />          <p className='text-white text-[18px] xs:text-[16px] xxs:text-[15px] font-bold cursor-pointer flex flex-wrap'>
-            <span className="whitespace-nowrap">Fernando</span>&nbsp;
-  
-            <span className='sm:hidden xs:inline hidden whitespace-nowrap'>| Dev</span>
-          </p>
-        </Link>        <ul className='list-none hidden sm:flex flex-row gap-6 lg:gap-10 items-center'>
+          <Link
+            to='/'
+            className='flex items-center gap-3'
+            onClick={() => {
+              setActive("");
+              window.scrollTo(0, 0);
+            }}
+          >
+            <motion.div
+              className="w-10 h-10 rounded-full bg-gradient-to-br from-[#f55f17] to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg"
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.6 }}
+            >
+              F
+            </motion.div>
+            <div className="flex flex-col">
+              <span className="text-white text-lg font-bold">Fernando</span>
+              <span className="text-gray-400 text-xs hidden sm:block">Full Stack Developer</span>
+            </div>
+          </Link>
+        </motion.div>
+
+        {/* Desktop Navigation - MEJORADO */}
+        <ul className='list-none hidden sm:flex flex-row gap-2 items-center'>
           {navLinks.map((nav) => (
-            <li
-              key={nav.id}
-              className="text-white hover:text-[#ff914d] text-[18px] md:text-[16px] lg:text-[18px] font-medium cursor-pointer transition-colors duration-200"
-              onClick={() => setActive(nav.title)}
-            >
-              <a href={`#${nav.id}`}>{nav.title}</a>
-            </li>
-         
+            <NavItem 
+              key={nav.id} 
+              nav={nav} 
+              active={active} 
+              setActive={setActive} 
+            />
           ))}
-          {/* Botón para controlar estrellas en desktop */}
-          <li className="hidden sm:block">
-            <button
-              onClick={toggleStars}
-              className={`p-2 rounded-full transition-all duration-300 transform hover:scale-110 ${
-                showStars 
-                  ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/30' 
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-              }`}
-              aria-label={showStars ? "Desactivar estrellas" : "Activar estrellas"}
-              title={showStars ? "Desactivar estrellas de fondo" : "Activar estrellas de fondo"}
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                {showStars ? (
-                  // Icono de estrella llena
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                ) : (
-                  // Icono de estrella vacía
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2zm0 4.24l-2.13 4.32-4.77.69 3.45 3.36-.81 4.74L12 17.27l4.26 2.24-.81-4.74 3.45-3.36-4.77-.69L12 6.24z"/>
-                )}
-              </svg>
-            </button>
-          </li>
+          
+          {/* Separador */}
+          <div className="w-px h-6 bg-gray-700 mx-2" />
+          
+          {/* Botón de estrellas mejorado */}
+          <StarsToggleButton 
+            showStars={showStars} 
+            toggleStars={toggleStars} 
+          />
         </ul>
 
+        {/* MENÚ MÓVIL - SIN CAMBIOS */}
         <div className='sm:hidden flex flex-1 justify-end items-center gap-3'>
           {/* Botón de menú móvil */}
-
           <button
             className={`mobile-touch-target flex items-center justify-center p-3 rounded-full transition-all duration-300 transform hover:scale-110 ${
               toggle 
@@ -140,7 +237,8 @@ const Navbar = () => {
               onClick={() => setToggle(false)}
             ></div>
             
-            {/* Close button */}            <button
+            {/* Close button */}
+            <button
               className="absolute top-4 right-4 z-[60] text-white space-close-button hover:text-purple-400 transition-colors duration-300 p-2 rounded-full mobile-touch-target"
               onClick={() => setToggle(false)}
               aria-label="Cerrar menú"
@@ -155,7 +253,8 @@ const Navbar = () => {
               className="relative z-50 flex flex-col items-center justify-start pt-20 w-full h-full px-6"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Logo/Title */}              <div className="mb-12 xs:mb-10 text-center space-fullscreen-logo">
+              {/* Logo/Title */}
+              <div className="mb-12 xs:mb-10 text-center space-fullscreen-logo">
                 <h2 className="text-white text-4xl xs:text-3xl font-bold mb-3 text-space-glow">Fernando</h2>
                 <p className="text-secondary text-lg xs:text-base font-light tracking-wide">Desarrollador Full Stack</p>
                 <div className="mt-4 w-24 h-0.5 bg-gradient-to-r from-purple-400 to-blue-400 mx-auto rounded-full"></div>
@@ -186,7 +285,8 @@ const Navbar = () => {
 
               {/* Footer section */}
               <div className="mt-12 xs:mt-10 text-center space-fullscreen-footer">
-                <p className="text-secondary text-sm font-light tracking-widest">EXPLORA LA GALAXIA DEL CÓDIGO</p>                <div className="mt-4 flex justify-center space-x-3">
+                <p className="text-secondary text-sm font-light tracking-widest">EXPLORA LA GALAXIA DEL CÓDIGO</p>
+                <div className="mt-4 flex justify-center space-x-3">
                   <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
                   <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
                   <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
@@ -196,7 +296,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

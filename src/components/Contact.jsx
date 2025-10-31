@@ -1,130 +1,67 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-import { styles } from "../styles";
-import { SectionWrapper } from "../hoc";
-import githubSvg from "../assets/github.svg";
-import linkedinSvg from "../assets/linkedin.svg";
-import gmailSvg from "../assets/gmail.svg";
+// Simulación de estilos
+const styles = {
+  sectionHeadText: "font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]",
+  sectionSubText: "sm:text-[18px] text-[14px] text-gray-400 uppercase tracking-wider"
+};
 
 const socialLinks = [
   {
     name: "GitHub",
-    icon: <img src={githubSvg} alt="GitHub" className="w-12 h-12 xs:w-16 xs:h-16 sm:w-20 sm:h-20" />,
+    icon: (
+      <svg className="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+      </svg>
+    ),
     url: "https://github.com/FernandoMarOrt",
     description: "Explora mis proyectos",
-    border: "border-purple-500 sm:border-white/60 sm:dark:border-white/20 sm:hover:border-purple-500 sm:hover:shadow-purple-500/20",
-    bgGradient: "from-gray-800 to-gray-900"
+    color: "from-gray-700 to-gray-900",
+    hoverColor: "group-hover:from-purple-600 group-hover:to-purple-800",
+    glowColor: "rgba(168, 85, 247, 0.4)"
   },
   {
     name: "LinkedIn",
-    icon: <img src={linkedinSvg} alt="LinkedIn" className="w-12 h-12 xs:w-16 xs:h-16 sm:w-20 sm:h-20" />,
+    icon: (
+      <svg className="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+      </svg>
+    ),
     url: "https://www.linkedin.com/in/fernandomartinezo/",
     description: "Conecta conmigo",
-    border: "border-blue-500 sm:border-white/60 sm:dark:border-white/20 sm:hover:border-blue-500 sm:hover:shadow-blue-500/20",
-    bgGradient: "from-blue-800 to-blue-900"
+    color: "from-blue-700 to-blue-900",
+    hoverColor: "group-hover:from-blue-500 group-hover:to-blue-700",
+    glowColor: "rgba(59, 130, 246, 0.4)"
   },
   {
     name: "Email",
-    icon: <img src={gmailSvg} alt="Email" className="w-12 h-12 xs:w-16 xs:h-16 sm:w-20 sm:h-20" />,
-    url: "mailto:fmarort153@gmail.com?subject=Contacto desde Portfolio&body=Hola Fernando,%0D%0A%0D%0AMe gustaría contactar contigo...",
+    icon: (
+      <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg>
+    ),
+    url: "mailto:fmarort153@gmail.com",
     description: "Envíame un mensaje",
-    border: "border-green-500 sm:border-white/60 sm:dark:border-white/20 sm:hover:border-green-500 sm:hover:shadow-green-500/20",
-    bgGradient: "from-green-800 to-green-900"
+    color: "from-green-700 to-emerald-900",
+    hoverColor: "group-hover:from-green-500 group-hover:to-emerald-700",
+    glowColor: "rgba(34, 197, 94, 0.4)"
   }
 ];
 
-// Componente de contacto minimalista para móvil
-const MobileContact = ({ handleEmailClick }) => (
-  <section className="py-16 px-6">
-    <div className="max-w-md mx-auto text-center">
-      <p className={styles.sectionSubText}>Conecta conmigo</p>
-      <h2 className={styles.sectionHeadText}>Contacto.</h2>
+// Componente de card de contacto
+const ContactCard = ({ link, index, isMobile }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleClick = (e) => {
+    if (link.name === "Email") {
+      e.preventDefault();
+      window.location.href = link.url;
       
-      <div className="space-y-4 mt-8">
-        {socialLinks.map((link) => (
-          <a
-            key={link.name}
-            href={link.url}
-            target={link.name !== "Email" ? "_blank" : "_self"}
-            rel={link.name !== "Email" ? "noopener noreferrer" : ""}
-            onClick={(e) => handleEmailClick(e, link.url)}
-            className="flex items-center justify-between p-4 bg-gray-900/50 rounded-lg border border-gray-800 hover:border-gray-700 transition-colors duration-200"
-          >
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 flex-shrink-0">
-                <img 
-                  src={link.name === "GitHub" ? githubSvg : link.name === "LinkedIn" ? linkedinSvg : gmailSvg} 
-                  alt={link.name} 
-                  className="w-full h-full" 
-                />
-              </div>
-              <div className="text-left">
-                <div className="text-white text-sm font-medium">{link.name}</div>
-                <div className="text-secondary text-xs">{link.description}</div>
-              </div>
-            </div>
-            <div className="text-gray-500">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
-          </a>
-        ))}
-      </div>
-      
-      <p className="text-secondary text-[16px] mt-8 leading-relaxed">
-        ¿Tienes un proyecto en mente? <br />
-        ¡Hablemos!
-      </p>
-    </div>
-  </section>
-);
-
-const Contact = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      // Solo usar window.innerWidth para la detección responsiva
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
-    };
-
-    // Verificar inicialmente
-    checkMobile();
-    
-    // Agregar listener para cambios de tamaño
-    window.addEventListener('resize', checkMobile);
-    
-    // Cleanup
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const handleEmailClick = (e, url) => {
-    // Si es el enlace de email, intentar mailto y dar alternativa si falla
-    if (url.startsWith('mailto:')) {
-      try {
-        window.location.href = url;
-        // Detectar si el mailto no funcionó después de un delay
-        setTimeout(() => {
-          const userChoice = confirm(
-            '¿No se abrió tu cliente de email?\n\n' +
-            'Puedes copiar mi email: fmarort153@gmail.com\n\n' +
-            '¿Quieres copiarlo al portapapeles?'
-          );
-          if (userChoice) {
-            navigator.clipboard.writeText('fmarort153@gmail.com').then(() => {
-              alert('¡Email copiado al portapapeles!');
-            }).catch(() => {
-              alert('Email: fmarort153@gmail.com');
-            });
-          }
-        }, 1000);
-      } catch (error) {
-        // Fallback si mailto falla
-        const userChoice = confirm(
-          'No se pudo abrir el cliente de email.\n\n' +
-          'Mi email es: fmarort153@gmail.com\n\n' +
+      setTimeout(() => {
+        const userChoice = window.confirm(
+          '¿No se abrió tu cliente de email?\n\n' +
+          'Puedes copiar mi email: fmarort153@gmail.com\n\n' +
           '¿Quieres copiarlo al portapapeles?'
         );
         if (userChoice) {
@@ -134,112 +71,359 @@ const Contact = () => {
             alert('Email: fmarort153@gmail.com');
           });
         }
-      }
-      e.preventDefault();
-      return false;
+      }, 1000);
     }
   };
 
-  // Versión minimalista para móvil
-  if (isMobile) {
-    return <MobileContact handleEmailClick={handleEmailClick} />;
-  }
-
-  const getButtonText = (linkName) => {
-    switch (linkName) {
-      case "Email":
-        return "Escribir Email";
-      case "GitHub":
-        return "Ver Repositorios";
-      default:
-        return "Conectar";
-    }
-  };
-
-  // Versión desktop original
   return (
-  <div className="flex justify-center w-full min-h-[60vh] bg-black-100">
-      <div
-        className='w-full max-w-6xl p-6 xs:p-8 sm:p-10 rounded-2xl shadow-2xl border-4 border-white/80 dark:border-white/30 relative before:content-[""] before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none before:border-4 before:border-white/40 before:blur-lg before:opacity-80 before:z-0 animate-fade-in-blur'
-      >
-        <div className="relative z-10">
-          <div className="text-center mb-16">
-            <p className={styles.sectionSubText}>Conecta conmigo</p>
-            <h3 className={styles.sectionHeadText}>Contacto</h3>
-            <p className="text-secondary text-[16px] xs:text-[18px] mt-6 max-w-3xl mx-auto leading-relaxed">
-              ¿Tienes un proyecto en mente o quieres colaborar? ¡Me encantaría saber de ti!
-              Puedes contactarme a través de cualquiera de estas plataformas y te responderé lo antes posible.
-            </p>
+    <motion.a
+      href={link.url}
+      target={link.name !== "Email" ? "_blank" : "_self"}
+      rel={link.name !== "Email" ? "noopener noreferrer" : ""}
+      onClick={handleClick}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      whileHover={{ y: -10, scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="group relative block"
+    >
+      {/* Contenedor principal */}
+      <div className="relative bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-md rounded-3xl overflow-hidden border border-white/10 hover:border-white/30 transition-all duration-500">
+        
+        {/* Fondo con gradiente animado */}
+        <motion.div
+          className={`absolute inset-0 bg-gradient-to-br ${link.color} ${link.hoverColor} opacity-20 transition-all duration-500`}
+          animate={isHovered ? {
+            scale: [1, 1.05, 1],
+            opacity: [0.2, 0.4, 0.2]
+          } : {}}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
+
+        {/* Efecto de escaneo láser */}
+        <AnimatePresence>
+          {isHovered && !isMobile && (
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-b from-transparent via-white/20 to-transparent"
+              initial={{ y: "-100%" }}
+              animate={{ y: "200%" }}
+              exit={{ y: "200%" }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Partículas orbitales */}
+        <AnimatePresence>
+          {isHovered && (
+            <>
+              {[...Array(8)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-2 h-2 rounded-full"
+                  style={{
+                    background: `radial-gradient(circle, ${link.glowColor} 0%, transparent 70%)`,
+                    left: "50%",
+                    top: "50%"
+                  }}
+                  initial={{ scale: 0, x: "-50%", y: "-50%" }}
+                  animate={{
+                    scale: [0, 1, 0],
+                    x: `calc(-50% + ${60 * Math.cos(i * Math.PI / 4)}px)`,
+                    y: `calc(-50% + ${60 * Math.sin(i * Math.PI / 4)}px)`,
+                  }}
+                  exit={{ scale: 0 }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: i * 0.2
+                  }}
+                />
+              ))}
+            </>
+          )}
+        </AnimatePresence>
+
+        {/* Contenido */}
+        <div className="relative z-10 p-8 sm:p-10 flex flex-col items-center text-center min-h-[280px] sm:min-h-[320px] justify-center">
+          
+          {/* Icono con órbita */}
+          <div className="relative mb-6">
+            {/* Anillo orbital */}
+            <motion.div
+              className="absolute inset-0 w-32 h-32 border-2 border-dashed rounded-full"
+              style={{ borderColor: link.glowColor }}
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            />
+            
+            {/* Icono principal */}
+            <motion.div
+              className="relative w-20 h-20 text-white p-4 rounded-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20"
+              animate={isHovered ? {
+                scale: [1, 1.1, 1],
+                rotate: [0, 10, -10, 0]
+              } : {}}
+              transition={{ duration: 2, repeat: Infinity }}
+              style={{
+                boxShadow: `0 0 30px ${link.glowColor}`,
+                filter: `drop-shadow(0 0 20px ${link.glowColor})`
+              }}
+            >
+              {link.icon}
+            </motion.div>
+
+            {/* Punto orbital brillante */}
+            <motion.div
+              className="absolute w-3 h-3 rounded-full bg-white"
+              style={{
+                boxShadow: `0 0 15px ${link.glowColor}`,
+                left: "50%",
+                top: "50%"
+              }}
+              animate={{
+                x: [20, -20, 20],
+                y: [20, -20, 20]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 xs:gap-10 mb-12">
-            {socialLinks.map((link, index) => (
-              <div
-                key={link.name}
-                className="group relative h-full"
-              >
-                <a
-                  href={link.url}
-                  target={link.name !== "Email" ? "_blank" : "_self"}
-                  rel={link.name !== "Email" ? "noopener noreferrer" : ""}
-                  onClick={(e) => handleEmailClick(e, link.url)}
-                  className={`relative block bg-tertiary p-4 xs:p-8 sm:p-10 rounded-2xl border-2 ${link.border} transition-all duration-500 transform hover:scale-105 hover:shadow-2xl overflow-hidden h-full min-h-[180px] xs:min-h-[240px] sm:min-h-[320px] flex flex-col justify-center before:content-[''] before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none before:border-2 before:border-white/40 before:blur before:opacity-70 before:z-0`}
-                  style={{ boxShadow: '0 0 16px 0 rgba(255,255,255,0.18), 0 0 0 2px rgba(255,255,255,0.10) inset' }}
-                >
-                  {/* Fondo degradado solo en hover escritorio */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${link.bgGradient} opacity-0 sm:group-hover:opacity-10 transition-opacity duration-500 rounded-2xl`}></div>
+          {/* Nombre del contacto */}
+          <motion.h3
+            className="text-white text-2xl sm:text-3xl font-bold mb-3"
+            animate={isHovered ? { scale: 1.05 } : { scale: 1 }}
+          >
+            {link.name}
+          </motion.h3>
 
-                  {/* Contenido principal */}
-                  <div className="relative z-10 flex flex-col items-center text-center space-y-4 xs:space-y-6">
-                    <div className="text-4xl xs:text-5xl sm:text-6xl mb-2 sm:group-hover:scale-125 transition-transform duration-500 filter sm:group-hover:drop-shadow-lg">
-                      {link.icon}
-                    </div>
-                    <h4 className="text-white text-[16px] xs:text-[20px] sm:text-[24px] font-bold tracking-wide">
-                      {link.name}
-                    </h4>
-                    <p className="text-secondary text-[13px] xs:text-[15px] sm:text-[17px] leading-relaxed sm:group-hover:text-white transition-colors duration-300">
-                      {link.description}
-                    </p>
-                    {/* Botón call-to-action */}
-                    <div className="mt-4 px-4 py-2 bg-primary rounded-full text-white text-[12px] xs:text-[14px] font-semibold opacity-100 transition-all duration-300">
-                      {getButtonText(link.name)}
-                    </div>
-                  </div>
+          {/* Descripción */}
+          <p className="text-gray-400 text-sm sm:text-base mb-6">
+            {link.description}
+          </p>
 
-                  {/* Icono de enlace externo */}
-                  <div className="absolute top-4 right-4 opacity-100 transition-all duration-300">
-                    <svg
-                      className="w-5 h-5 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                      />
-                    </svg>
-                  </div>
+          {/* Botón de acción */}
+          <motion.div
+            className={`px-6 py-3 bg-gradient-to-r ${link.color} ${link.hoverColor} rounded-full text-white font-semibold text-sm shadow-lg transition-all duration-300`}
+            style={{
+              boxShadow: isHovered ? `0 10px 40px ${link.glowColor}` : `0 5px 20px ${link.glowColor}`
+            }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {link.name === "Email" ? "Escribir Email" : 
+             link.name === "GitHub" ? "Ver Repositorios" : 
+             "Conectar"}
+            <motion.span
+              className="inline-block ml-2"
+              animate={{ x: [0, 5, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              →
+            </motion.span>
+          </motion.div>
 
-                  {/* Efectos de partículas decorativos */}
-                  <div className="absolute inset-0 opacity-100 transition-opacity duration-700">
-                    <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full animate-ping"></div>
-                    <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-white rounded-full animate-ping animation-delay-300"></div>
-                    <div className="absolute bottom-1/4 left-1/3 w-1 h-1 bg-white rounded-full animate-ping animation-delay-600"></div>
-                  </div>
-
-                  {/* Borde animado */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-100 transition-opacity duration-500"></div>
-                </a>
-              </div>
-            ))}
-          </div>
+          {/* Indicador de disponibilidad para Email */}
+          {link.name === "Email" && (
+            <motion.div
+              className="flex items-center gap-2 mt-4 text-xs text-green-400"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+            </motion.div>
+          )}
         </div>
+
+        {/* Efecto de brillo en los bordes */}
+        <motion.div
+          className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{
+            background: `linear-gradient(135deg, ${link.glowColor} 0%, transparent 50%, ${link.glowColor} 100%)`,
+            padding: "2px",
+            WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+            WebkitMaskComposite: "xor",
+            maskComposite: "exclude"
+          }}
+        />
+      </div>
+
+      {/* Sombra proyectada */}
+      <motion.div
+        className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-[80%] h-6 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{ background: link.glowColor }}
+        animate={isHovered ? {
+          scale: [1, 1.1, 1]
+        } : {}}
+        transition={{ duration: 2, repeat: Infinity }}
+      />
+    </motion.a>
+  );
+};
+
+// Componente de formulario rápido (opcional)
+const QuickMessageForm = () => {
+  const [formData, setFormData] = useState({ name: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Abrir cliente de email con datos prellenados
+    const subject = encodeURIComponent(`Mensaje de ${formData.name || 'Visitante'}`);
+    const body = encodeURIComponent(formData.message);
+    window.location.href = `mailto:fmarort153@gmail.com?subject=${subject}&body=${body}`;
+    
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setFormData({ name: "", message: "" });
+    }, 1000);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.4 }}
+      className="max-w-2xl mx-auto mt-16"
+    >
+      <div className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-md rounded-3xl p-8 border border-white/10">
+        <h4 className="text-white text-2xl font-bold mb-2 text-center">
+          Mensaje Rápido
+        </h4>
+        <p className="text-gray-400 text-center mb-6 text-sm">
+          O escríbeme directamente desde aquí
+        </p>
+        
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            placeholder="Tu nombre"
+            value={formData.name}
+            onChange={(e) => setFormData({...formData, name: e.target.value})}
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#f55f17] transition-colors"
+          />
+          <textarea
+            placeholder="Tu mensaje..."
+            value={formData.message}
+            onChange={(e) => setFormData({...formData, message: e.target.value})}
+            rows={4}
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#f55f17] transition-colors resize-none"
+          />
+          <motion.button
+            type="submit"
+            disabled={isSubmitting || !formData.message}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full bg-gradient-to-r from-[#f55f17] to-[#ff914d] text-white font-bold py-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-[0_0_30px_rgba(245,95,23,0.5)] transition-all duration-300"
+          >
+            {isSubmitting ? "Abriendo cliente de email..." : "Enviar Mensaje"}
+          </motion.button>
+        </form>
+      </div>
+    </motion.div>
+  );
+};
+
+const Contact = () => {
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  return (
+    <div className="relative py-20 overflow-hidden">
+      {/* Efectos de fondo */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[150px] animate-pulse" style={{ animationDuration: '5s' }} />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#f55f17]/10 rounded-full blur-[150px] animate-pulse" style={{ animationDuration: '6s' }} />
+      
+      {/* Grid de fondo tecnológico */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="w-full h-full" style={{
+          backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
+          backgroundSize: "50px 50px"
+        }} />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
+        {/* Título */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-16"
+        >
+          <motion.p
+            className={`${styles.sectionSubText} mb-2`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.1 }}
+          >
+            Conecta conmigo
+          </motion.p>
+          
+          <div className="relative inline-block">
+            <div className="absolute -inset-6 bg-gradient-to-r from-[#f55f17]/20 via-purple-600/20 to-blue-500/20 blur-3xl opacity-60" />
+            <h2 className={`${styles.sectionHeadText} text-white relative z-10`}>
+              <span className="bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent">
+                Contac
+              </span>
+              <span className="bg-gradient-to-r from-[#f55f17] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                to
+              </span>
+            </h2>
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="mt-6 text-gray-400 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed"
+          >
+            ¿Tienes un proyecto en mente o quieres colaborar? ¡Me encantaría saber de ti!
+            <br className="hidden sm:block" />
+            Puedes contactarme a través de cualquiera de estas plataformas.
+          </motion.p>
+        </motion.div>
+
+        {/* Grid de contactos */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          {socialLinks.map((link, index) => (
+            <ContactCard 
+              key={link.name} 
+              link={link} 
+              index={index}
+              isMobile={isMobile}
+            />
+          ))}
+        </div>
+
+        {/* Formulario rápido */}
+        <QuickMessageForm />
+
+        {/* Línea decorativa final */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="mt-16 h-1 bg-gradient-to-r from-transparent via-[#f55f17] to-transparent rounded-full"
+        />
       </div>
     </div>
   );
 };
 
-export default SectionWrapper(Contact, "contact");
+export default Contact;

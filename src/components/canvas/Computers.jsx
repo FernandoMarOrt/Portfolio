@@ -3,8 +3,6 @@ import { Canvas } from "@react-three/fiber";
 import { Suspense, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import CanvasLoader from "../Loader";
-import withSimpleWebGLFallback from "../../hoc/withSimpleWebGLFallback";
-import SimpleComputerFallback from "../SimpleComputerFallback";
 
 const Computers = ({ scale, position }) => {
   const spacemanRef = useRef();
@@ -105,10 +103,4 @@ const ComputersCanvas = ({ scrollContainer }) => {
   );
 };
 
-// Apply WebGL fallback HOC
-const EnhancedComputersCanvas = withSimpleWebGLFallback(
-  ComputersCanvas, 
-  SimpleComputerFallback
-);
-
-export default EnhancedComputersCanvas;
+export default ComputersCanvas;
