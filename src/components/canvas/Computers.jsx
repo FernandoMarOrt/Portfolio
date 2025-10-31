@@ -1,95 +1,156 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useMemo, memo, useState } from "react";
 
-const Computers = ({ scale, position }) => {
+// Pre-cargar el modelo (solo una vez)
+useGLTF.preload("./desktop_pc/spaceman.glb");
+
+const Computers = memo(({ scale, position, rotationX, rotationY }) => {
   const spacemanRef = useRef();
   const { scene, animations } = useGLTF("./desktop_pc/spaceman.glb");
   const { actions } = useAnimations(animations, spacemanRef);
 
   useEffect(() => {
-    if (actions && actions["Idle"]) {
+    if (actions?.["Idle"]) {
       actions["Idle"].play();
     }
   }, [actions]);
+
+  // Memoizar la rotación para evitar recálculos
+  const rotation = useMemo(() => [rotationX, 2.2 + rotationY, 0], [rotationX, rotationY]);
 
   return (
     <mesh 
       ref={spacemanRef} 
       position={position} 
       scale={scale} 
-      rotation={[0, 2.2, 0]}
+      rotation={rotation}
     >
       <primitive object={scene} />
     </mesh>
   );
-};
+});
+
+Computers.displayName = 'Computers';
 
 const ComputersCanvas = ({ scrollContainer }) => {
+  const containerRef = scrollContainer || useRef(null);
+  const animationFrameRef = useRef(null);
+  
+  // Estado para rotaciones (necesita re-render para animar)
   const [rotationX, setRotationX] = useState(0);
   const [rotationY, setRotationY] = useState(0);
+  
+  // Estado para escala y posición (cambian raramente)
   const [scale, setScale] = useState([2, 2, 2]);
-  const [position, setPosition] = useState([0.2, -0.7, 0]);
+  const [position, setPosition] = useState([0.2, -1.5, 0]);
 
-  const containerRef = scrollContainer || { current: document.createElement('div') };
-
+  // Función de scroll optimizada con throttle implícito (requestAnimationFrame)
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      if (containerRef.current) {
-        const scrollTop = containerRef.current.scrollTop;
-        const rotationXValue = scrollTop * -0.0006;
-        const rotationYValue = scrollTop * -0.00075;
-        setRotationX(rotationXValue);
-        setRotationY(rotationYValue);
+      if (!ticking) {
+        animationFrameRef.current = requestAnimationFrame(() => {
+          if (containerRef.current) {
+            const scrollTop = containerRef.current.scrollTop;
+            setRotationX(scrollTop * -0.0006);
+            setRotationY(scrollTop * -0.00075);
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
+    const updateScale = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        setScale([0.7, 0.7, 0.7]);
+        setPosition([0, -1.2, 0]);
+      } else if (width < 1024) {
+        setScale([0.9, 0.9, 0.9]);
+        setPosition([0.2, -1.2, 0]);
+      } else if (width < 1280) {
         setScale([1, 1, 1]);
-        setPosition([0, -1.5, 0]);
-      } else if (window.innerWidth < 1024) {
-        setScale([1.5, 1.5, 1.5]);
-        setPosition([0.2, -1.5, 0]);
-      } else if (window.innerWidth < 1280) {
-        setScale([1.75, 1.75, 1.75]);
-        setPosition([0.2, -1.5, 0]);
-      } else if (window.innerWidth < 1536) {
-        setScale([1.85, 1.85, 1.85]);
-        setPosition([0.2, -1.5, 0]);
+        setPosition([0.2, -1.2, 0]);
+      } else if (width < 1536) {
+        setScale([1.1, 1.1, 1.1]);
+        setPosition([0.2, -1.2, 0]);
       } else {
-        setScale([2, 2, 2]);
-        setPosition([0.2, -1.5, 0]);
+        setScale([1.2, 1.2, 1.2]);
+        setPosition([0.2, -1.2, 0]);
       }
     };
 
-    handleResize();
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    // Debounce para resize
+    let resizeTimeout;
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(updateScale, 150);
+    };
+
+    updateScale(); // Inicial
+
+    const scrollElement = containerRef.current || window;
+    scrollElement.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize, { passive: true });
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      scrollElement.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      clearTimeout(resizeTimeout);
     };
-  }, [scrollContainer]);
+  }, [containerRef]);
+
+  // Configuración de Canvas memoizada
+  const canvasConfig = useMemo(() => ({
+    camera: { 
+      near: 0.1, 
+      far: 100, // Reducido de 1000 (no necesitas tanto)
+      fov: 50
+    },
+    gl: { 
+      alpha: true,
+      antialias: true,
+      powerPreference: 'high-performance',
+      stencil: false,
+      preserveDrawingBuffer: false
+    },
+    dpr: [1, 2], // Limitar pixel ratio
+    shadows: false, // Desactivar si no usas sombras
+    performance: {
+      min: 0.5
+    }
+  }), []);
+
+  // Luces optimizadas y memoizadas
+  const Lights = memo(() => (
+    <>
+      <directionalLight position={[1, 1, 1]} intensity={2} />
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 5, 10]} intensity={2} />
+      <spotLight position={[0, 50, 10]} angle={0.15} penumbra={1} intensity={2} />
+      <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={1} />
+    </>
+  ));
+  
+  Lights.displayName = 'Lights';
 
   return (
     <Canvas 
       className="w-full h-screen bg-transparent"
-      camera={{ near: 0.1, far: 1000 }}
       style={{ 
         zIndex: 10,
         position: 'relative'
       }}
-      gl={{ alpha: true }}
+      {...canvasConfig}
     >
       <Suspense fallback={null}>
-        <directionalLight position={[1, 1, 1]} intensity={2} />
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 5, 10]} intensity={2} />
-        <spotLight position={[0, 50, 10]} angle={0.15} penumbra={1} intensity={2} />
-        <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={1} />
-
+        <Lights />
         <Computers 
           rotationX={rotationX} 
           rotationY={rotationY} 
