@@ -1,8 +1,6 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useEffect, useRef, useState } from "react";
-import * as THREE from "three";
-import CanvasLoader from "../Loader";
 
 const Computers = ({ scale, position }) => {
   const spacemanRef = useRef();
@@ -85,7 +83,7 @@ const ComputersCanvas = ({ scrollContainer }) => {
       }}
       gl={{ alpha: true }}
     >
-      <Suspense fallback={<CanvasLoader />}>
+      <Suspense fallback={null}>
         <directionalLight position={[1, 1, 1]} intensity={2} />
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 5, 10]} intensity={2} />

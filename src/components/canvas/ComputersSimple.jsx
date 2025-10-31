@@ -1,7 +1,6 @@
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useEffect, useRef, useState } from "react";
-import CanvasLoader from "../Loader";
 import SimpleComputerFallback from "../SimpleComputerFallback";
 
 const Computers = ({ scale, position }) => {
@@ -101,7 +100,7 @@ const ComputersCanvas = ({ scrollContainer }) => {
         }
       }}
     >
-      <Suspense fallback={<CanvasLoader />}>
+      <Suspense fallback={null}>
         <directionalLight position={[1, 1, 1]} intensity={2} />
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 5, 10]} intensity={2} />

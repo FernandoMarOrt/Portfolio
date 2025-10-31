@@ -6,7 +6,6 @@ import { styles } from "../styles";
 import { services } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../utils/motion";
-import LazyImage from "./LazyImage";
 
 const ServiceCard = ({ index, title, icon }) => (
   <Tilt 
@@ -24,7 +23,7 @@ const ServiceCard = ({ index, title, icon }) => (
       <div
         className='bg-tertiary rounded-[20px] py-4 px-4 xs:px-6 sm:px-8 min-h-[220px] xs:min-h-[260px] sm:min-h-[280px] flex justify-evenly items-center flex-col'
       >
-        <LazyImage
+        <img
           src={icon}
           alt='web-development'
           loading="lazy"

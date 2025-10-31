@@ -4,7 +4,6 @@ import { textVariant } from "../utils/motion";
 import { SectionWrapper } from "../hoc";
 import { styles } from "../styles";
 import { useInView } from "../hooks/useAnimations";
-import LazyImage from "./LazyImage";
 
 import htmlIcon from '../assets/tech/html.png';
 import cssIcon from '../assets/tech/css.png';
@@ -126,7 +125,7 @@ const SkillCard = ({ tech, index }) => {
                   transition={{ duration: 8, repeat: isHovered ? Infinity : 0, ease: "linear" }}
                 >
                 <div className="absolute inset-0 border-2 border-dashed border-cyan-400/80 rounded-full animate-spin" style={{ animationDuration: '20s' }} />
-                <LazyImage
+                <img
                   src={tech.icon}
                   alt={tech.name}
                   loading="lazy"
