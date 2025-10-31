@@ -149,7 +149,7 @@ const ContactCard = ({ link, index, isMobile }) => {
         </AnimatePresence>
 
         {/* Contenido */}
-        <div className="relative z-10 p-8 sm:p-10 flex flex-col items-center text-center min-h-[280px] sm:min-h-[320px] justify-center">
+        <div className="relative z-10 p-8 sm:p-10 flex flex-col items-center text-center min-h-[320px] sm:min-h-[340px] justify-center">
           
           {/* Icono con órbita */}
           <div className="relative mb-6">
@@ -219,8 +219,8 @@ const ContactCard = ({ link, index, isMobile }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {link.name === "Email" ? "Escribir Email" : 
-             link.name === "GitHub" ? "Ver Repositorios" : 
+            {link.name === "Email" ? "Escribir" : 
+             link.name === "GitHub" ? "Ver Repos" : 
              "Conectar"}
             <motion.span
               className="inline-block ml-2"
@@ -230,16 +230,6 @@ const ContactCard = ({ link, index, isMobile }) => {
               →
             </motion.span>
           </motion.div>
-
-          {/* Indicador de disponibilidad para Email */}
-          {link.name === "Email" && (
-            <motion.div
-              className="flex items-center gap-2 mt-4 text-xs text-green-400"
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-            </motion.div>
-          )}
         </div>
 
         {/* Efecto de brillo en los bordes */}
@@ -268,7 +258,7 @@ const ContactCard = ({ link, index, isMobile }) => {
   );
 };
 
-// Componente de formulario rápido (opcional)
+// Componente de formulario rápido
 const QuickMessageForm = () => {
   const [formData, setFormData] = useState({ name: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -304,7 +294,7 @@ const QuickMessageForm = () => {
           O escríbeme directamente desde aquí
         </p>
         
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-4">
           <input
             type="text"
             placeholder="Tu nombre"
@@ -320,7 +310,7 @@ const QuickMessageForm = () => {
             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#f55f17] transition-colors resize-none"
           />
           <motion.button
-            type="submit"
+            onClick={handleSubmit}
             disabled={isSubmitting || !formData.message}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -328,7 +318,7 @@ const QuickMessageForm = () => {
           >
             {isSubmitting ? "Abriendo cliente de email..." : "Enviar Mensaje"}
           </motion.button>
-        </form>
+        </div>
       </div>
     </motion.div>
   );
