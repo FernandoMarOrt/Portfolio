@@ -1,10 +1,5 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { textVariant } from "../utils/motion";
-import { SectionWrapper } from "../hoc";
-import { styles } from "../styles";
-import { useInView } from "../hooks/useAnimations";
-
 import htmlIcon from '../assets/tech/html.png';
 import cssIcon from '../assets/tech/css.png';
 import javascriptIcon from '../assets/tech/javascript.png';
@@ -21,6 +16,12 @@ import postgreIcon from '../assets/tech/postgre.png';
 import mysqlIcon from '../assets/tech/mysql.png';
 import visualestudioIcon from '../assets/tech/visualestudio.png';
 import postmanIcon from '../assets/tech/postman.png';
+
+
+// Simulación de imports
+const styles = {
+  sectionHeadText: "font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]"
+};
 
 const technologies = [
   { name: "HTML 5", icon: htmlIcon, category: "Frontend" },
@@ -51,38 +52,53 @@ const categoryConfig = {
   Database: { color: "from-teal-500 to-cyan-400"},
 };
 
-// Componente SkillCard rediseñado con temática espacial
 const SkillCard = ({ tech, index }) => {
-  const [ref, isInView] = useInView(0.2);
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50, rotateY: -15 }}
-      animate={{ opacity: 1, y: 0, rotateY: 0 }}
+      initial={{ opacity: 0, y: 50, scale: 0.9 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true }}
       transition={{
-        duration: 0.6,
+        duration: 0.5,
+        delay: index * 0.05,
         type: "spring",
         stiffness: 100
       }}
       whileHover={{
-        scale: 1.08,
+        scale: 1.05,
+        y: -10,
         rotateY: 5,
         z: 50
       }}
-      className="group relative md:hover:scale-105"
+      className="group relative"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Contenedor principal con efecto de cristal espacial */}
-  <div className="relative bg-[#181c2a]/50 p-3 sm:p-6 rounded-2xl border border-white/30 transition-all duration-500 overflow-hidden">
+      {/* Resplandor exterior en hover */}
+      <motion.div
+        className={`absolute -inset-1 rounded-2xl bg-gradient-to-r ${categoryConfig[tech.category]?.color} opacity-0 group-hover:opacity-75 blur-lg transition-all duration-500`}
+        animate={isHovered ? {
+          scale: [1, 1.05, 1],
+        } : {}}
+        transition={{ duration: 2, repeat: Infinity }}
+      />
 
+      {/* Contenedor principal */}
+      <div className="relative bg-gradient-to-br from-[#1a1a2e]/90 to-[#16213e]/90 backdrop-blur-sm p-4 sm:p-6 rounded-2xl border border-white/10 group-hover:border-white/30 transition-all duration-500 overflow-hidden">
+        
+        {/* Efecto de escaneo láser diagonal */}
+        <motion.div
+          className={`absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100`}
+          animate={isHovered ? {
+            x: ["-100%", "200%"],
+            y: ["-100%", "200%"],
+          } : {}}
+          transition={{ duration: 1.5, repeat: Infinity }}
+        />
 
-        {/* Efecto de brillo de fondo */}
-        <div className="absolute inset-0 bg-gradient-to-br from-violet-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-        {/* Partículas espaciales en hover */}
+        {/* Campo de estrellas mini en hover */}
         <AnimatePresence>
           {isHovered && (
             <motion.div
@@ -91,24 +107,23 @@ const SkillCard = ({ tech, index }) => {
               exit={{ opacity: 0 }}
               className="absolute inset-0 overflow-hidden pointer-events-none"
             >
-              {[...Array(6)].map((_, i) => (
+              {[...Array(8)].map((_, i) => (
                 <motion.div
                   key={i}
                   className="absolute w-1 h-1 bg-white rounded-full"
-                  initial={{
-                    x: Math.random() * 100 + "%",
-                    y: Math.random() * 100 + "%",
-                    opacity: 0
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
                   }}
+                  initial={{ opacity: 0, scale: 0 }}
                   animate={{
-                    x: Math.random() * 100 + "%",
-                    y: Math.random() * 100 + "%",
-                    opacity: [0, 1, 0]
+                    opacity: [0, 1, 0],
+                    scale: [0, 1.5, 0],
                   }}
                   transition={{
-                    duration: 2,
+                    duration: 1.5,
                     repeat: Infinity,
-                    delay: i * 0.3
+                    delay: i * 0.2
                   }}
                 />
               ))}
@@ -116,37 +131,111 @@ const SkillCard = ({ tech, index }) => {
           )}
         </AnimatePresence>
 
-        <div className="relative flex flex-col items-center space-y-2 sm:space-y-4 z-10">
-          {/* Contenedor del icono con órbita */}
-            <div className="relative mb-4 sm:mb-0">
+        {/* Línea orbital superior */}
+        <motion.div
+          className={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r ${categoryConfig[tech.category]?.color}`}
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: index * 0.05 }}
+        />
+
+        <div className="relative flex flex-col items-center space-y-3 sm:space-y-4 z-10">
+          {/* Contenedor del icono con múltiples órbitas */}
+          <div className="relative">
+            {/* Órbita exterior */}
+            <motion.div
+              className={`absolute -inset-8 border-2 border-dashed rounded-full opacity-30`}
+              style={{ borderColor: categoryConfig[tech.category]?.color.split(' ')[1] }}
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            />
+            
+            {/* Órbita media */}
+            <motion.div
+              className={`absolute -inset-6 border border-dashed rounded-full opacity-20`}
+              style={{ borderColor: categoryConfig[tech.category]?.color.split(' ')[3] }}
+              animate={{ rotate: -360 }}
+              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            />
+
+            {/* Contenedor central del icono */}
+            <motion.div
+              className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br ${categoryConfig[tech.category]?.color} p-[2px] shadow-2xl`}
+              animate={isHovered ? {
+                rotate: 360,
+                boxShadow: [
+                  "0 0 20px rgba(168, 85, 247, 0.5)",
+                  "0 0 40px rgba(168, 85, 247, 0.8)",
+                  "0 0 20px rgba(168, 85, 247, 0.5)",
+                ],
+              } : {}}
+              transition={{ duration: 3, repeat: isHovered ? Infinity : 0, ease: "linear" }}
+            >
+              {/* Fondo interno del icono */}
+              <div className="w-full h-full bg-[#1a1a2e] rounded-full flex items-center justify-center relative overflow-hidden">
+                {/* Brillo interior */}
                 <motion.div
-                  className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center"
-                  animate={isHovered ? { rotate: 360 } : { rotate: 0 }}
-                  transition={{ duration: 8, repeat: isHovered ? Infinity : 0, ease: "linear" }}
-                >
-                <div className="absolute inset-0 border-2 border-dashed border-cyan-400/80 rounded-full animate-spin" style={{ animationDuration: '20s' }} />
+                  className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                />
+                
                 <img
                   src={tech.icon}
                   alt={tech.name}
                   loading="lazy"
-                  className="w-12 h-12 sm:w-14 sm:h-14 object-contain filter group-hover:brightness-110 transition-all duration-300"
+                  className="w-8 h-8 sm:w-12 sm:h-12 object-contain relative z-10 filter group-hover:brightness-110 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all duration-300"
                 />
-              </motion.div>
-            </div>
+              </div>
+            </motion.div>
+
+            {/* Partícula orbital brillante */}
+            <motion.div
+              className={`absolute w-2 h-2 rounded-full bg-gradient-to-r ${categoryConfig[tech.category]?.color} shadow-lg`}
+              style={{ left: "50%", top: "50%" }}
+              animate={{
+                x: [20, -20, 20],
+                y: [15, -15, 15],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+          </div>
 
           {/* Información de la tecnología */}
-            <div className="text-center flex flex-col items-center space-y-3 sm:space-y-2">
-              <h3 className="text-white text-xs sm:text-base font-bold tracking-wide">
-                {tech.name}
-              </h3>
-              <span className={`text-xs px-2 py-1 sm:px-3 sm:py-1 rounded-full bg-gradient-to-r ${categoryConfig[tech.category]?.color} text-white font-medium shadow-lg`}>
-                {tech.category}
-              </span>
-            </div>
+          <div className="text-center flex flex-col items-center space-y-2">
+            <motion.h3 
+              className="text-white text-sm sm:text-base font-bold tracking-wide"
+              animate={isHovered ? { scale: 1.05 } : { scale: 1 }}
+            >
+              {tech.name}
+            </motion.h3>
+            
+            <motion.span 
+              className={`text-xs px-3 py-1 rounded-full bg-gradient-to-r ${categoryConfig[tech.category]?.color} text-white font-medium shadow-lg relative overflow-hidden`}
+              whileHover={{ scale: 1.1 }}
+            >
+              {/* Brillo deslizante */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                animate={isHovered ? { x: ["-100%", "200%"] } : {}}
+                transition={{ duration: 1, repeat: isHovered ? Infinity : 0 }}
+              />
+              <span className="relative z-10">{tech.category}</span>
+            </motion.span>
+          </div>
         </div>
 
-        {/* Efecto de borde brillante */}
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-600/20 to-purple-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        {/* Efecto de borde brillante pulsante */}
+        <motion.div
+          className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${categoryConfig[tech.category]?.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none`}
+          animate={isHovered ? {
+            opacity: [0.2, 0.4, 0.2],
+          } : {}}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
       </div>
     </motion.div>
   );
@@ -154,25 +243,105 @@ const SkillCard = ({ tech, index }) => {
 
 const Tech = () => {
   return (
-    <>
-      {/* Título principal */}
-      <div className="text-center mb-16">
-        <h2 className={`${styles.sectionHeadText} text-center text-white`}>
-          Tecnologías y Herramientas
-        </h2>
+    <div className="relative py-20 overflow-hidden">
+      {/* Fondo espacial animado */}
+      <div className="absolute inset-0">
+        {/* Estrellas de fondo */}
+        {[...Array(60)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-px h-px bg-white rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              opacity: [0.2, 1, 0.2],
+              scale: [1, 1.5, 1],
+            }}
+            transition={{
+              duration: 2 + Math.random() * 3,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+
+        {/* Nebulosas de colores */}
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px]"
+          animate={{
+            scale: [1, 1.2, 1],
+            x: [0, 50, 0],
+            y: [0, -30, 0],
+          }}
+          transition={{ duration: 15, repeat: Infinity }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px]"
+          animate={{
+            scale: [1, 1.3, 1],
+            x: [0, -50, 0],
+            y: [0, 30, 0],
+          }}
+          transition={{ duration: 18, repeat: Infinity }}
+        />
       </div>
 
-      {/* Grid simple de todas las tecnologías */}
-      <motion.div
-        layout
-        className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-6"
-      >
-        {technologies.map((tech, index) => (
-          <SkillCard key={tech.name} tech={tech} index={index} />
-        ))}
-      </motion.div>
-    </>
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
+        {/* Título principal mejorado */}
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="relative inline-block">
+            {/* Resplandor del título */}
+            <div className="absolute -inset-6 bg-gradient-to-r from-purple-600/20 via-blue-600/20 to-cyan-600/20 blur-3xl" />
+            
+            <h2 className={`${styles.sectionHeadText} text-center relative`}>
+              <span className="text-white">Tecnologías y </span>
+              <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent">
+                Herramientas
+              </span>
+            </h2>
+
+            {/* Línea decorativa debajo */}
+            <motion.div
+              className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent rounded-full"
+              initial={{ width: 0 }}
+              whileInView={{ width: "80%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.3 }}
+            />
+          </div>
+
+          {/* Subtítulo */}
+          <motion.p
+            className="mt-8 text-gray-400 text-base sm:text-lg"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+          >
+            Mi arsenal de herramientas para crear experiencias increíbles
+          </motion.p>
+        </motion.div>
+
+        {/* Grid de tecnologías */}
+        <motion.div
+          layout
+          className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6"
+        >
+          {technologies.map((tech, index) => (
+            <SkillCard key={tech.name} tech={tech} index={index} />
+          ))}
+        </motion.div>
+      </div>
+    </div>
   );
 };
 
-export default SectionWrapper(Tech, "tech");
+export default Tech;
