@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-
-import { styles } from "../styles";
 import { navLinks } from "../constants";
-import { logo, menu, close } from "../assets";
+import { generalImages } from "../constants/index.js";
 import { useTheme } from "../contexts/ThemeContext";
 
 // Componente de item de navegación desktop
@@ -136,9 +134,7 @@ const Navbar = () => {
   
   return (
     <motion.nav
-      className={`${
-        styles.paddingX
-      } w-full flex items-center py-5 fixed top-0 z-20 navbar-mobile transition-all duration-500 ${
+      className={`sm:px-16 px-6 w-full flex items-center py-5 fixed top-0 z-20 navbar-mobile transition-all duration-500 ${
         scrolled ? "bg-primary backdrop-blur-xl shadow-lg shadow-black/20" : "bg-transparent"
       }`}
       initial={{ y: -100 }}
@@ -217,7 +213,7 @@ const Navbar = () => {
             aria-label={toggle ? "Cerrar menú" : "Abrir menú"}
           >
             <img
-              src={toggle ? close : menu}
+              src={toggle ? generalImages.close : generalImages.menu}
               alt='menu'
               className={`w-[28px] h-[28px] xs:w-[24px] xs:h-[24px] object-contain transition-transform duration-300 ${
                 toggle ? 'rotate-180' : 'rotate-0'

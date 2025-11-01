@@ -1,9 +1,7 @@
 import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
-
-import { styles } from "../styles";
 import { services } from "../constants";
-import { SectionWrapper } from "../hoc";
+import SectionWrapper from "./SectionWrapper";
 import { fadeIn, textVariant } from "../utils/motion";
 
 const ServiceCard = ({ index, title, icon }) => (
@@ -41,7 +39,7 @@ const About = () => {
   return (
     <>
       <div>
-        <h2 className={styles.sectionHeadText}>Sobre mi.</h2>
+  <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">Sobre mi.</h2>
       </div>
 
       <motion.p

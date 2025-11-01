@@ -1,8 +1,9 @@
 import { BrowserRouter } from "react-router-dom";
 
 import React, { Suspense, lazy } from "react";
-import { Hero, Navbar } from "./components";
-import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
+import Hero from "./components/Hero";
+import Navbar from "./components/Navbar";
+import { ThemeProvider, useTheme } from "./contexts/ThemeContext";  
 import ScrollProgress from "./components/ScrollProgress";
 import StarryBackground from "./components/StarryBackground";
 

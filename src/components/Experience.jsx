@@ -5,10 +5,8 @@ import {
 } from "react-vertical-timeline-component";
 
 import "react-vertical-timeline-component/style.min.css";
-
-import { styles } from "../styles";
 import { experiences } from "../constants";
-import { SectionWrapper } from "../hoc";
+import SectionWrapper from "./SectionWrapper";
 
 const ExperienceCard = ({ experience }) => {
   return (
@@ -84,7 +82,7 @@ const Experience = () => {
         `}
       </style>
       <div>
-        <h2 className={`${styles.sectionHeadText} text-center`}>
+  <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] text-center">
           Experiencia
         </h2>
       </div>

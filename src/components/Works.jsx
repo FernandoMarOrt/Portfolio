@@ -1,7 +1,6 @@
 import Tilt from "react-parallax-tilt";
-import { styles } from "../styles";
-import { github } from "../assets";
-import { SectionWrapper } from "../hoc";
+import { generalImages } from "../constants/index.js";
+import SectionWrapper from "./SectionWrapper";
 import { projects } from "../constants";
 
 
@@ -31,7 +30,7 @@ const ProjectCard = ({
             aria-label={`Ver código de ${name}`}
           >
             <img
-              src={github}
+              src={generalImages.github}
               alt='source code'
               className='w-1/2 h-1/2 object-contain'
             />
@@ -80,7 +79,7 @@ const Works = () => {
   return (
     <>
       <div>
-        <h2 className={`${styles.sectionHeadText} text-center`}>Proyectos</h2>
+  <h2 className="text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] text-center">Proyectos</h2>
       </div>
       <div className='mt-12 xs:mt-16 sm:mt-20 flex flex-wrap gap-6 xs:gap-7 justify-center'>
         {projects.map((project, index) => (

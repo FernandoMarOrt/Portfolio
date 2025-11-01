@@ -1,25 +1,71 @@
-import {
-  mobile,
+// Imágenes generales
+import logo from "../assets/logo.svg";
+import backend from "../assets/backend.png";
+import creator from "../assets/creator.png";
+import mobile from "../assets/angular.png";
+import web from "../assets/web2.png";
+import github from "../assets/github.png";
+import menu from "../assets/menu.svg";
+import close from "../assets/close.svg";
+
+export const generalImages = {
+  logo,
   backend,
   creator,
+  mobile,
   web,
-  javascript,
-  typescript,
-  html,
+  github,
+  menu,
+  close,
+};
+
+// Imágenes de tecnologías
+import css from "../assets/tech/css.png";
+import docker from "../assets/tech/docker.png";
+import figma from "../assets/tech/figma.png";
+import git from "../assets/tech/git.png";
+import html from "../assets/tech/html.png";
+import javascript from "../assets/tech/javascript.png";
+import nodejs from "../assets/tech/nodejs.png";
+import reactjs from "../assets/tech/reactjs.png";
+import tailwind from "../assets/tech/tailwind.png";
+import typescript from "../assets/tech/typescript.png";
+
+export const techImages = {
   css,
+  docker,
+  figma,
+  git,
+  html,
+  javascript,
+  nodejs,
   reactjs,
   tailwind,
-  nodejs,
-  git,
-  figma,
-  docker,
+  typescript,
+};
+
+// Imágenes de empresas
+import bimaxpro from "../assets/company/bimaxpro.png";
+import villacarrillo from "../assets/company/villacarrillo.png";
+import freelancer from "../assets/company/freelancer.png";
+
+export const companyImages = {
+  bimaxpro,
   villacarrillo,
   freelancer,
-  bimaxpro,
+};
+
+// Imágenes de proyectos
+import carrent from "../assets/tech/css.png";
+import jobit from "../assets/tech/css.png";
+import tripguide from "../assets/tech/css.png";
+
+export const projectImages = {
   carrent,
   jobit,
   tripguide,
-} from "../assets";
+};
+
 
 export const navLinks = [
   {
@@ -47,62 +93,62 @@ export const navLinks = [
 const services = [
   {
     title: "Desarrollador Web",
-    icon: web,
+    icon: generalImages.web,
   },
   {
     title: "Desarrollador Angular",
-    icon: mobile,
+    icon: generalImages.mobile,
   },
   {
     title: "Desarrollador Backend",
-    icon: backend,
+    icon: generalImages.backend,
   },
   {
     title: "Desarrollador .NET",
-    icon: creator,
+    icon: generalImages.creator,
   },
 ];
 
 const technologies = [
   {
     name: "HTML 5",
-    icon: html,
+    icon: techImages.html,
   },
   {
     name: "CSS 3",
-    icon: css,
+    icon: techImages.css,
   },
   {
     name: "JavaScript",
-    icon: javascript,
+    icon: techImages.javascript,
   },
   {
     name: "TypeScript",
-    icon: typescript,
+    icon: techImages.typescript,
   },
   {
     name: "React JS",
-    icon: reactjs,
+    icon: techImages.reactjs,
   },
   {
     name: "Tailwind CSS",
-    icon: tailwind,
+    icon: techImages.tailwind,
   },
   {
     name: "Node JS",
-    icon: nodejs,
+    icon: techImages.nodejs,
   },
   {
     name: "git",
-    icon: git,
+    icon: techImages.git,
   },
   {
     name: "figma",
-    icon: figma,
+    icon: techImages.figma,
   },
   {
     name: "docker",
-    icon: docker,
+    icon: techImages.docker,
   },
 ];
 
@@ -110,7 +156,7 @@ const experiences = [
   {
     title: "Técnico Informático",
     company_name: "Ayuntamiento de Villacarrillo",
-    icon: villacarrillo,
+    icon: companyImages.villacarrillo,
     iconBg: "#E6DEDD",
     date: "Abril 2022 - Junio 2022",
     points: [
@@ -123,7 +169,7 @@ const experiences = [
   {
     title: "Freenlancer Web Developer",
     company_name: "Freelance",
-    icon: freelancer,
+    icon: companyImages.freelancer,
     iconBg: "#E6DEDD",
     date: "Julio 2022 -  Septiembre 2024",
     points: [
@@ -136,7 +182,7 @@ const experiences = [
   {
     title: "Desarrollador Web",
     company_name: "Bimaxpro",
-    icon: bimaxpro,
+    icon: companyImages.bimaxpro,
     iconBg: "#E6DEDD",
     date: "Octubre 2024 - Actualidad",
     points: [
@@ -198,33 +244,33 @@ const projects = [
         color: "yellow-text-gradient",
       },
     ],
-    image: carrent,
+    image: projectImages.carrent,
     source_code_link: "https://github.com/",
   },
   {
-    name: "Flow - (En desarrollo)",
+    name: "StyleBarber",
     description:
-      "Aplicación web que permite a los usuarios tomar notas y organizar tareas.",
+      "Página web para una barbería local que permite a los ver los servicios ofrecidos y sus locales",
     tags: [
-      {
-        name: "Angular",
-        color: "red-text-gradient",
+       {
+        name: "Astro",
+        color: "orange-text-gradient",
       },
       {
         name: "TypeScript",
         color: "dark-blue-text-gradient",
       },
       {
-        name: ".NET",
-        color: "purple-text-gradient",
+        name: "CSS",
+        color: "blue-text-gradient",
       },
-         {
-        name: "C#",
-        color: "green-text-gradient",
+      {
+        name: "JavaScript",
+        color: "yellow-text-gradient",
       },
     ],
-    image: jobit,
-    source_code_link: "https://github.com/",
+    image: projectImages.jobit,
+    source_code_link: "https://stylebarber.es/",
   },
   {
     name: "MyLedger - (En desarrollo)",
@@ -244,7 +290,7 @@ const projects = [
         color: "pink-text-gradient",
       },
     ],
-    image: tripguide,
+    image: projectImages.tripguide,
     source_code_link: "https://github.com/",
   },
 ];
