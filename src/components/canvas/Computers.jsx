@@ -16,8 +16,12 @@ const Computers = memo(({ scale, position, rotationX, rotationY }) => {
     }
   }, [actions]);
 
-  // Memoizar la rotación para evitar recálculos
-  const rotation = useMemo(() => [rotationX, 2.2 + rotationY, 0], [rotationX, rotationY]);
+  // Memoizar la rotación con validación contra NaN y valores extremos
+  const rotation = useMemo(() => [
+    isNaN(rotationX) ? 0 : rotationX,
+    2.2 + (isNaN(rotationY) ? 0 : rotationY),
+    0
+  ], [rotationX, rotationY]);
 
   return (
     <mesh 
@@ -45,7 +49,7 @@ const ComputersCanvas = ({ scrollContainer }) => {
   const [scale, setScale] = useState([2, 2, 2]);
   const [position, setPosition] = useState([0.2, -1.5, 0]);
 
-  // Función de scroll optimizada con throttle implícito (requestAnimationFrame)
+  // Función de scroll optimizada con límites y reseteo
   useEffect(() => {
     let ticking = false;
 
@@ -53,9 +57,27 @@ const ComputersCanvas = ({ scrollContainer }) => {
       if (!ticking) {
         animationFrameRef.current = requestAnimationFrame(() => {
           if (containerRef.current) {
-            const scrollTop = containerRef.current.scrollTop;
-            setRotationX(scrollTop * -0.0006);
-            setRotationY(scrollTop * -0.00075);
+            const scrollTop = Math.max(0, containerRef.current.scrollTop); // Nunca negativo
+            const scrollHeight = containerRef.current.scrollHeight - containerRef.current.clientHeight;
+            
+            // Si estamos en el tope, resetear completamente
+            if (scrollTop <= 0) {
+              setRotationX(0);
+              setRotationY(0);
+            } else {
+              // Calcular porcentaje de scroll (0 a 1)
+              const scrollPercent = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
+              
+              // Aplicar rotación con límites máximos (evita rotaciones extremas)
+              const maxRotationX = 1.5; // ~86 grados máximo
+              const maxRotationY = 1.8; // ~103 grados máximo
+              
+              const newRotationX = Math.min(scrollPercent * -1.2, maxRotationX);
+              const newRotationY = Math.min(scrollPercent * -1.5, maxRotationY);
+              
+              setRotationX(newRotationX);
+              setRotationY(newRotationY);
+            }
           }
           ticking = false;
         });
@@ -110,7 +132,7 @@ const ComputersCanvas = ({ scrollContainer }) => {
   const canvasConfig = useMemo(() => ({
     camera: { 
       near: 0.1, 
-      far: 100, // Reducido de 1000 (no necesitas tanto)
+      far: 100,
       fov: 50
     },
     gl: { 
@@ -120,8 +142,8 @@ const ComputersCanvas = ({ scrollContainer }) => {
       stencil: false,
       preserveDrawingBuffer: false
     },
-    dpr: [1, 2], // Limitar pixel ratio
-    shadows: false, // Desactivar si no usas sombras
+    dpr: [1, 2],
+    shadows: false,
     performance: {
       min: 0.5
     }
