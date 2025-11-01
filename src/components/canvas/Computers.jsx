@@ -37,8 +37,7 @@ const Computers = memo(({ scale, position, rotationX, rotationY }) => {
 
 Computers.displayName = 'Computers';
 
-const ComputersCanvas = ({ scrollContainer }) => {
-  const containerRef = scrollContainer || useRef(null);
+const ComputersCanvas = () => {
   
   // Rotaciones fijas (sin animación de scroll)
   const rotationX = 0;
