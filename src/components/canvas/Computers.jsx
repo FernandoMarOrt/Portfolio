@@ -39,52 +39,17 @@ Computers.displayName = 'Computers';
 
 const ComputersCanvas = ({ scrollContainer }) => {
   const containerRef = scrollContainer || useRef(null);
-  const animationFrameRef = useRef(null);
   
-  // Estado para rotaciones (necesita re-render para animar)
-  const [rotationX, setRotationX] = useState(0);
-  const [rotationY, setRotationY] = useState(0);
+  // Rotaciones fijas (sin animación de scroll)
+  const rotationX = 0;
+  const rotationY = 0;
   
   // Estado para escala y posición (cambian raramente)
   const [scale, setScale] = useState([2, 2, 2]);
   const [position, setPosition] = useState([0.2, -1.5, 0]);
 
-  // Función de scroll optimizada con límites y reseteo
+  // Función optimizada solo para resize
   useEffect(() => {
-    let ticking = false;
-
-    const handleScroll = () => {
-      if (!ticking) {
-        animationFrameRef.current = requestAnimationFrame(() => {
-          if (containerRef.current) {
-            const scrollTop = Math.max(0, containerRef.current.scrollTop); // Nunca negativo
-            const scrollHeight = containerRef.current.scrollHeight - containerRef.current.clientHeight;
-            
-            // Si estamos en el tope, resetear completamente
-            if (scrollTop <= 0) {
-              setRotationX(0);
-              setRotationY(0);
-            } else {
-              // Calcular porcentaje de scroll (0 a 1)
-              const scrollPercent = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
-              
-              // Aplicar rotación con límites máximos (evita rotaciones extremas)
-              const maxRotationX = 1.5; // ~86 grados máximo
-              const maxRotationY = 1.8; // ~103 grados máximo
-              
-              const newRotationX = Math.min(scrollPercent * -1.2, maxRotationX);
-              const newRotationY = Math.min(scrollPercent * -1.5, maxRotationY);
-              
-              setRotationX(newRotationX);
-              setRotationY(newRotationY);
-            }
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
     const updateScale = () => {
       const width = window.innerWidth;
       if (width < 768) {
@@ -114,19 +79,13 @@ const ComputersCanvas = ({ scrollContainer }) => {
 
     updateScale(); // Inicial
 
-    const scrollElement = containerRef.current || window;
-    scrollElement.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize, { passive: true });
 
     return () => {
-      scrollElement.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
       clearTimeout(resizeTimeout);
     };
-  }, [containerRef]);
+  }, []);
 
   // Configuración de Canvas memoizada
   const canvasConfig = useMemo(() => ({
