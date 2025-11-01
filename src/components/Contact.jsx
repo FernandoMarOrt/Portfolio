@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Simulación de estilos
@@ -49,9 +49,17 @@ const socialLinks = [
   }
 ];
 
+// Detectar móvil
+const isMobileDevice = () => typeof window !== 'undefined' && window.innerWidth < 768;
+
 // Componente de card de contacto
-const ContactCard = ({ link, index, isMobile }) => {
+const ContactCard = ({ link, index }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(isMobileDevice());
+  }, []);
 
   const handleClick = (e) => {
     if (link.name === "Email") {
@@ -81,142 +89,150 @@ const ContactCard = ({ link, index, isMobile }) => {
       target={link.name !== "Email" ? "_blank" : "_self"}
       rel={link.name !== "Email" ? "noopener noreferrer" : ""}
       onClick={handleClick}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -10, scale: 1.02 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+      whileHover={!isMobile ? { y: -10, scale: 1.02 } : {}}
       whileTap={{ scale: 0.98 }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => !isMobile && setIsHovered(true)}
+      onMouseLeave={() => !isMobile && setIsHovered(false)}
       className="group relative block"
     >
       {/* Contenedor principal */}
-      <div className="relative bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-md rounded-3xl overflow-hidden border border-white/10 hover:border-white/30 transition-all duration-500">
+      <div className="relative bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm rounded-3xl overflow-hidden border border-white/10 hover:border-white/30 transition-all duration-500">
         
         {/* Fondo con gradiente animado */}
         <motion.div
           className={`absolute inset-0 bg-gradient-to-br ${link.color} ${link.hoverColor} opacity-20 transition-all duration-500`}
-          animate={isHovered ? {
+          animate={isHovered && !isMobile ? {
             scale: [1, 1.05, 1],
             opacity: [0.2, 0.4, 0.2]
           } : {}}
           transition={{ duration: 2, repeat: Infinity }}
         />
 
-        {/* Efecto de escaneo láser */}
-        <AnimatePresence>
-          {isHovered && !isMobile && (
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-b from-transparent via-white/20 to-transparent"
-              initial={{ y: "-100%" }}
-              animate={{ y: "200%" }}
-              exit={{ y: "200%" }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            />
-          )}
-        </AnimatePresence>
+        {/* Efecto de escaneo láser - SOLO DESKTOP */}
+        {!isMobile && (
+          <AnimatePresence>
+            {isHovered && (
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-b from-transparent via-white/20 to-transparent"
+                initial={{ y: "-100%" }}
+                animate={{ y: "200%" }}
+                exit={{ y: "200%" }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              />
+            )}
+          </AnimatePresence>
+        )}
 
-        {/* Partículas orbitales */}
-        <AnimatePresence>
-          {isHovered && (
-            <>
-              {[...Array(8)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-2 h-2 rounded-full"
-                  style={{
-                    background: `radial-gradient(circle, ${link.glowColor} 0%, transparent 70%)`,
-                    left: "50%",
-                    top: "50%"
-                  }}
-                  initial={{ scale: 0, x: "-50%", y: "-50%" }}
-                  animate={{
-                    scale: [0, 1, 0],
-                    x: `calc(-50% + ${60 * Math.cos(i * Math.PI / 4)}px)`,
-                    y: `calc(-50% + ${60 * Math.sin(i * Math.PI / 4)}px)`,
-                  }}
-                  exit={{ scale: 0 }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: i * 0.2
-                  }}
-                />
-              ))}
-            </>
-          )}
-        </AnimatePresence>
+        {/* Partículas orbitales - SOLO DESKTOP */}
+        {!isMobile && (
+          <AnimatePresence>
+            {isHovered && (
+              <>
+                {[...Array(8)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-2 h-2 rounded-full"
+                    style={{
+                      background: `radial-gradient(circle, ${link.glowColor} 0%, transparent 70%)`,
+                      left: "50%",
+                      top: "50%"
+                    }}
+                    initial={{ scale: 0, x: "-50%", y: "-50%" }}
+                    animate={{
+                      scale: [0, 1, 0],
+                      x: `calc(-50% + ${60 * Math.cos(i * Math.PI / 4)}px)`,
+                      y: `calc(-50% + ${60 * Math.sin(i * Math.PI / 4)}px)`,
+                    }}
+                    exit={{ scale: 0 }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: i * 0.2
+                    }}
+                  />
+                ))}
+              </>
+            )}
+          </AnimatePresence>
+        )}
 
         {/* Contenido */}
-        <div className="relative z-10 p-8 sm:p-10 flex flex-col items-center text-center min-h-[320px] sm:min-h-[340px] justify-center">
+        <div className="relative z-10 p-6 sm:p-8 md:p-10 flex flex-col items-center text-center min-h-[280px] sm:min-h-[320px] md:min-h-[340px] justify-center">
           
           {/* Icono con órbita */}
-          <div className="relative mb-6">
-            {/* Anillo orbital */}
-            <motion.div
-              className="absolute inset-0 w-32 h-32 border-2 border-dashed rounded-full"
-              style={{ borderColor: link.glowColor }}
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            />
+          <div className="relative mb-4 sm:mb-6">
+            {/* Anillo orbital - SOLO DESKTOP */}
+            {!isMobile && (
+              <motion.div
+                className="absolute inset-0 w-28 h-28 sm:w-32 sm:h-32 border-2 border-dashed rounded-full"
+                style={{ borderColor: link.glowColor }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              />
+            )}
             
             {/* Icono principal */}
             <motion.div
-              className="relative w-20 h-20 text-white p-4 rounded-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20"
-              animate={isHovered ? {
+              className="relative w-16 h-16 sm:w-20 sm:h-20 text-white p-3 sm:p-4 rounded-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20"
+              animate={isHovered && !isMobile ? {
                 scale: [1, 1.1, 1],
                 rotate: [0, 10, -10, 0]
               } : {}}
               transition={{ duration: 2, repeat: Infinity }}
               style={{
-                boxShadow: `0 0 30px ${link.glowColor}`,
-                filter: `drop-shadow(0 0 20px ${link.glowColor})`
+                boxShadow: isHovered && !isMobile ? `0 0 30px ${link.glowColor}` : `0 0 15px ${link.glowColor}`,
+                filter: `drop-shadow(0 0 ${isHovered && !isMobile ? '20px' : '10px'} ${link.glowColor})`
               }}
             >
               {link.icon}
             </motion.div>
 
-            {/* Punto orbital brillante */}
-            <motion.div
-              className="absolute w-3 h-3 rounded-full bg-white"
-              style={{
-                boxShadow: `0 0 15px ${link.glowColor}`,
-                left: "50%",
-                top: "50%"
-              }}
-              animate={{
-                x: [20, -20, 20],
-                y: [20, -20, 20]
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-            />
+            {/* Punto orbital brillante - SOLO DESKTOP */}
+            {!isMobile && (
+              <motion.div
+                className="absolute w-3 h-3 rounded-full bg-white"
+                style={{
+                  boxShadow: `0 0 15px ${link.glowColor}`,
+                  left: "50%",
+                  top: "50%"
+                }}
+                animate={{
+                  x: [20, -20, 20],
+                  y: [20, -20, 20]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
+            )}
           </div>
 
           {/* Nombre del contacto */}
           <motion.h3
-            className="text-white text-2xl sm:text-3xl font-bold mb-3"
-            animate={isHovered ? { scale: 1.05 } : { scale: 1 }}
+            className="text-white text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3"
+            animate={isHovered && !isMobile ? { scale: 1.05 } : { scale: 1 }}
           >
             {link.name}
           </motion.h3>
 
           {/* Descripción */}
-          <p className="text-gray-400 text-sm sm:text-base mb-6">
+          <p className="text-gray-400 text-sm sm:text-base mb-4 sm:mb-6">
             {link.description}
           </p>
 
           {/* Botón de acción */}
           <motion.div
-            className={`px-6 py-3 bg-gradient-to-r ${link.color} ${link.hoverColor} rounded-full text-white font-semibold text-sm shadow-lg transition-all duration-300`}
+            className={`px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r ${link.color} ${link.hoverColor} rounded-full text-white font-semibold text-sm shadow-lg transition-all duration-300`}
             style={{
-              boxShadow: isHovered ? `0 10px 40px ${link.glowColor}` : `0 5px 20px ${link.glowColor}`
+              boxShadow: isHovered && !isMobile ? `0 10px 40px ${link.glowColor}` : `0 5px 20px ${link.glowColor}`
             }}
-            whileHover={{ scale: 1.05 }}
+            whileHover={!isMobile ? { scale: 1.05 } : {}}
             whileTap={{ scale: 0.95 }}
           >
             {link.name === "Email" ? "Escribir" : 
@@ -224,7 +240,7 @@ const ContactCard = ({ link, index, isMobile }) => {
              "Conectar"}
             <motion.span
               className="inline-block ml-2"
-              animate={{ x: [0, 5, 0] }}
+              animate={!isMobile ? { x: [0, 5, 0] } : {}}
               transition={{ duration: 1.5, repeat: Infinity }}
             >
               →
@@ -232,28 +248,32 @@ const ContactCard = ({ link, index, isMobile }) => {
           </motion.div>
         </div>
 
-        {/* Efecto de brillo en los bordes */}
-        <motion.div
-          className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-          style={{
-            background: `linear-gradient(135deg, ${link.glowColor} 0%, transparent 50%, ${link.glowColor} 100%)`,
-            padding: "2px",
-            WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-            WebkitMaskComposite: "xor",
-            maskComposite: "exclude"
-          }}
-        />
+        {/* Efecto de brillo en los bordes - SOLO DESKTOP */}
+        {!isMobile && (
+          <motion.div
+            className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+            style={{
+              background: `linear-gradient(135deg, ${link.glowColor} 0%, transparent 50%, ${link.glowColor} 100%)`,
+              padding: "2px",
+              WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+              WebkitMaskComposite: "xor",
+              maskComposite: "exclude"
+            }}
+          />
+        )}
       </div>
 
-      {/* Sombra proyectada */}
-      <motion.div
-        className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-[80%] h-6 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ background: link.glowColor }}
-        animate={isHovered ? {
-          scale: [1, 1.1, 1]
-        } : {}}
-        transition={{ duration: 2, repeat: Infinity }}
-      />
+      {/* Sombra proyectada - SOLO DESKTOP */}
+      {!isMobile && (
+        <motion.div
+          className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-[80%] h-6 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{ background: link.glowColor }}
+          animate={isHovered ? {
+            scale: [1, 1.1, 1]
+          } : {}}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
+      )}
     </motion.a>
   );
 };
@@ -263,11 +283,11 @@ const QuickMessageForm = () => {
   const [formData, setFormData] = useState({ name: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
+    if (!formData.message) return;
+    
     setIsSubmitting(true);
     
-    // Abrir cliente de email con datos prellenados
     const subject = encodeURIComponent(`Mensaje de ${formData.name || 'Visitante'}`);
     const body = encodeURIComponent(formData.message);
     window.location.href = `mailto:fmarort153@gmail.com?subject=${subject}&body=${body}`;
@@ -280,14 +300,14 @@ const QuickMessageForm = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: 0.4 }}
-      className="max-w-2xl mx-auto mt-16"
+      transition={{ delay: 0.3 }}
+      className="max-w-2xl mx-auto mt-12 sm:mt-16"
     >
-      <div className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-md rounded-3xl p-8 border border-white/10">
-        <h4 className="text-white text-2xl font-bold mb-2 text-center">
+      <div className="bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border border-white/10">
+        <h4 className="text-white text-xl sm:text-2xl font-bold mb-2 text-center">
           Mensaje Rápido
         </h4>
         <p className="text-gray-400 text-center mb-6 text-sm">
@@ -325,45 +345,35 @@ const QuickMessageForm = () => {
 };
 
 const Contact = () => {
-  const [isMobile, setIsMobile] = React.useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  React.useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(isMobileDevice());
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   return (
-    <div className="relative py-20 overflow-hidden">
-      {/* Efectos de fondo */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[150px] animate-pulse" style={{ animationDuration: '5s' }} />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#f55f17]/10 rounded-full blur-[150px] animate-pulse" style={{ animationDuration: '6s' }} />
-      
-      {/* Grid de fondo tecnológico */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="w-full h-full" style={{
-          backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-          backgroundSize: "50px 50px"
-        }} />
-      </div>
+    <div className="relative py-12 sm:py-20 overflow-hidden">
+      {/* Efectos de fondo - Optimizados */}
+      {!isMobile && (
+        <>
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[100px]" 
+               style={{ animation: 'pulse 5s ease-in-out infinite' }} />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#f55f17]/10 rounded-full blur-[100px]" 
+               style={{ animation: 'pulse 6s ease-in-out infinite' }} />
+        </>
+      )}
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
         {/* Título */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <motion.p
-            className={`${styles.sectionSubText} mb-2`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-          >
-            Conecta conmigo
-          </motion.p>
-          
+ 
           <div className="relative inline-block">
             <div className="absolute -inset-6 bg-gradient-to-r from-[#f55f17]/20 via-purple-600/20 to-blue-500/20 blur-3xl opacity-60" />
             <h2 className={`${styles.sectionHeadText} text-white relative z-10`}>
@@ -380,7 +390,7 @@ const Contact = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="mt-6 text-gray-400 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed"
+            className="mt-4 sm:mt-6 text-gray-400 text-sm sm:text-base lg:text-lg max-w-3xl mx-auto leading-relaxed"
           >
             ¿Tienes un proyecto en mente o quieres colaborar? ¡Me encantaría saber de ti!
             <br className="hidden sm:block" />
@@ -389,13 +399,12 @@ const Contact = () => {
         </motion.div>
 
         {/* Grid de contactos */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12">
           {socialLinks.map((link, index) => (
             <ContactCard 
               key={link.name} 
               link={link} 
               index={index}
-              isMobile={isMobile}
             />
           ))}
         </div>
@@ -408,8 +417,8 @@ const Contact = () => {
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="mt-16 h-1 bg-gradient-to-r from-transparent via-[#f55f17] to-transparent rounded-full"
+          transition={{ duration: 1, delay: 0.4 }}
+          className="mt-12 sm:mt-16 h-1 bg-gradient-to-r from-transparent via-[#f55f17] to-transparent rounded-full"
         />
       </div>
     </div>

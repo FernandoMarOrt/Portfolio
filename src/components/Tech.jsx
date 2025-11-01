@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import htmlIcon from '../assets/tech/html.png';
 import cssIcon from '../assets/tech/css.png';
@@ -46,10 +46,7 @@ const categoryConfig = {
   Database: { color: "from-teal-500 to-cyan-400", shadow: "shadow-teal-500/50" },
 };
 
-// Detectar si es móvil para reducir animaciones
-const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-
-const SkillCard = ({ tech, index }) => {
+const SkillCard = ({ tech, index, isMobile }) => {
   const [isHovered, setIsHovered] = useState(false);
   const config = categoryConfig[tech.category];
 
@@ -67,21 +64,21 @@ const SkillCard = ({ tech, index }) => {
       onMouseEnter={() => !isMobile && setIsHovered(true)}
       onMouseLeave={() => !isMobile && setIsHovered(false)}
     >
-      {/* Glow effect - solo desktop y con will-change */}
+      {/* Glow effect - solo desktop */}
       {!isMobile && (
         <div
-          className={`absolute -inset-0.5 rounded-xl bg-gradient-to-r ${config.color} opacity-0 group-hover:opacity-60 blur transition-opacity duration-300 will-change-transform`}
+          className={`absolute -inset-0.5 rounded-xl bg-gradient-to-r ${config.color} opacity-0 group-hover:opacity-60 blur transition-opacity duration-300`}
         />
       )}
 
       {/* Card principal */}
-      <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 p-4 sm:p-5 rounded-xl border border-slate-700/50 group-hover:border-slate-600 transition-colors duration-300 will-change-transform">
+      <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 p-4 sm:p-5 rounded-xl border border-slate-700/50 group-hover:border-slate-600 transition-colors duration-300">
         
         {/* Barra superior de categoría */}
         <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${config.color} rounded-t-xl`} />
 
         <div className="flex flex-col items-center gap-3">
-          {/* Contenedor del icono - animación simplificada */}
+          {/* Contenedor del icono */}
           <div className="relative">
             <motion.div
               className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br ${config.color} p-0.5 ${config.shadow} shadow-lg`}
@@ -138,51 +135,40 @@ const SkillCard = ({ tech, index }) => {
 };
 
 const Tech = () => {
-  // Reducir número de estrellas en móvil
-  const starCount = isMobile ? 15 : 40;
-  
-  const stars = useMemo(() => 
-    [...Array(starCount)].map((_, i) => ({
-      id: i,
-      left: Math.random() * 100,
-      top: Math.random() * 100,
-      delay: Math.random() * 2,
-      duration: 2 + Math.random() * 2
-    })),
-    []
-  );
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   return (
-    <div className="relative py-12 sm:py-20 overflow-hidden bg-slate-950">
-      {/* Fondo con estrellas - reducido y optimizado */}
-      <div className="absolute inset-0 opacity-50">
-        {stars.map((star) => (
+    <div className="relative py-12 sm:py-20 overflow-hidden">
+      {/* Solo nebulosas sutiles para dar profundidad - SIN fondo sólido ni estrellas */}
+      {!isMobile && (
+        <div className="absolute inset-0 pointer-events-none opacity-30">
           <motion.div
-            key={star.id}
-            className="absolute w-px h-px bg-white rounded-full"
-            style={{
-              left: `${star.left}%`,
-              top: `${star.top}%`,
-            }}
+            className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[80px]"
             animate={{
-              opacity: [0.2, 1, 0.2],
+              scale: [1, 1.2, 1],
+              x: [0, 50, 0],
+              y: [0, -30, 0],
             }}
-            transition={{
-              duration: star.duration,
-              repeat: Infinity,
-              delay: star.delay,
-            }}
+            transition={{ duration: 15, repeat: Infinity }}
           />
-        ))}
-
-        {/* Gradientes de fondo - sin blur excesivo */}
-        {!isMobile && (
-          <>
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl" />
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl" />
-          </>
-        )}
-      </div>
+          <motion.div
+            className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[80px]"
+            animate={{
+              scale: [1, 1.3, 1],
+              x: [0, -50, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{ duration: 18, repeat: Infinity }}
+          />
+        </div>
+      )}
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
         {/* Título */}
@@ -217,7 +203,7 @@ const Tech = () => {
         {/* Grid optimizado */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
           {technologies.map((tech, index) => (
-            <SkillCard key={tech.name} tech={tech} index={index} />
+            <SkillCard key={tech.name} tech={tech} index={index} isMobile={isMobile} />
           ))}
         </div>
       </div>
