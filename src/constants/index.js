@@ -30,6 +30,13 @@ import nodejs from "../assets/tech/nodejs.png";
 import reactjs from "../assets/tech/reactjs.png";
 import tailwind from "../assets/tech/tailwind.png";
 import typescript from "../assets/tech/typescript.png";
+import angular from "../assets/tech/angular.png";
+import net from "../assets/tech/net.png";
+import csharp from "../assets/tech/csharp.png";
+import postgre from "../assets/tech/postgre.png";
+import mysql from "../assets/tech/mysql.png";
+import visualestudio from "../assets/tech/visualestudio.png";
+import postman from "../assets/tech/postman.png";
 
 export const techImages = {
   css,
@@ -42,6 +49,13 @@ export const techImages = {
   reactjs,
   tailwind,
   typescript,
+  angular,
+  net,
+  csharp,
+  postgre,
+  mysql,
+  visualestudio,
+  postman,
 };
 
 // Imágenes de empresas

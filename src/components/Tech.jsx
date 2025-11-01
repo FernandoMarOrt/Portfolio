@@ -1,39 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import htmlIcon from '../assets/tech/html.png';
-import cssIcon from '../assets/tech/css.png';
-import javascriptIcon from '../assets/tech/javascript.png';
-import typescriptIcon from '../assets/tech/typescript.png';
-import tailwindIcon from '../assets/tech/tailwind.png';
-import nodejsIcon from '../assets/tech/nodejs.png';
-import angularIcon from '../assets/tech/angular.png';
-import netIcon from '../assets/tech/net.png';
-import csharpIcon from '../assets/tech/csharp.png';
-import gitIcon from '../assets/tech/git.png';
-import dockerIcon from '../assets/tech/docker.png';
-import figmaIcon from '../assets/tech/figma.png';
-import postgreIcon from '../assets/tech/postgre.png';
-import mysqlIcon from '../assets/tech/mysql.png';
-import visualestudioIcon from '../assets/tech/visualestudio.png';
-import postmanIcon from '../assets/tech/postman.png';
+import { techImages } from "../constants";
+import SectionWrapper from "./SectionWrapper";
 
 const technologies = [
-  { name: "HTML 5", icon: htmlIcon, category: "Frontend" },
-  { name: "CSS 3", icon: cssIcon, category: "Frontend" },
-  { name: "JavaScript", icon: javascriptIcon, category: "Frontend" },
-  { name: "TypeScript", icon: typescriptIcon, category: "Frontend" },
-  { name: "Tailwind CSS", icon: tailwindIcon, category: "Frontend" },
-  { name: "C#", icon: csharpIcon, category: "Backend" },
-  { name: "Node JS", icon: nodejsIcon, category: "Backend" },
-  { name: "Angular", icon: angularIcon, category: "Framework" },
-  { name: ".NET", icon: netIcon, category: "Framework" },
-  { name: "Git", icon: gitIcon, category: "Tools" },
-  { name: "Visual Studio", icon: visualestudioIcon, category: "Tools" },
-  { name: "Postman", icon: postmanIcon, category: "Tools" },
-  { name: "Docker", icon: dockerIcon, category: "DevOps" },
-  { name: "Figma", icon: figmaIcon, category: "Design" },
-  { name: "PostgreSQL", icon: postgreIcon, category: "Database" },
-  { name: "MySQL", icon: mysqlIcon, category: "Database" },
+  { name: "HTML 5", icon: techImages.html, category: "Frontend" },
+  { name: "CSS 3", icon: techImages.css, category: "Frontend" },
+  { name: "JavaScript", icon: techImages.javascript, category: "Frontend" },
+  { name: "TypeScript", icon: techImages.typescript, category: "Frontend" },
+  { name: "Tailwind CSS", icon: techImages.tailwind, category: "Frontend" },
+  { name: "C#", icon: techImages.csharp, category: "Backend" },
+  { name: "Node JS", icon: techImages.nodejs, category: "Backend" },
+  { name: "Angular", icon: techImages.angular, category: "Framework" },
+  { name: ".NET", icon: techImages.net, category: "Framework" },
+  { name: "Git", icon: techImages.git, category: "Tools" },
+  { name: "Visual Studio", icon: techImages.visualestudio, category: "Tools" },
+  { name: "Postman", icon: techImages.postman, category: "Tools" },
+  { name: "Docker", icon: techImages.docker, category: "DevOps" },
+  { name: "Figma", icon: techImages.figma, category: "Design" },
+  { name: "PostgreSQL", icon: techImages.postgre, category: "Database" },
+  { name: "MySQL", icon: techImages.mysql, category: "Database" },
 ];
 
 const categoryConfig = {
@@ -211,4 +197,4 @@ const Tech = () => {
   );
 };
 
-export default Tech;
+export default SectionWrapper(Tech, "tech");

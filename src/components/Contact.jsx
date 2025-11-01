@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import SectionWrapper from "./SectionWrapper";
 
 // Simulación de estilos
 const styles = {
@@ -425,4 +426,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default SectionWrapper(Contact, "contact");
