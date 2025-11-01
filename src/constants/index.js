@@ -71,12 +71,12 @@ export const companyImages = {
 
 // Imágenes de proyectos
 import carrent from "../assets/tech/css.png";
-import jobit from "../assets/tech/css.png";
+import stylebarber from "../assets/works/stylebarber.webp";
 import tripguide from "../assets/tech/css.png";
 
 export const projectImages = {
   carrent,
-  jobit,
+  stylebarber,
   tripguide,
 };
 
@@ -194,7 +194,7 @@ const experiences = [
     ],
   },
   {
-    title: "Desarrollador Web",
+    title: "Desarrollador Web Full Stack",
     company_name: "Bimaxpro",
     icon: companyImages.bimaxpro,
     iconBg: "#E6DEDD",
@@ -264,7 +264,7 @@ const projects = [
   {
     name: "StyleBarber",
     description:
-      "Página web para una barbería local que permite a los ver los servicios ofrecidos y sus locales",
+      "Página web para una barbería local que permite a los usuarios ver los servicios ofrecidos y sus locales",
     tags: [
        {
         name: "Astro",
@@ -283,7 +283,7 @@ const projects = [
         color: "yellow-text-gradient",
       },
     ],
-    image: projectImages.jobit,
+    image: projectImages.stylebarber,
     source_code_link: "https://stylebarber.es/",
   },
   {

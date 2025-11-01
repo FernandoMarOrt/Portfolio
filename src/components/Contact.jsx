@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import emailjs from '@emailjs/browser';
 import SectionWrapper from "./SectionWrapper";
 
-// Simulación de estilos
+// Variables de entorno seguras (configurar en archivo .env)
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
 const styles = {
   sectionHeadText: "font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]",
   sectionSubText: "sm:text-[18px] text-[14px] text-gray-400 uppercase tracking-wider"
@@ -50,10 +55,8 @@ const socialLinks = [
   }
 ];
 
-// Detectar móvil
 const isMobileDevice = () => typeof window !== 'undefined' && window.innerWidth < 768;
 
-// Componente de card de contacto
 const ContactCard = ({ link, index }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -100,10 +103,7 @@ const ContactCard = ({ link, index }) => {
       onMouseLeave={() => !isMobile && setIsHovered(false)}
       className="group relative block"
     >
-      {/* Contenedor principal */}
       <div className="relative bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm rounded-3xl overflow-hidden border border-white/10 hover:border-white/30 transition-all duration-500">
-        
-        {/* Fondo con gradiente animado */}
         <motion.div
           className={`absolute inset-0 bg-gradient-to-br ${link.color} ${link.hoverColor} opacity-20 transition-all duration-500`}
           animate={isHovered && !isMobile ? {
@@ -113,7 +113,6 @@ const ContactCard = ({ link, index }) => {
           transition={{ duration: 2, repeat: Infinity }}
         />
 
-        {/* Efecto de escaneo láser - SOLO DESKTOP */}
         {!isMobile && (
           <AnimatePresence>
             {isHovered && (
@@ -128,55 +127,8 @@ const ContactCard = ({ link, index }) => {
           </AnimatePresence>
         )}
 
-        {/* Partículas orbitales - SOLO DESKTOP */}
-        {!isMobile && (
-          <AnimatePresence>
-            {isHovered && (
-              <>
-                {[...Array(8)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute w-2 h-2 rounded-full"
-                    style={{
-                      background: `radial-gradient(circle, ${link.glowColor} 0%, transparent 70%)`,
-                      left: "50%",
-                      top: "50%"
-                    }}
-                    initial={{ scale: 0, x: "-50%", y: "-50%" }}
-                    animate={{
-                      scale: [0, 1, 0],
-                      x: `calc(-50% + ${60 * Math.cos(i * Math.PI / 4)}px)`,
-                      y: `calc(-50% + ${60 * Math.sin(i * Math.PI / 4)}px)`,
-                    }}
-                    exit={{ scale: 0 }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: i * 0.2
-                    }}
-                  />
-                ))}
-              </>
-            )}
-          </AnimatePresence>
-        )}
-
-        {/* Contenido */}
         <div className="relative z-10 p-6 sm:p-8 md:p-10 flex flex-col items-center text-center min-h-[280px] sm:min-h-[320px] md:min-h-[340px] justify-center">
-          
-          {/* Icono con órbita */}
           <div className="relative mb-4 sm:mb-6">
-            {/* Anillo orbital - SOLO DESKTOP */}
-            {!isMobile && (
-              <motion.div
-                className="absolute inset-0 w-28 h-28 sm:w-32 sm:h-32 border-2 border-dashed rounded-full"
-                style={{ borderColor: link.glowColor }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              />
-            )}
-            
-            {/* Icono principal */}
             <motion.div
               className="relative w-16 h-16 sm:w-20 sm:h-20 text-white p-3 sm:p-4 rounded-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20"
               animate={isHovered && !isMobile ? {
@@ -191,30 +143,8 @@ const ContactCard = ({ link, index }) => {
             >
               {link.icon}
             </motion.div>
-
-            {/* Punto orbital brillante - SOLO DESKTOP */}
-            {!isMobile && (
-              <motion.div
-                className="absolute w-3 h-3 rounded-full bg-white"
-                style={{
-                  boxShadow: `0 0 15px ${link.glowColor}`,
-                  left: "50%",
-                  top: "50%"
-                }}
-                animate={{
-                  x: [20, -20, 20],
-                  y: [20, -20, 20]
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-              />
-            )}
           </div>
 
-          {/* Nombre del contacto */}
           <motion.h3
             className="text-white text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3"
             animate={isHovered && !isMobile ? { scale: 1.05 } : { scale: 1 }}
@@ -222,12 +152,10 @@ const ContactCard = ({ link, index }) => {
             {link.name}
           </motion.h3>
 
-          {/* Descripción */}
           <p className="text-gray-400 text-sm sm:text-base mb-4 sm:mb-6">
             {link.description}
           </p>
 
-          {/* Botón de acción */}
           <motion.div
             className={`px-5 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r ${link.color} ${link.hoverColor} rounded-full text-white font-semibold text-sm shadow-lg transition-all duration-300`}
             style={{
@@ -248,55 +176,65 @@ const ContactCard = ({ link, index }) => {
             </motion.span>
           </motion.div>
         </div>
-
-        {/* Efecto de brillo en los bordes - SOLO DESKTOP */}
-        {!isMobile && (
-          <motion.div
-            className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-            style={{
-              background: `linear-gradient(135deg, ${link.glowColor} 0%, transparent 50%, ${link.glowColor} 100%)`,
-              padding: "2px",
-              WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-              WebkitMaskComposite: "xor",
-              maskComposite: "exclude"
-            }}
-          />
-        )}
       </div>
-
-      {/* Sombra proyectada - SOLO DESKTOP */}
-      {!isMobile && (
-        <motion.div
-          className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-[80%] h-6 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{ background: link.glowColor }}
-          animate={isHovered ? {
-            scale: [1, 1.1, 1]
-          } : {}}
-          transition={{ duration: 2, repeat: Infinity }}
-        />
-      )}
     </motion.a>
   );
 };
 
-// Componente de formulario rápido
 const QuickMessageForm = () => {
-  const [formData, setFormData] = useState({ name: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState({ type: "", message: "" });
 
-  const handleSubmit = () => {
-    if (!formData.message) return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     
+    if (!formData.message || !formData.email) {
+      setStatus({ type: "error", message: "Por favor completa todos los campos requeridos" });
+      return;
+    }
+
+    // Verificar que las variables de entorno estén configuradas
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+      setStatus({ 
+        type: "error", 
+        message: "Error de configuración. Por favor contacta directamente a fmarort153@gmail.com" 
+      });
+      console.error("EmailJS no está configurado. Revisa tu archivo .env");
+      return;
+    }
+
     setIsSubmitting(true);
-    
-    const subject = encodeURIComponent(`Mensaje de ${formData.name || 'Visitante'}`);
-    const body = encodeURIComponent(formData.message);
-    window.location.href = `mailto:fmarort153@gmail.com?subject=${subject}&body=${body}`;
-    
-    setTimeout(() => {
+    setStatus({ type: "", message: "" });
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name || "Visitante",
+          from_email: formData.email,
+          message: formData.message,
+          to_email: "fmarort153@gmail.com",
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+
+      setStatus({ 
+        type: "success", 
+        message: "¡Mensaje enviado con éxito! Te responderé pronto 🚀" 
+      });
+      setFormData({ name: "", email: "", message: "" });
+      
+    } catch (error) {
+      console.error("Error al enviar:", error);
+      setStatus({ 
+        type: "error", 
+        message: "Error al enviar el mensaje. Por favor intenta escribirme directamente a fmarort153@gmail.com" 
+      });
+    } finally {
       setIsSubmitting(false);
-      setFormData({ name: "", message: "" });
-    }, 1000);
+    }
   };
 
   return (
@@ -315,31 +253,67 @@ const QuickMessageForm = () => {
           O escríbeme directamente desde aquí
         </p>
         
-        <div className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
-            placeholder="Tu nombre"
+            placeholder="Tu nombre (opcional)"
             value={formData.name}
             onChange={(e) => setFormData({...formData, name: e.target.value})}
             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#f55f17] transition-colors"
           />
+          
+          <input
+            type="email"
+            placeholder="Tu email *"
+            value={formData.email}
+            onChange={(e) => setFormData({...formData, email: e.target.value})}
+            required
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#f55f17] transition-colors"
+          />
+          
           <textarea
-            placeholder="Tu mensaje..."
+            placeholder="Tu mensaje *"
             value={formData.message}
             onChange={(e) => setFormData({...formData, message: e.target.value})}
+            required
             rows={4}
             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#f55f17] transition-colors resize-none"
           />
+          
+          {status.message && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`p-4 rounded-xl ${
+                status.type === "success" 
+                  ? "bg-green-500/10 border border-green-500/30 text-green-400" 
+                  : "bg-red-500/10 border border-red-500/30 text-red-400"
+              }`}
+            >
+              {status.message}
+            </motion.div>
+          )}
+          
           <motion.button
-            onClick={handleSubmit}
-            disabled={isSubmitting || !formData.message}
+            type="submit"
+            disabled={isSubmitting || !formData.message || !formData.email}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="w-full bg-gradient-to-r from-[#f55f17] to-[#ff914d] text-white font-bold py-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-[0_0_30px_rgba(245,95,23,0.5)] transition-all duration-300"
           >
-            {isSubmitting ? "Abriendo cliente de email..." : "Enviar Mensaje"}
+            {isSubmitting ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                </svg>
+                Enviando...
+              </span>
+            ) : (
+              "Enviar Mensaje"
+            )}
           </motion.button>
-        </div>
+        </form>
       </div>
     </motion.div>
   );
@@ -357,7 +331,6 @@ const Contact = () => {
 
   return (
     <div className="relative py-12 sm:py-20 overflow-hidden">
-      {/* Efectos de fondo - Optimizados */}
       {!isMobile && (
         <>
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[100px]" 
@@ -368,13 +341,11 @@ const Contact = () => {
       )}
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Título */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12 sm:mb-16"
         >
- 
           <div className="relative inline-block">
             <div className="absolute -inset-6 bg-gradient-to-r from-[#f55f17]/20 via-purple-600/20 to-blue-500/20 blur-3xl opacity-60" />
             <h2 className={`${styles.sectionHeadText} text-white relative z-10`}>
@@ -399,7 +370,6 @@ const Contact = () => {
           </motion.p>
         </motion.div>
 
-        {/* Grid de contactos */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12">
           {socialLinks.map((link, index) => (
             <ContactCard 
@@ -410,10 +380,8 @@ const Contact = () => {
           ))}
         </div>
 
-        {/* Formulario rápido */}
         <QuickMessageForm />
 
-        {/* Línea decorativa final */}
         <motion.div
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
